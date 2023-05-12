@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{hyperref}
 \usepackage[english]{babel}
 \usepackage{amsthm}
 \usepackage{mathrsfs}
@@ -52,9 +53,25 @@ We will assume that all the rings we work on are commutative.
     Such an ideal will be denoted $\langle f \rangle$.
 \end{definition}
 
+We will also define the intersection and the sum of two ideals, as they will be used later on.
+
+\begin{definition}
+    Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$. 
+    \begin{displaymath}
+        I_{1} \cap I_{2} = \langle f \mid f \in I_{1} \land f \in I_{2} \rangle
+    \end{displaymath}
+\end{definition}
+
+\begin{definition}
+    Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$. 
+    \begin{displaymath}
+        I_{1} + I_{2} = \langle f_{1} \mid f_{1} \in I_{1}, f_{2} \mid f_{2} \in I_{2} \rangle
+    \end{displaymath}
+\end{definition}
+
 \section{Monomial orderings}
 
-\begin{definition}[Monomial ordering]
+\begin{definition}[Monomial ordering]\label{def:monomial-order}
     A monomial ordering $\prec$ on $\mathbb{K}[x, y]$ is any order satisfying : 
     \begin{itemize}
         \item $\prec$ is a total order
@@ -63,7 +80,7 @@ We will assume that all the rings we work on are commutative.
     \end{itemize}
 \end{definition}
 
-\begin{definition}[Lexicographic order]
+\begin{definition}[Lexicographic order]\label{def:lexicographic-order}
     The lexicographic order $\prec_{lex}$ is a monomial order over $\mathbb{K}[x, y]$ defined as :
     \begin{itemize}
         \item For all $i \in \mathbb{N}$, $y^{i} \prec_{lex} x$
@@ -82,23 +99,22 @@ We will assume that all the rings we work on are commutative.
 
 \begin{proof}
     $\Rightarrow$ \newline
-    $y^{m} \prec_{lex} x^{m}$ (Def 2.2) \newline
-    $y^{m+l} \prec_{lex} y^{l}x^{m}$ (Def 2.1) \newline
-    $x^{i}y^{m+l} \prec_{lex} y^{l}x^{m+i}$ (Def 2.1) \newline
+    $y^{m} \prec_{lex} x^{m}$ \ref{def:lexicographic-order} \newline
+    $y^{m+l} \prec_{lex} y^{l}x^{m}$ \ref{def:monomial-order} \newline
+    $x^{i}y^{m+l} \prec_{lex} y^{l}x^{m+i}$ \ref{def:lexicographic-order} \newline
     $j = m+l$ $ k = m + i$ and we have that $m+i>i \Rightarrow k > i$ \newline
-    $\Leftarrow$ Let suppose that we have
-    $i<k$ We can then write 
+    $\Leftarrow$ Let suppose that we have $i<k$ We can then write 
     \newline
-    $x^{i}\prec_{lex} x^{k}$ (Def 2.2)\newline
+    $x^{i}\prec_{lex} x^{k}$ \ref{def:lexicographic-order} \newline
     $x^{i}y^{j}\prec_{lex} 
-    x^{k}y^{j}$ (Def 2.1)
+    x^{k}y^{j}$ \ref{def:monomial-order}
     \newline
-    $x^{k}y^{j} \prec_{lex} x^{k+1}y^{j} $ (Def 2.1 + 2.2)
+    $x^{k}y^{j} \prec_{lex} x^{k+1}y^{j} $ \ref{def:lexicographic-order}, \ref{def:monomial-order}
     \newline
-    $x^{k}y^{j}y^{w} \prec_{lex} x^{k+1}y^{j}y^{w} $ (Def 2.1)
+    $x^{k}y^{j}y^{w} \prec_{lex} x^{k+1}y^{j}y^{w} $ \ref{def:monomial-order}
     \newline
     $x^{i}y^{j}\prec_{lex} 
-    x^{k}y^{j}\prec_{lex} x^{k'}y^{l} $ (Def 2.1)
+    x^{k}y^{j}\prec_{lex} x^{k'}y^{l} $ \ref{def:monomial-order}
     \newline
     $x^{i}y^{j}\prec_{lex} x^{k'}y^{l} $
     
@@ -122,24 +138,28 @@ We will assume that all the rings we work on are commutative.
     $1 \prec_{drl} y \prec_{drl} x \prec_{drl} y^{2} \prec_{drl} xy \prec_{drl} x^{2} \prec_{drl} y^{3} \prec_{drl} xy^{2} \prec_{drl} x^{2} y \prec_{drl} x^{3} \prec_{drl} ...$
 \end{example}
 
-\begin{definition}
+\begin{definition} 
     Let $f \in \mathbb{K}[x, y]$ be a polynomial and $\prec$ a monomial order. 
     \begin{itemize}
         \item $LM_{\prec}(f)$ is the leading monomial of $f$ for $\prec$
         \item $LC_{\prec}(f)$ is the leading coefficient of $f$ for $\prec$
-        \item $LT_{\prec}(f) = LM_{\prec}(f) \times LC_{\prec}(f)$ is the leading term of $f$ for $\prec$
+        \item $LT_{\prec}(f) = LM_{\prec}(f) \cdot LC_{\prec}(f)$ is the leading term of $f$ for $\prec$
     \end{itemize}
 \end{definition}
 
-\begin{lemma}
-    Let $F$ and $G$ be two polynomials of $\mathbb{K}[x, y]$. Then, 
+\begin{lemma} \label{lemma:lm-mult}
+    Let $f$ and $g$ be two polynomials of $\mathbb{K}[x, y]$, and $\prec$ a monomial ordering. Then, 
     \begin{displaymath}
-        LM_{\prec}(FG) = LM_{\prec}(F)LM_{\prec}(G)
+        LM_{\prec}(f \cdot g) = LM_{\prec}(f) \cdot LM_{\prec}(g)
     \end{displaymath}
 \end{lemma}
 
 \begin{proof}
-    
+    Let us first rewrite the polynomials $F$ and $G$. We have $f = LM(f) + f^{\prime}$ and $g = LM(g) + g^{\prime}$, with $f^{\prime}, g^{\prime}$ in $\mathbb{K}[x, y]$. Then, we can multiply them and get :
+    \begin{displaymath}
+        f \cdot g = LM(f)LM(g) + LM(f)g^{\prime} + LM(g)f^{\prime} + f^{\prime}g^{\prime}
+    \end{displaymath}
+    Since $LM_{\prec}(g^{\prime}) \prec LM_{\prec}(g)$ and $LM_{\prec}(f^{\prime}) \prec LM_{\prec}(f)$, we get that $LM_{\prec}(f \cdot g) = LM_{\prec}(f) \cdot LM_{\prec}(g)$ 
 \end{proof}
 
 \section{Gröbner Bases}
@@ -155,7 +175,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proposition}
 
 \begin{proof}
-    
+    Suppose $\mathscr{G}$ does not generate $I$. So there exists $f \in I$ such that $f$ isn't an algebreaic combination of elements of $\mathscr{G}$
 \end{proof}
 
 \begin{definition}[Staircase]
@@ -165,15 +185,15 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{displaymath}
 \end{definition}
 
-\begin{proposition}
+\begin{proposition} \label{proposition:monomial-in-staircase}
     Let $\mathscr{G} \subseteq I$ be a Gröbner basis of $I$ for the monomial order $\prec$. Let $m \in I$ be a monomial. $m \in E(I)$ if for all $g \in \mathscr{G}$, $LM_{\prec}(g)$ does not divide $m$.
 \end{proposition}
 
 \begin{proof}
-    Let us assume that there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $m$. Then, there exists a monomial $k \in \mathbb{K}[x, y]$ such that $m = k \cdot LM_{\prec}(g)$. For instance, one could choose $k = 1$ or $k = g$. We just constructed a polynomial of $I$ with $m$ as its leading monomial. So $m \notin E(I)$, hence the result by contraposition.
+    Assume that there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $m$. Then, there exists a monomial $k \in \mathbb{K}[x, y]$ such that $m = k \cdot LM_{\prec}(g)$. For instance, one could choose $k = 1$ or $k = g$. We just constructed a polynomial of $I$ with $m$ as its leading monomial. So $m \notin E(I)$, hence the result by contraposition.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma} \label{lemma:finite-staircase-lm}
     The staircase of $I$ is finite if and only if there exists $k, l \in \mathbb{N}$ such that :
     \begin{itemize}
         \item $x^{k}$ is a leading monomial of I
@@ -181,16 +201,17 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{itemize}
 \end{lemma}
 
-\begin{proof}
-    
+\begin{proof} % Must doublecheck this proof 
+    $\Rightarrow$ Assume the staircase of $I$ is finite, and let $N = Card(E(I))$. Let us suppose there exists no $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are of the form $x^{m}y^{n}$, $m,n > 0$. So for all $k, l > 0$, $x^{k}$ and $y^{l}$ are in $E(I)$. Hence $E(I)$ is not finite. \\ % Must prove that xk and yl exist
+    $\Leftarrow$ Assume there exists $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Then, $x^{k}y^{l}$ is also a leading monomial of $I$ (Lemma \ref{lemma:lm-mult}), so the the size of $E(I)$ is at most equal to $kl$. Thus the staircase of $I$ is finite.
 \end{proof}
 
-\begin{proposition}
-    If $E(I)$ is finite for a monomial ordering, then it is finite for any monomial ordering.
+\begin{proposition} \label{proposition:staircase-finite-any-order}
+    If the staircase of $I$ is finite for a monomial ordering, then it is finite for any monomial ordering.
 \end{proposition}
 
 \begin{proof}
-    Let E(I) be the finite staircase for the order $\prec_{h}$, let suppose there exist an order $\prec_{v}$ such that $E(I)_{\prec_{v}}$ isn't finite, that mean there exist
+    Let $E(I)$ be the finite staircase for the order $\prec_{1}$. Then, there exists $k, l \in \mathbb{N}$ such that $x^{k_{1}}$ and $y^{l_{1}}$ are leading monomials of I (Lemma \ref{lemma:finite-staircase-lm}). $E(I)$ has size equal to $k_{1}l_{1}$ at most. Let $\prec_{2}$ be any monomial order different than $\prec_{1}$, and suppose $E(I)$ is not finite for $\prec_{2}$. Following the same idea as in the proof of Lemma \ref{lemma:finite-staircase-lm}, we can state that all the leading monomials for $\prec_{2}$ are of the form $x^{i}y^{j}$, $i, j \in \mathbb{N}$. 
 \end{proof}
 
 \begin{proposition}
@@ -198,7 +219,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proposition}
 
 \begin{proof}
-    
+    All the monomials of $E(I)$ are monomials of the form $x^{i}y^{j}$, with all the $(i, j)$ different pairwise. So the monomials of $E(I)$ are linearly independent. $\mathbb{K}[x,y] / I$ is the quotient ring where for all $f \in \mathbb{K}[x,y] / I$, $\nexists m \in LM(I)$ such that $m$ divides $LM(f)$. Thus, by Proposition \ref{proposition:monomial-in-staircase}, $E(I)$ generates $\mathbb{K}[x,y] / I$.
 \end{proof}
 
 \begin{theorem}
@@ -206,7 +227,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{theorem}
 
 \begin{proof}
-
+    Let $\prec_{1}$ a monomial order such that $E_{\prec_{1}}(I)$ is finite. As proven in Proposition \ref{proposition:staircase-finite-any-order}, $E_{\prec_{2}}(I)$ is finite. Let us show that $\# E_{\prec_{1}}(I) = \# E_{\prec_{2}}(I)$, \textit{i.e.} $dim(E_{\prec_{1}}(I)) = dim(E_{\prec_{2}}(I))$. 
 \end{proof}
 
 \begin{theorem}
@@ -226,13 +247,13 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proof}
 
 \begin{algorithm}
-\caption{??}\label{alg:cap}
-\hspace*{\algorithmicindent} \textbf{Input : Gröbner basis G of an Ideal I for $\prec$}  \\
-\hspace*{\algorithmicindent} \textbf{Output : Normal form of f} 
+\caption{Division algorithm over $\mathbb{K}[x, y]$}\label{alg:div}
+\textbf{Input : }Gröbner basis G of an Ideal I for $\prec$+ \\
+\textbf{Output : }Normal form of f
 \begin{algorithmic}
     \State $h \gets 0$
     \While{$f \neq 0$} 
-        \If{there exist g $\in$ $\mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$}
+        \If{there exists g $\in$ $\mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$}
             \State $f \gets f-\frac{LT_{\prec}(f)}{LT_{\prec}(g)}g$
         \Else
             \State $h \gets h + LT_{\prec}(f)$
@@ -244,7 +265,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{algorithm}
 
 \begin{definition}
-    Let $h$ be the output of the above algorithm. $h$ is called the normal form of $f$ with respect to $\mathscr{G}$ and $\prec$. In a more formal way, 
+    Let $h$ be the output of Algorithm \ref{alg:div}. $h$ is called the normal form of $f$ with respect to $\mathscr{G}$ and $\prec$. In a more formal way, 
     \begin{displaymath}
         h = NF(f, \mathscr{G}, \prec)
     \end{displaymath}
@@ -255,8 +276,8 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proposition}
     
 \begin{proof}
-    In the beginning, $h = 0$. Then, if $\nexists g \in \mathscr{G}$ such that $LM\_{\prec}(g)$ divides $LM\_{\prec}(f)$, $h \gets LT_{\prec}(f)$. \\
-    Therefore, every monomial of $h$ is in the staircase of $I$, as proved above. % reference theorem
+    In the beginning, $h = 0$. Then, if $\nexists g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$, $h \gets LT_{\prec}(f)$. \\
+    Therefore, every monomial of $h$ is in the staircase of $I$, as proved above (Proposition \ref{proposition:monomial-in-staircase}). 
 \end{proof}
 
 \begin{theorem}
@@ -272,6 +293,37 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 
 \begin{proof}
     
+\end{proof}
+
+\section{Varieties : equation solving point of view}
+
+\begin{definition}
+    The variety of an ideal $I$ is the set as defined below : 
+    \begin{displaymath}
+        V(I) = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f \in I, f(a, b) = 0 \}
+    \end{displaymath}
+    Where $\overline{\mathbb{K}}$ stands for the algebraic closure of $\mathbb{K}$. 
+\end{definition}
+
+\begin{proposition}
+    Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$. 
+    \begin{enumerate}
+        \item[(i)] $V(I_{1} \cap I_{2}) = V(I_{1}) \cup V(I_{2})$
+        \item[(ii)] $V(I_{1} + I_{2}) = V(I_{1}) \cap V(I_{2})$
+    \end{enumerate}
+\end{proposition}
+    
+\begin{proof}
+    Let us first write the formal definitions of $V(I_{1})$ and $V(I_{2})$. We have : \\
+    \begin{displaymath}
+        V(I_{1}) = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, f_{1}(a, b) = 0 \}, \;
+        V(I_{2}) = \{ (c, d) \in \overline{\mathbb{K}} \mid \forall f_{2} \in I_{2}, f_{2}(a, b) = 0 \} 
+    \end{displaymath}
+    
+    \begin{enumerate}
+        \item[(i)] $V(I_{1} \cap I_{2}) = V( \langle f \mid f \in I_{1} \land f \in I_{2} \rangle)$
+        \item[(ii)] $V(I_{1} + I_{2}) = V(I_{1}) \cap V(I_{2})$
+    \end{enumerate}
 \end{proof}
 
 \section{Applications}
@@ -309,13 +361,13 @@ Let us now define the ideals $I_{1}$ and $I_{2}$.
     I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle
 \end{displaymath}
 
-We will assume that $GCD(h_{1}, h_{2}) = 1$.
+We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 
 \begin{theorem}
     \begin{displaymath}
         I_{1} \cap I_{2} = \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle
     \end{displaymath}
-    Where $g_{3}(y)$ satisfies : 
+    Where $g_{3}(y)$ satisfies : % can be computed using the CRT
     \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -337,5 +389,43 @@ We will assume that $GCD(h_{1}, h_{2}) = 1$.
     Now, let us show that $\langle h_{1}h_{2}(y), x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$.
 
 \end{proof}
+
+
+Now, let us assume that $\gcd(h_{1}, {h_2}) \neq 1$. 
+
+\begin{algorithm}
+    \caption{Intersection ($I_{1}, I_{2}$)}\label{alg:intersect-2-ideals}
+    \textbf{Input : }Two Ideals $I_{1}$ and $I_{2}$ as described above \\
+    \textbf{Output : }$I_{1} \cap I_{2}$
+\begin{algorithmic}
+    \State $h_{1}, g_{1} = I_{1}$ 
+    \State $h_{2}, g_{2} = I_{2}$ 
+    \State $l, g \gets lcm(h_{1}, h_{2}), gcd(h_{1}, h_{2})$
+    \State $p_{1}, p_{2} \gets \frac{h_{1}}{g}, \frac{h_{2}}{g}$
+    \State $q_{1}, q_{2} \gets g_{1} \pmod {p_{1}}, g_{2} \pmod {p_{2}}$
+    \State $q_{3} \gets g_{1} \cdot g_{2} \pmod {g}$ \Comment{Polynomials can both be reduced modulo $g$ first}
+    \State $u_{1}, v_{1} \gets gcdex_{y} (p_{1}, p_{2})$ \Comment{$u_{1}, v_{1}$ represent the cofactors here}
+    \State $u_{2}, v_{2} \gets gcdex_{y} (p_{1} \cdot p_{2}, g)$ \Comment{$u_{2}, v_{2}$ represent the cofactors here}
+    \State $P_{1}, P_{2} \gets u_{1}q_{2}p_{1}, v_{1}q_{1}p_{2}$ \Comment{This are the CRT solutions}
+    \State $P_{12} = P_{1} + P_{2}$
+    \State $P_{3}, P_{4} \gets u_{2}q_{3}p_{1}p_{2}, v_{2}P_{12}g$
+    \State $P_{34} = P_{3} + P_{4}$
+    \State $B^{\prime} = \langle l, gP_{12} \rangle$
+    \State $P_{34} \gets NF(P_{34}, B^{\prime})$
+    \State $R = \langle l, NF(gP_{12}, \langle l \rangle), P_{34} \rangle$ \\
+    \Return $R$
+    
+    
+    %\State $c \gets 1$
+    %\For{$j = 1$ to $n$}
+    %    \For{$i = n$ to $j + 1$}
+    %        \State $\theta \gets \tan^{-1}\left(\frac{A_{i, c}}{A_{i-1, c}}\right)$
+    %        \State $A \gets G(i-1, i, \theta) A G(i-1, i, \theta)^{\star}$
+    %    \EndFor
+    %    \State $c \gets c + 1$
+    %\EndFor
+\end{algorithmic}
+\end{algorithm}
+
 
 \end{document}
