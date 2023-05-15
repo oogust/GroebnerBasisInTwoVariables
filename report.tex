@@ -443,5 +443,22 @@ Now, let us assume that $\gcd(h_{1}, {h_2}) \neq 1$.
 \end{algorithmic}
 \end{algorithm}
 
+\begin{algorithm}
+    \caption{Intersection ($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals}
+    \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
+    \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
+\begin{algorithmic}
+    \State $H := \{h_{1},..,h_{N}\}$
+    \State $P1 := LCM(H)$
+    \State $h^{*} := GCD(H)$
+    \State $Y:= \{y_{1}= \frac{h_{1}}{h^{*}},...,y_{N}= \frac{h_{N}}{h^{*}}\}$
+    \State $X := \{x_{1} = \frac{x-g_{1}}{y_{1}},...,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
+    \State $x^{*} := \prod^{N}_{i=1} \frac{x-g_{i}}{h^{*}}$
+    \State $c:= CRT(X,Y)$
+    \State $P2 := c*h^{*}$
+    \State $P3 := CRT(\{c,x^{*}\},\{\prod^{N}_{i=1} y_{i}, h^{*}\})$
+    \State \Return P1,P2,P3
+\end{algorithmic}
+\end{algorithm}
 
 \end{document}
