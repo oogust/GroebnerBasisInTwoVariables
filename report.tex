@@ -21,7 +21,7 @@
 \newtheorem{proposition}{Proposition}[section]
 \newtheorem{example}{Example}[section]
 
-\geometry{legalpaper, margin=3cm}
+%\geometry{legalpaper, margin=4cm}
 \setlength{\parindent}{0pt}
 
 
@@ -202,7 +202,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{lemma}
 
 \begin{proof} % Must doublecheck this proof 
-    $\Rightarrow$ Assume the staircase of $I$ is finite, and let $N = Card(E(I))$. Let us suppose there exists no $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are of the form $x^{m}y^{n}$, $m,n > 0$. So for all $k, l > 0$, $x^{k}$ and $y^{l}$ are in $E(I)$. Hence $E(I)$ is not finite. \\ % Must prove that xk and yl exist
+    $\Rightarrow$ Assume the staircase of $I$ is finite, and let $N = Card(E(I))$. Suppose there exists no $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are of the form $x^{m}y^{n}$, $m,n > 0$. So for all $k, l > 0$, $x^{k}$ and $y^{l}$ are in $E(I)$. Hence $E(I)$ is not finite. \\ % Must prove that xk and yl exist
     $\Leftarrow$ Assume there exists $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Then, $x^{k}y^{l}$ is also a leading monomial of $I$ (Lemma \ref{lemma:lm-mult}), so the the size of $E(I)$ is at most equal to $kl$. Thus the staircase of $I$ is finite.
 \end{proof}
 
@@ -321,15 +321,31 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{displaymath}
     
     \begin{enumerate}
-        \item[(i)] $V(I_{1} \cap I_{2}) = V( \langle f \mid f \in I_{1} \land f \in I_{2} \rangle)$
-        \item[(ii)] $V(I_{1} + I_{2}) = V(I_{1}) \cap V(I_{2})$
+        \item[(i)] 
+        \begin{align*}
+            V(I_{1} \cap I_{2})
+            & = V( \langle f \mid f \in I_{1} \land f \in I_{2} \rangle) \\
+            & = \{(a, b) \in \overline{\mathbb{K}} \mid \forall f \in I_{1} \cap I_{2}, f(a, b) = 0\} \\
+            & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, \forall f_{2} \in I_{2}, f_{1}f_{2}(a, b) = 0 \} \\
+            & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, \forall f_{2} \in I_{2}, f_{1}(a, b) = 0 \lor f_{2}(a, b) = 0 \} \\
+            & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, f_{1}(a, b) = 0 \} \cup 
+            \{ (c, d) \in \overline{\mathbb{K}} \mid \forall f_{2} \in I_{2}, f_{2}(a, b) = 0 \} \\
+            & = V(I_{1}) \cup V(I_{2}) \\
+        \end{align*}
+        \item[(ii)] 
+        \begin{align*} 
+            V(I_{1} + I_{2}) 
+            & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f \in I_{1} + I_{2}, f(a, b) = 0\} \\
+            & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, \forall f_{2} \in I_{2}, f_{1}(a, b) = 0 \land f_{2}(a, b) = 0 \} \\
+            & = V(I_{1}) \cap V(I_{2}) \\
+        \end{align*}
     \end{enumerate}
 \end{proof}
 
 \section{Applications}
 
 We will now study ideals based on generators of a certain form. 
-First, let us define the points $p_{i} = (x_{i}, y_{i})$ for $0 \leq i \leq d$, where $y_{i} \neq y_{j} \forall i, j$. 
+First, let us define the points $p_{i} = (x_{i}, y_{i})$ for $0 \leq i \leq d$, where $y_{i} \neq y_{j}, \forall i, j$. 
 Then, we will define the following polynomials : 
 
 \begin{displaymath}
