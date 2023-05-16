@@ -12,14 +12,34 @@
 \usepackage{titlesec}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
+
+\usepackage[english]{babel}
+
+\usepackage{filecontents}
+
+\begin{filecontents*}{\jobname.bib}
+
+@book{ideals-varieties-algorithms,
+    author = {D. A. Cox, J. Little, and D. O\'Shea},
+    title = {Ideals, Varieties, and Algorithms (third edition)},
+    publisher = {Springer-Verlag New-York},
+    year = {2007},
+}
+
+
+\end{filecontents*}
+
+\addbibresource{\jobname.bib}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{lemma}{Lemma}[section]
 \newtheorem{definition}{Definition}[section]
-\newtheorem{property}{Property}[section]
 \newtheorem{proposition}{Proposition}[section]
 \newtheorem{example}{Example}[section]
+\newtheorem{property}{Property}[section]
+
 
 %\geometry{legalpaper, margin=4cm}
 \setlength{\parindent}{0pt}
@@ -27,7 +47,7 @@
 
 \begin{document}
 
-\title{PSFPN - Study of a Gröbner basis of two variables}
+\title{PSFPN - Gröbner bases of two variables}
 
 \author{Auguste WARME-JANVILLE, Alan PULVAL-DADY}
 
@@ -68,6 +88,24 @@ We will also define the intersection and the sum of two ideals, as they will be 
         I_{1} + I_{2} = \langle f_{1} \mid f_{1} \in I_{1}, f_{2} \mid f_{2} \in I_{2} \rangle
     \end{displaymath}
 \end{definition}
+
+\begin{definition}
+    Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$. 
+    \begin{displaymath}
+        I_{1} \cdot I_{2} = \langle f_{1}f_{2} \mid f_{1} \in I_{1}, f_{2} \in I_{2} \rangle
+    \end{displaymath}
+\end{definition}
+
+\begin{proposition}
+    Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$. 
+    \begin{displaymath}
+        I_{1} \cdot I_{2} \subseteq I_{1} \cap I_{2}
+    \end{displaymath}
+\end{proposition}
+
+\begin{proof}
+    Let $f \in I_{1} \cdot I_{2}$. By definition, $f \in I_{1}$ as the operator ($\cdot$) is absorbant. Same goes for $I_{2}$, hence the result.
+\end{proof}
 
 \section{Monomial orderings}
 
@@ -127,8 +165,8 @@ We will also define the intersection and the sum of two ideals, as they will be 
         \item $y \prec_{drl} x$
         \item For all $i, j, k, l \in \mathbb{N}$, $x^{i}y^{j} \prec_{drl} x^{k}y^{l}$ if and only if one of the following conditions are satisfied : 
         \begin{itemize}
-            \item $i + j < k + l$
-            \item $i + j = k + l$ and $j > l$
+            \item $i + j < k + l$.
+            \item $i + j = k + l$ and $j > l$.
         \end{itemize}
     \end{itemize}
 \end{definition}
@@ -141,9 +179,9 @@ We will also define the intersection and the sum of two ideals, as they will be 
 \begin{definition} 
     Let $f \in \mathbb{K}[x, y]$ be a polynomial and $\prec$ a monomial order. 
     \begin{itemize}
-        \item $LM_{\prec}(f)$ is the leading monomial of $f$ for $\prec$
-        \item $LC_{\prec}(f)$ is the leading coefficient of $f$ for $\prec$
-        \item $LT_{\prec}(f) = LM_{\prec}(f) \cdot LC_{\prec}(f)$ is the leading term of $f$ for $\prec$
+        \item $LM_{\prec}(f)$ is the leading monomial of $f$ for $\prec$.
+        \item $LC_{\prec}(f)$ is the leading coefficient of $f$ for $\prec$.
+        \item $LT_{\prec}(f) = LM_{\prec}(f) \cdot LC_{\prec}(f)$ is the leading term of $f$ for $\prec$.
     \end{itemize}
 \end{definition}
 
@@ -170,11 +208,11 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     A finite subset $\mathscr{G} \subseteq I$ is said to be a Gröbner basis of $I$ for the monomial order $\prec$ if for all $f \in I$, there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$. 
 \end{definition}
 
-\begin{proposition}
+\begin{proposition} \label{proposition:g-generates-i}
     Let $\mathscr{G} \subseteq I$ be a Gröbner basis of $I$ for the monomial order $\prec$. Then, $\mathscr{G}$ generates $I$.
 \end{proposition}
 
-\begin{proof}
+\begin{proof} % check
     Suppose $\mathscr{G}$ does not generate $I$. So there exists $f \in I$ such that $f$ isn't an algebreaic combination of elements of $\mathscr{G}$
 \end{proof}
 
@@ -210,7 +248,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     If the staircase of $I$ is finite for a monomial ordering, then it is finite for any monomial ordering.
 \end{proposition}
 
-\begin{proof}
+\begin{proof} % check this proof
     Let $E(I)$ be the finite staircase for the order $\prec_{1}$. Then, there exists $k, l \in \mathbb{N}$ such that $x^{k_{1}}$ and $y^{l_{1}}$ are leading monomials of I (Lemma \ref{lemma:finite-staircase-lm}). $E(I)$ has size equal to $k_{1}l_{1}$ at most. Let $\prec_{2}$ be any monomial order different than $\prec_{1}$, and suppose $E(I)$ is not finite for $\prec_{2}$. Following the same idea as in the proof of Lemma \ref{lemma:finite-staircase-lm}, we can state that all the leading monomials for $\prec_{2}$ are of the form $x^{i}y^{j}$, $i, j \in \mathbb{N}$. 
 \end{proof}
 
@@ -227,7 +265,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{theorem}
 
 \begin{proof}
-    Let $\prec_{1}$ a monomial order such that $E_{\prec_{1}}(I)$ is finite. As proven in Proposition \ref{proposition:staircase-finite-any-order}, $E_{\prec_{2}}(I)$ is finite. Let us show that $\# E_{\prec_{1}}(I) = \# E_{\prec_{2}}(I)$, \textit{i.e.} $dim(E_{\prec_{1}}(I)) = dim(E_{\prec_{2}}(I))$. 
+    Let $\prec_{1}$ a monomial order such that $E_{\prec_{1}}(I)$ is finite. As proven in Proposition \ref{proposition:staircase-finite-any-order}, $E_{\prec_{2}}(I)$ is finite. Let us show that $\# E_{\prec_{1}}(I) = \# E_{\prec_{2}}(I)$, \textit{i.e.} $dim(E_{\prec_{1}}(I)) = dim(E_{\prec_{2}}(I))$. From the dimension theorem for vector spaces, we deduce that $dim(E_{\prec_{1}}(I)) = dim(E_{\prec_{2}}(I))$, hence the result.
 \end{proof}
 
 \begin{theorem}
@@ -246,15 +284,17 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     Let $f$ be the generator of $I$. Suppose $E(I)$ is finite. So there exists $(k, l) \in \mathbb{N}^{2}$ such that $x^{k}$ and $y^{l}$ are leading monomials of $I$. Then, there exists $(i, j) \in \mathbb{N}^{2}$ such that $i \leq k, j \leq l$ and $x^{k} = LM_{\prec}(f) \cdot x^{k - i}$ and $y^{l} = LM_{\prec}(f) \cdot y^{l - j}$. So $LM_{\prec}(f)$ would have to be either only in $x$ or in $y$, which is not possible as it is unique : contradiction. Thus, $E(I)$ is not finite. 
 \end{proof}
 
+\section{Division over $\mathbb{K}[x, y]$}
+
 \begin{algorithm}
-\caption{Division algorithm over $\mathbb{K}[x, y]$}\label{alg:div}
+\caption{Division algorithm over $\mathbb{K}[x, y]$} \label{alg:div}
 \textbf{Input : }Gröbner basis G of an Ideal I for $\prec$+ \\
 \textbf{Output : }Normal form of f
 \begin{algorithmic}
     \State $h \gets 0$
     \While{$f \neq 0$} 
         \If{there exists g $\in$ $\mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$}
-            \State $f \gets f-\frac{LT_{\prec}(f)}{LT_{\prec}(g)}g$
+            \State $f \gets f- \displaystyle \frac{LT_{\prec}(f)}{LT_{\prec}(g)}g$
         \Else
             \State $h \gets h + LT_{\prec}(f)$
             \State $f \gets f - LT_{\prec}(f)$
@@ -271,8 +311,8 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{displaymath}
 \end{definition}
 
-\begin{proposition}
-    Let $h$ be the output of the above algorithm. Every monomial of $h$ is in the staircase of $I$.
+\begin{proposition} \label{proposition:monomials-h-staircase}
+    Let $h$ be the output of Algorithm \ref{alg:div}. Every monomial of $h$ is in the staircase of $I$.
 \end{proposition}
     
 \begin{proof}
@@ -281,21 +321,42 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proof}
 
 \begin{theorem}
-    Let $h$ be the output of the above algorithm. Then, $h = 0$ if and only if $f \in I$.
+    Let $h$ be the output of Algorithm \ref{alg:div}. Then, $h = 0$ if and only if $f \in I$.
 \end{theorem}
 
 \begin{proof}
+    Let $\mathscr{G} = \{g_{1}, ..., g_{k}\}$ be a Gröbner basis of $I$. \\
+    $\Rightarrow$ Assume that $f \notin I$, and show that $h \neq 0$. If $f \notin I$, there exists $h \neq 0$ such that $g_{i}$ does not divide $h$ for all $i$ and : 
+    \begin{displaymath}
+        f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right) + h
+    \end{displaymath}
+    We have that $h$ is non zero and that all the monomials of $h$ are in $E(I)$, hence the result by contraposition. \\
+    $\Leftarrow$ Assume that $f \in I$. As $g$ generates $I$, $f$ can be written as :
+    \begin{displaymath}
+        f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right) + h
+    \end{displaymath}
+    Suppose $h \neq 0$, we have : 
+    \begin{displaymath}
+        h = f - \left( \sum_{i = 1}^{n} k_{i}g_{i} \right) \in I. 
+    \end{displaymath}
+    Yet, every monomial of $h$ is in $E(I)$ (Proposition \ref{proposition:monomials-h-staircase}), so $h \notin I$. We have a contradition, so we deduce that $h = 0$, hence the result.
 \end{proof}
 
 \begin{corollary}
-    Let $h$ be the output of the above algorithm. $h$ does not depend on the choices taken during the execution of the algorithm. 
+    Let $h$ be the output of Algorithm \ref{alg:div}. $h$ does not depend on the choices made during the execution of the algorithm. 
 \end{corollary}
 
 \begin{proof}
-    
+    We'll prove that $h$ is unique. Let $f \in \mathbb{K}[x, y]$. Using the Algorithm \ref{alg:div} on $f$, we get that $f = g + h$ where : 
+    \begin{displaymath}
+        g = \sum_{i = 1}^{n} k_{i}g_{i} 
+    \end{displaymath}
+    Suppose that we have $f = g + h = g^{\prime} + h^{\prime}$, where $g^{\prime}$ is also a combination of elements of $\mathscr{G}$. Then, $h - h^{\prime} = g^{\prime} - g \in I$. If $h \neq h^{\prime}$, there exist $g \in \mathscr{G}$ such that $LT(g)$ divides $LT(h - h^{\prime})$. But from Proposition \ref{proposition:monomials-h-staircase}, all the monomials of $h$ and $h^{\prime}$ are in $E(I)$. In particular, $LT(h - h^{\prime}) \in E(I)$. We get to a contradition, thus $h - h^{\prime} = 0$ which proves the uniqueness of $h$.
 \end{proof}
 
-\section{Varieties : equation solving point of view}
+\section{Geometric point of view}
+
+\subsection{Varieties}
 
 \begin{definition}
     The variety of an ideal $I$ is the set as defined below : 
@@ -306,10 +367,38 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{definition}
 
 \begin{proposition}
+    Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$ such that $I_{1} \subseteq I_{2}$. Then, $V(I_{2}) \subseteq V(I_{1})$.
+\end{proposition}
+
+\begin{proof}
+    Let $p \in V(I_{2})$. Then for all $f_{2} \in I_{2}$, $f_{2}(p) = 0$. In particular, as $I_{1} \subseteq I_{2}$, for all $f_{1} \in I_{1}$, $f_{1}(p) = 0$, so $p \in V(I_{1})$, hence $V(I_{2}) \subseteq V(I_{1})$.
+\end{proof}
+
+\begin{proposition}
+    Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$. 
+    \begin{displaymath}
+        V(I_{1} \cdot I_{2}) = V(I_{1} \cap I_{2})
+    \end{displaymath}
+\end{proposition}
+
+\begin{proof}
+    One can observe that $(I_{1} \cap I_{2}) \cdot (I_{1} \cap I_{2}) \subseteq I_{1} \cdot I_{2}$. Since $I_{1} \cdot I_{2} \subseteq I_{1} \cap I_{2}$. We then have : 
+    \begin{displaymath}
+        (I_{1} \cap I_{2}) \cdot (I_{1} \cap I_{2}) \subseteq I_{1} \cdot I_{2} \subseteq I_{1} \cap I_{2}
+    \end{displaymath}
+    Thus, 
+    \begin{displaymath}
+        V(I_{1} \cap I_{2}) \subseteq V(I_{1} \cdot I_{2}) \subseteq V((I_{1} \cap I_{2}) \cdot (I_{1} \cap I_{2}))
+    \end{displaymath}
+    Since $V((I_{1} \cap I_{2}) \cdot (I_{1} \cap I_{2})) = V(I_{1} \cap I_{2})$, we can conclude that $V(I_{1} \cdot I_{2}) = V(I_{1} \cap I_{2})$.
+\end{proof}
+
+\begin{proposition}
     Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$. 
     \begin{enumerate}
-        \item[(i)] $V(I_{1} \cap I_{2}) = V(I_{1}) \cup V(I_{2})$
-        \item[(ii)] $V(I_{1} + I_{2}) = V(I_{1}) \cap V(I_{2})$
+        \item[(i)] $V(I_{1} \cdot I_{2}) = V(I_{1}) \cup V(I_{2})$
+        \item[(ii)] $V(I_{1} \cap I_{2}) = V(I_{1}) \cup V(I_{2})$
+        \item[(iii)] $V(I_{1} + I_{2}) = V(I_{1}) \cap V(I_{2})$
     \end{enumerate}
 \end{proposition}
     
@@ -319,20 +408,20 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
         V(I_{1}) = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, f_{1}(a, b) = 0 \}, \;
         V(I_{2}) = \{ (c, d) \in \overline{\mathbb{K}} \mid \forall f_{2} \in I_{2}, f_{2}(a, b) = 0 \} 
     \end{displaymath}
-    
     \begin{enumerate}
         \item[(i)] 
         \begin{align*}
-            V(I_{1} \cap I_{2})
+            V(I_{1} \cdot I_{2})
             & = V( \langle f \mid f \in I_{1} \land f \in I_{2} \rangle) \\
             & = \{(a, b) \in \overline{\mathbb{K}} \mid \forall f \in I_{1} \cap I_{2}, f(a, b) = 0\} \\
-            & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, \forall f_{2} \in I_{2}, f_{1}f_{2}(a, b) = 0 \} \\
+            & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, \forall f_{2} \in I_{2}, f_{1}f_{2}(a, b) = 0 \} \\ %check 
             & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, \forall f_{2} \in I_{2}, f_{1}(a, b) = 0 \lor f_{2}(a, b) = 0 \} \\
             & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, f_{1}(a, b) = 0 \} \cup 
             \{ (c, d) \in \overline{\mathbb{K}} \mid \forall f_{2} \in I_{2}, f_{2}(a, b) = 0 \} \\
             & = V(I_{1}) \cup V(I_{2}) \\
         \end{align*}
-        \item[(ii)] 
+        \item[(ii)] We have that $V(I_{1} \cdot I_{2}) = V(I_{1} \cap I_{2})$, hence the result.
+        \item[(iii)] 
         \begin{align*} 
             V(I_{1} + I_{2}) 
             & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f \in I_{1} + I_{2}, f(a, b) = 0\} \\
@@ -342,7 +431,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{enumerate}
 \end{proof}
 
-\section{Applications}
+\subsection{Ideals Intersections}
 
 We will now study ideals based on generators of a certain form. 
 First, let us define the points $p_{i} = (x_{i}, y_{i})$ for $0 \leq i \leq d$, where $y_{i} \neq y_{j}, \forall i, j$. 
@@ -367,8 +456,6 @@ We can now define the following ideal :
     Let $a \in I$. If $a$ is purely in $y$, then $a$ is a multiple of $h(y)$ and then $LM(h(y))$ divides $LM(a)$. Otherwise, $LM(a) = x^{k}$ where $k \geq 1$, so $LM(x - g(y)) = x$ divides $LM(a)$.
 \end{proof}
 
-\subsection{Ideals Intersections}
-
 Let us now define the ideals $I_{1}$ and $I_{2}$. 
 \begin{displaymath}
     I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle
@@ -387,8 +474,8 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
     \begin{displaymath}
     \left\{
     \begin{array}{ll}
-        g_{3} \equiv g_{1} \pmod {h_{1}} \\
-        g_{3} \equiv g_{2} \pmod {h_{2}} \\
+        g_{3} = g_{1} \pmod {h_{1}} \\
+        g_{3} = g_{2} \pmod {h_{2}} \\
     \end{array}
     \right.
     \end{displaymath}
@@ -396,18 +483,64 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 
 \begin{proof}
     We will first show that $I_{1} \cap I_{2} \subset \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle$.
-    Assume that $f \in I_{1} \cap I_{2}$. There are a few possible cases : 
+    Assume that $f \in I_{1} \cap I_{2}$. We can write $f$ as : 
+    \begin{displaymath}
+        f = \sum_{i = 1}^{n} m_{i}
+    \end{displaymath}
+    Where all the $m_{i}$ are in $I_{1} \cap I_{2}$. \\
+    Let $m$ be any of the $m_{i}$. There a few possible cases for $m$ : 
     \begin{itemize}
-        \item $f$ is purely in $y$. Then, $h_{1}$ divides $f$ and $h_{2}$ divides $f$. Hence $h_{1}h_{2}$ divides $f$ so $f \in \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle$
-        \item $f$ is 
+        \item $m$ is purely in $y$. Then $h_{1} | m$ and $h_{2} | m$, so $h_{1}h_{2} | m$, thus $m \in \langle h_{1}h_{2}(y) \rangle$.
+        \item $m = k \cdot (x - g_{1}(y)) (x - g_{2}(y))$. 
     \end{itemize}
-
+    
     Now, let us show that $\langle h_{1}h_{2}(y), x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$.
+    \begin{itemize}
+        \item It is straightforward that $\langle h_{1}h_{2}(y) \rangle \subset I_{1} \cap I_{2}$, as it belongs to $I_{1}$ as well as $I_{2}$.
+        \item Now, we will show that  $\langle x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$. As $\gcd(h_{1}, h_{2}) = 1$, there exists $u, v$ such that : 
+        \begin{displaymath}
+            uh_{1} + vh_{2} = 1
+        \end{displaymath}
+        Using the CRT, we have : 
+        \begin{align*}
+            (x - g_{2})uh_{1} + (x - g_{1})vh_{2} 
+            & = x(uh_{1} + vh_{2}) - ug_{2}h_{1} - vg_{1}h_{2} \\
+            & = x - g_{3}(y)
+        \end{align*}
+        Thus we get that $\langle x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$ as it is an algebraic combination of terms belonging to $I_{1} \cap I_{2}$.
+
+    \end{itemize}
 
 \end{proof}
 
 
 Now, let us assume that $\gcd(h_{1}, {h_2}) \neq 1$. 
+We want to compute $I_{1} \cap I_{2}$. We define the polynomials $p_{1}, p_{2}$ such that $p_{1} = \displaystyle \frac{h_{1}}{\gcd(h_{1}, h_{2})}$ and $p_{2} = \displaystyle \frac{h_{2}}{\gcd(h_{1}, h_{2})}$. We want to find $f$ such that : 
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+        f_{1} = g_{1} \pmod {p_{1}} \\
+        f_{1} = g_{2} \pmod {p_{2}} \\
+    \end{array}
+    \right.
+\end{displaymath}
+$f_{1}$ can be computed using the CRT. Now, we want to find $f_{2}$ such that : 
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+        f_{2} = f_{1} \pmod {p_{1}p_{2}} \\
+        f_{2} = g_{1}g_{2} \pmod {\gcd(h_{1}, h_{2})} \\
+    \end{array}
+    \right.
+\end{displaymath}
+Again, such a polynomial can be computed using the CRT. 
+
+\begin{theorem}
+    Assume $\gcd(I_{1}, I_{2}) \neq 1$. 
+    \begin{displaymath}
+        I_{1} \cap I_{2} = \langle lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})f_{1}(x,y), f_{2}(x,y) \rangle
+    \end{displaymath}
+\end{theorem}
 
 \begin{algorithm}
     \caption{Intersection ($I_{1}, I_{2}$)}\label{alg:intersect-2-ideals}
@@ -430,18 +563,10 @@ Now, let us assume that $\gcd(h_{1}, {h_2}) \neq 1$.
     \State $P_{34} \gets NF(P_{34}, B^{\prime})$
     \State $R = \langle l, NF(gP_{12}, \langle l \rangle), P_{34} \rangle$ \\
     \Return $R$
-    
-    
-    %\State $c \gets 1$
-    %\For{$j = 1$ to $n$}
-    %    \For{$i = n$ to $j + 1$}
-    %        \State $\theta \gets \tan^{-1}\left(\frac{A_{i, c}}{A_{i-1, c}}\right)$
-    %        \State $A \gets G(i-1, i, \theta) A G(i-1, i, \theta)^{\star}$
-    %    \EndFor
-    %    \State $c \gets c + 1$
-    %\EndFor
 \end{algorithmic}
 \end{algorithm}
 
+\nocite{*}
+\printbibliography
 
 \end{document}
