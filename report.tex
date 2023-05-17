@@ -9,6 +9,7 @@
 \usepackage{amsthm}
 \usepackage{mathrsfs}
 \usepackage{blindtext}
+%\usepackage{algorithm2e}
 \usepackage{titlesec}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -20,11 +21,13 @@
 
 \begin{filecontents*}{\jobname.bib}
 
+% Add the references here
+
 @book{ideals-varieties-algorithms,
-    author = {D. A. Cox, J. Little, and D. O\'Shea},
+    author = {{D. A. Cox, J. Little, and D. O'Shea}},
     title = {Ideals, Varieties, and Algorithms (third edition)},
     publisher = {Springer-Verlag New-York},
-    year = {2007},
+    year = {2007}
 }
 
 
@@ -41,7 +44,7 @@
 \newtheorem{property}{Property}[section]
 
 
-%\geometry{legalpaper, margin=4cm}
+%\geometry{legalpaper, margin=2cm}
 \setlength{\parindent}{0pt}
 
 
@@ -208,14 +211,6 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     A finite subset $\mathscr{G} \subseteq I$ is said to be a Gröbner basis of $I$ for the monomial order $\prec$ if for all $f \in I$, there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$. 
 \end{definition}
 
-\begin{proposition} \label{proposition:g-generates-i}
-    Let $\mathscr{G} \subseteq I$ be a Gröbner basis of $I$ for the monomial order $\prec$. Then, $\mathscr{G}$ generates $I$.
-\end{proposition}
-
-\begin{proof} % check
-    Suppose $\mathscr{G}$ does not generate $I$. So there exists $f \in I$ such that $f$ isn't an algebreaic combination of elements of $\mathscr{G}$
-\end{proof}
-
 \begin{definition}[Staircase]
     The staircase $E(I)$ for the monomial order $\prec$ is the set of all the monomials that are not leading monomials of $I$ for $\prec$. It can be expressed as follows : 
     \begin{displaymath}
@@ -224,7 +219,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{definition}
 
 \begin{proposition} \label{proposition:monomial-in-staircase}
-    Let $\mathscr{G} \subseteq I$ be a Gröbner basis of $I$ for the monomial order $\prec$. Let $m \in I$ be a monomial. $m \in E(I)$ if for all $g \in \mathscr{G}$, $LM_{\prec}(g)$ does not divide $m$.
+    Let $\mathscr{G} \subseteq I$ be a Gröbner basis of $I$ for the monomial order $\prec$. Let $m \in \mathbb{K}[x,y]$ be a monomial. $m \in E(I)$ if for all $g \in \mathscr{G}$, $LM_{\prec}(g)$ does not divide $m$.
 \end{proposition}
 
 \begin{proof}
@@ -240,7 +235,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{lemma}
 
 \begin{proof} % Must doublecheck this proof 
-    $\Rightarrow$ Assume the staircase of $I$ is finite, and let $N = Card(E(I))$. Suppose there exists no $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are of the form $x^{m}y^{n}$, $m,n > 0$. So for all $k, l > 0$, $x^{k}$ and $y^{l}$ are in $E(I)$. Hence $E(I)$ is not finite. \\ % Must prove that xk and yl exist
+    $\Rightarrow$ Assume the staircase of $I$ is finite, and let $N = Card(E(I))$. Suppose there exists no $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are of the form $x^{m}y^{n}$, $m,n > 0$. So for all $k, l > 0$, $x^{k}$ and $y^{l}$ are in $E(I)$. Hence $E(I)$ is not finite. \\ 
     $\Leftarrow$ Assume there exists $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Then, $x^{k}y^{l}$ is also a leading monomial of $I$ (Lemma \ref{lemma:lm-mult}), so the the size of $E(I)$ is at most equal to $kl$. Thus the staircase of $I$ is finite.
 \end{proof}
 
@@ -326,12 +321,12 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 
 \begin{proof}
     Let $\mathscr{G} = \{g_{1}, ..., g_{k}\}$ be a Gröbner basis of $I$. \\
-    $\Rightarrow$ Assume that $f \notin I$, and show that $h \neq 0$. If $f \notin I$, there exists $h \neq 0$ such that $g_{i}$ does not divide $h$ for all $i$ and : 
+    $\Rightarrow$ Assume that $h = 0$. Using Algorithm \ref{alg:div} on $f$, we get that : 
     \begin{displaymath}
-        f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right) + h
+        f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right)
     \end{displaymath}
-    We have that $h$ is non zero and that all the monomials of $h$ are in $E(I)$, hence the result by contraposition. \\
-    $\Leftarrow$ Assume that $f \in I$. As $g$ generates $I$, $f$ can be written as :
+    Therefore $f$ is an algebraic combination of elements of $\mathscr{G} \subset I$, so $f \in I$. \\
+    $\Leftarrow$ Assume that $f \in I$. Using Algorithm \ref{alg:div} on $f$, we can write it as :
     \begin{displaymath}
         f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right) + h
     \end{displaymath}
@@ -340,6 +335,18 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
         h = f - \left( \sum_{i = 1}^{n} k_{i}g_{i} \right) \in I. 
     \end{displaymath}
     Yet, every monomial of $h$ is in $E(I)$ (Proposition \ref{proposition:monomials-h-staircase}), so $h \notin I$. We have a contradition, so we deduce that $h = 0$, hence the result.
+\end{proof}
+
+\begin{corollary} \label{corollary:g-generates-i}
+    Let $\mathscr{G} \subseteq I$ be a Gröbner basis of $I$ for the monomial order $\prec$. Then, $\mathscr{G}$ generates $I$.
+\end{corollary}
+
+\begin{proof}
+    Let $f \in I$. If we apply Algorithm \ref{alg:div} to $f$, we get that 
+    \begin{displaymath}
+        f = \sum_{i = 1}^{n} k_{i}g_{i}
+    \end{displaymath}
+    So $f$ is an algebraic combination of elements of $\mathscr{G}$, therefore $\mathscr{G}$ generates $I$.
 \end{proof}
 
 \begin{corollary}
@@ -543,7 +550,7 @@ Again, such a polynomial can be computed using the CRT.
 \end{theorem}
 
 \begin{algorithm}
-    \caption{Intersection ($I_{1}, I_{2}$)}\label{alg:intersect-2-ideals}
+    \caption{Intersection ($I_{1}, I_{2}$)} \label{alg:intersect-2-ideals}
     \textbf{Input : }Two Ideals $I_{1}$ and $I_{2}$ as described above \\
     \textbf{Output : }$I_{1} \cap I_{2}$
 \begin{algorithmic}
@@ -567,7 +574,7 @@ Again, such a polynomial can be computed using the CRT.
 \end{algorithm}
 
 \begin{algorithm}
-    \caption{Intersection ($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals}
+    \caption{Intersection ($I_{1},...,I_{N}$)}\label{alg:intersect-n-ideals}
     \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
     \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
 \begin{algorithmic}

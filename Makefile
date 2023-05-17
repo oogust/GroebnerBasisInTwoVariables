@@ -12,4 +12,4 @@ view: $(DOCNAME)
 	open $(DOCNAME).pdf
 
 clean:
-	rm *.blg *.bbl *.aux *.log *.out *.bcf *.nav *.bib *.run.xml *.snm *.toc
+	rm $(DOCNAME).blg $(DOCNAME).bbl $(DOCNAME).aux $(DOCNAME).log $(DOCNAME).out $(DOCNAME).bcf $(DOCNAME).nav $(DOCNAME).bib $(DOCNAME).run.xml $(DOCNAME).snm $(DOCNAME).toc
