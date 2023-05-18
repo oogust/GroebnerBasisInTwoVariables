@@ -574,7 +574,7 @@ Again, such a polynomial can be computed using the CRT.
 \end{algorithm}
 
 \begin{algorithm}
-    \caption{Intersection ($I_{1},...,I_{N}$)}\label{alg:intersect-n-ideals}
+    \caption{Intersect1($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals}
     \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
     \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
 \begin{algorithmic}
@@ -588,6 +588,42 @@ Again, such a polynomial can be computed using the CRT.
     \State $P2 := c*h^{*}$
     \State $P3 := CRT(\{c,x^{*}\},\{\prod^{N}_{i=1} y_{i}, h^{*}\})$
     \State \Return P1,P2,P3
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+    \caption{Intersect2 ($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals}
+    \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
+    \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
+\begin{algorithmic}
+    \State $H := \{h_{1},..,h_{N}\}$
+    \State $P:=[]$
+    \State $C := $Correspondances($h_{i},g_{i}$)
+    \State $P[1] := LCM(H)$
+    \State $H := \prod^{N}_{i=1} h_{i}$
+    \State $F:= $ListOfFactorsAndMultiplicities(H)
+    \State $F: = $DecreaseAllMultiplicitiesByOne(F)
+    \If{only one factor has a multiplicity greater than 0}
+        \State \Return Intersect1($I_{1},...,I_{N}$)
+    \EndIf
+    \State $Last\_used\_poly\_y := 1$
+    \State $Last\_found\_poly\_x := 1$
+    \For{ i from 1 to MaxMultiplicity(F)}
+        \State $y^{*}:= \prod_{f_{i} has multiplicity > 0} f_{i}$
+        \State $p_y:=\frac{\frac{P[1]}{y^{*}}}{last\_used\_poly\_y}$
+        \State $X, Y:=$BuildCRTParameters($p_y, C$)
+        \State $res := $CRT($X,Y$)
+        \If{$i > 1$}
+            \State $res := $CRT($[res[1],last\_found\_poly\_x],[res[2],last\_used\_poly\_y]$)
+        \EndIf
+        \State $P[i+1] := $NormalForm($res[1]*y^{*},P$)
+        \State $F: = $DecreaseAllMultiplicitiesByOne(F)
+    \EndFor
+    \State $X,Y$ := BuildCRTParameters($GCD(\{h_{i}\}),C$)
+    \State res := CRT($X,Y\cup\{last\_used\_poly\_y\}$
+    \State P[MaxMultiplicity(F)+2] $:= $NormalForm($res[1],P$)
+    \State \Return P
+
 \end{algorithmic}
 \end{algorithm}
 \nocite{*}
