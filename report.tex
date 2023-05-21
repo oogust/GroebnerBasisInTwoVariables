@@ -673,11 +673,19 @@ From this reasoning we get the following iterative algorithm :
 \end{algorithmic}
 \end{algorithm}
 
-
-\newpage
 \subsection{Ideals Intersections case 2}
 
-Let now assume that ...
+Let now assume that we have : 
+$$gcd(\{h_{i}\}) \neq 1$$
+But this time we don't necessarily have the pairwise equality :
+$$gcd(h_{1},h_{2}) = gcd(h_{2},h_{3}) = \dots = gcd(h_{N-1},h_{N}) $$
+
+Which implies that there exist $i$ such that $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1},h_{i+2})$
+
+This mean that the polynomial $H = \prod_{i=1}^{N} h_{i}$ has at least one factor which isn't gcd($\{h_{i}\}$) with multiplicity greater than one.
+
+In term of geometric point of view 
+
 
 
 
