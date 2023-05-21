@@ -83,7 +83,7 @@
     
 \LARGE{Introduction\\}
 \end{center}
-Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ polynomials in x and y with coefficients in K, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems.\newline
+Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ polynomials in x and y with coefficients in K, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems.\newline
 It is known that when the system has a finite number of solutions, the associated Gröbner bases under the lexicographical order contain at least two non-zero polynomials that can be distinguished:(1) one exclusively in terms of y and (2) another where the leading term is a power of x.The objective of this project is to investigate the structure of these bases.\newline
 To accomplish this, we first examined the construction of a Gröbner basis and then established the existence of polynomials (1) and (2). Subsequently, we explored the structure of the intersection of two Gröbner bases with specific properties(link).Finally, we extended our analysis to the structure of the intersection of N Gröbner bases.
 \newpage
@@ -474,7 +474,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{enumerate}
 \end{proof}
 
-\subsection{Ideals Intersections}
+\subsection{Ideals Intersections case 1}
 
 We will now study ideals based on generators of a certain form. 
 First, let us define the points $p_{i} = (x_{i}, y_{i})$ for $0 \leq i \leq d$, where $y_{i} \neq y_{j}, \forall i, j$. 
@@ -562,8 +562,8 @@ We want to compute $I_{1} \cap I_{2}$. We define the polynomials $p_{1}, p_{2}$ 
 \begin{displaymath}
     \left\{
     \begin{array}{ll}
-        f_{1} = g_{1} \pmod {p_{1}} \\
-        f_{1} = g_{2} \pmod {p_{2}} \\
+        f_{1} = x-g_{1} \pmod {p_{1}} \\
+        f_{1} = x-g_{2} \pmod {p_{2}} \\
     \end{array}
     \right.
 \end{displaymath}
@@ -572,7 +572,7 @@ $f_{1}$ can be computed using the CRT. Now, we want to find $f_{2}$ such that :
     \left\{
     \begin{array}{ll}
         f_{2} = f_{1} \pmod {p_{1}p_{2}} \\
-        f_{2} = g_{1}g_{2} \pmod {\gcd(h_{1}, h_{2})} \\
+        f_{2} = (x-g_{1})(x-g_{2}) \pmod {\gcd(h_{1}, h_{2})} \\
     \end{array}
     \right.
 \end{displaymath}
@@ -585,6 +585,12 @@ Again, such a polynomial can be computed using the CRT.
     \end{displaymath}
 \end{theorem}
 
+From this reasoning we can deduce an iterative algorithm to compute the intersection of two ideal with the above proprieties[].
+
+
+This algorithm is used only for understanding the step behind Maple's algorithms.
+
+\newpage
 \begin{algorithm}
     \caption{Intersection ($I_{1}, I_{2}$)}\label{alg:intersect-2-ideals}
     \textbf{Input : }Two Ideals $I_{1}$ and $I_{2}$ as described above \\
@@ -609,6 +615,46 @@ Again, such a polynomial can be computed using the CRT.
 \end{algorithmic}
 \end{algorithm}
 
+How can we generalize this process for an intersection of N ideal instead of only 2 ?
+Let assume we have N Ideal with the same structure which are : 
+
+$$I_{1} = <h_{1}(y),x-g_{1}(y)>$$
+$$I_{2} = <h_{2}(y),x-g_{2}(y)>$$
+$$\dots$$
+$$I_{N} = <h_{N}(y),x-g_{N}(y)>$$
+
+We also have the assumption that: $$gcd(h_{1},h_{2})=gcd(h_{2},h_{3})=...=gcd(h_{N-1},h_{N})\neq1$$ 
+
+We define the polynomials $y_{1},\dots,y_{N}$ such that $y_{1} = \displaystyle \frac{h_{1}}{\gcd(\{h_{N}\})}$,$\dots$, $y_{N} = \displaystyle \frac{h_{N}}{\gcd(\{h_{i}\})}$. We want to find $f$ such that : 
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+        f_{1} = x-g_{1} \pmod {y_{1}} \\
+        f_{1} = x-g_{2} \pmod {y_{2}} \\
+        \hspace{8mm} \vdots \\
+        f_{1} = x-g_{N} \pmod{y_{N}}\\
+    \end{array}
+    \right.
+\end{displaymath}
+$f_{1}$ can be computed using the CRT. Now, we want to find $f_{2}$ such that : 
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+        f_{2} = f_{1} \pmod {\prod_{i=1}^{N} y_{i}} \\
+        f_{2} = \prod^{N}_{i=1} x-g_{i} \pmod {\gcd(\{h_{i}\})} \\
+    \end{array}
+    \right.
+\end{displaymath}
+Again, such a polynomial can be computed using the CRT. 
+
+\begin{theorem}
+    \begin{displaymath}
+        I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle lcm(\{h_{i}\}), gcd(\{h_{i}\})f_{1},f_{2} \rangle
+    \end{displaymath}
+\end{theorem}
+
+From this reasoning we get the following iterative algorithm : 
+
 \begin{algorithm}
     \caption{Intersect1($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals}
     \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
@@ -626,6 +672,15 @@ Again, such a polynomial can be computed using the CRT.
     \State \Return P1,P2,P3
 \end{algorithmic}
 \end{algorithm}
+
+
+\newpage
+\subsection{Ideals Intersections case 2}
+
+Let now assume that ...
+
+
+
 
 \begin{algorithm}
     \caption{Intersect2 ($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals}
