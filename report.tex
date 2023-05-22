@@ -48,6 +48,7 @@
 \newtheorem{proposition}{Proposition}[section]
 \newtheorem{example}{Example}[section]
 \newtheorem{property}{Property}[section]
+\newtheorem{remark}{Remark}[section]
 
 \title{PSFPN - Gröbner bases in two variables}
 \begin{document}
@@ -81,12 +82,10 @@
 \end{center}
 
 \newpage
-       
-\begin{center}
-    
-\LARGE{Introduction\\}
-\end{center}
-Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ are polynomials in $x$ and $y$ with coefficients in a field $K$, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems. \\
+     
+\section*{Introduction}
+
+Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ are polynomials in $x$ and $y$ with coefficients in a field $\mathbb{K}$, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems. \\
 It is known that when the system has a finite number of solutions, the associated Gröbner bases under the lexicographical order contain at least two non-zero polynomials that can be distinguished : (1) one exclusively in terms of y and (2) another where the leading term is a power of x. \\
 The objective of this project is to investigate the structure of these bases. \\
 To accomplish this, we first examined the construction of a Gröbner basis and then established the existence of polynomials (1) and (2). Subsequently, we explored the structure of the intersection of two Gröbner bases with specific properties(link). \\
@@ -145,6 +144,8 @@ We will also define the intersection and the sum of two ideals, as they will be 
 \end{proof}
 
 \section{Monomial orderings}
+
+When studying polynomials of only one variable, the order of the monomials is straightforward : we implicitely assume that $1 < x < x^{2} < ...$. If we rise the number of variables we study, we can still sort all the powers of one variable with each other, but how do we manage monomials that are products of more than one variable ? There are many ways to handle this order problem. This is why we'll introduce \textit{monomial orderings}. 
 
 \begin{definition}[Monomial ordering]\label{def:monomial-order}
     A monomial ordering $\prec$ on $\mathbb{K}[x, y]$ is any ordering on the monomials $x^{i}y^{j}$ : 
@@ -255,7 +256,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proposition}
 
 \begin{proof}
-    Assume that there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $m$. Then, there exists a monomial $k \in \mathbb{K}[x, y]$ such that $m = k \cdot LM_{\prec}(g)$. For instance, one could choose $k = g \cdot \displaystyle \frac{m}{LM(g)}$. We just constructed a polynomial of $I$ with $m$ as its leading monomial. So $m \notin E(I)$, hence the result by contraposition.
+    Assume that there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $m$. Then, there exists a monomial $k \in \mathbb{K}[x, y]$ such that $m = k \cdot LM_{\prec}(g)$. If we consider the polynomial $f = g \cdot \displaystyle \frac{m}{LM(g)}$, we see that we can construct a polynomial of $I$ with $m$ as its leading monomial. So $m \notin E(I)$, hence the result by contraposition.
 \end{proof}
 
 \begin{lemma} \label{lemma:finite-staircase-lm}
@@ -266,9 +267,10 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{itemize}
 \end{lemma}
 
-\begin{proof} % Must doublecheck this proof 
-    $\Rightarrow$ Assume the staircase of $I$ is finite, and let $N = Card(E(I))$. Suppose there exists no $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are of the form $x^{m}y^{n}$, $m,n > 0$. So for all $k, l > 0$, $x^{k}$ and $y^{l}$ are in $E(I)$. Hence $E(I)$ is not finite. \\ 
-    $\Leftarrow$ Assume there exists $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Then, $x^{k}y^{l}$ is also a leading monomial of $I$ (Lemma \ref{lemma:lm-mult}), so the the size of $E(I)$ is at most equal to $kl$. Thus the staircase of $I$ is finite.
+\begin{proof} 
+    $\Rightarrow$ Assume the staircase of $I$ is finite. Suppose there exists no $k, l \in \mathbb{N}$ such that either $x^{k}$ or $y^{l}$ is a leading monomial of I. Without loss of generality, assume none of the $x^{k}$ are leading monomials of $I$. \\
+    Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are either of the form $x^{m}y^{n}$, $m,n > 0$ or $y^{l}$, $l > 0$ . So for all $k > 0$, the monomials $x^{k}$ are in $E(I)$. Hence $E(I)$ is not finite. \\ 
+    $\Leftarrow$ Conversly, assume there exists $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Then, for all $i, j > 0$, $x^{k}y^{i}$ and $x^{j}y^{l}$ are leading monomials of $I$ (Lemma \ref{lemma:lm-mult}), so the the size of $E(I)$ is at most equal to $kl$. Thus the staircase of $I$ is finite.
 \end{proof}
 
 \begin{proposition} \label{proposition:staircase-finite-any-order}
@@ -276,7 +278,8 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proposition}
 
 \begin{proof} % check this proof
-    Let $E(I)$ be the finite staircase for the order $\prec_{1}$. Then, there exists $k, l \in \mathbb{N}$ such that $x^{k_{1}}$ and $y^{l_{1}}$ are leading monomials of I (Lemma \ref{lemma:finite-staircase-lm}). $E(I)$ has size equal to $k_{1}l_{1}$ at most. Let $\prec_{2}$ be any monomial order different than $\prec_{1}$, and suppose $E(I)$ is not finite for $\prec_{2}$. Following the same idea as in the proof of Lemma \ref{lemma:finite-staircase-lm}, we can state that all the leading monomials for $\prec_{2}$ are of the form $x^{i}y^{j}$, $i, j \in \mathbb{N}$. 
+    Let $E(I)$ be the finite staircase for the order $\prec_{1}$. Then, there exists $k, l \in \mathbb{N}$ such that $x^{k_{1}}$ and $y^{l_{1}}$ are leading monomials of I (Lemma \ref{lemma:finite-staircase-lm}). $E(I)$ has size equal to $k_{1}l_{1}$ at most. \\
+    Let $\prec_{2}$ be any monomial order different than $\prec_{1}$, and suppose $E(I)$ is not finite for $\prec_{2}$. Following the same idea as in the proof of Lemma \ref{lemma:finite-staircase-lm}, we can state that all the leading monomials for $\prec_{2}$ are of the form $x^{i}y^{j}$, $i, j \in \mathbb{N}$. 
 \end{proof}
 
 \begin{proposition}
@@ -284,7 +287,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proposition}
 
 \begin{proof}
-    Let $f$ be the generator of $I$. Suppose $E(I)$ is finite. So there exists $(k, l) \in \mathbb{N}^{2}$ such that $x^{k}$ and $y^{l}$ are leading monomials of $I$. Then, there exists $(i, j) \in \mathbb{N}^{2}$ such that $i \leq k, j \leq l$ and $x^{k} = LM_{\prec}(f) \cdot x^{k - i}$ and $y^{l} = LM_{\prec}(f) \cdot y^{l - j}$. So $LM_{\prec}(f)$ would have to be either only in $x$ or in $y$, which is not possible as it is unique : contradiction. Thus, $E(I)$ is not finite. 
+    Let $f$ be the generator of $I$. Suppose $E(I)$ is finite. So there exists $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of $I$. Then, there exists $i, j \in \mathbb{N}$ such that $i \leq k, j \leq l$ and $x^{k} = LM_{\prec}(f) \cdot x^{k - i}$ and $y^{l} = LM_{\prec}(f) \cdot y^{l - j}$. So $LM_{\prec}(f)$ would have to be either only in $x$ or in $y$, which is not possible as it is unique : contradiction. Thus, $E(I)$ is not finite. 
 \end{proof}
 
 \section{Division over $\mathbb{K}[x, y]$}
@@ -317,7 +320,7 @@ Using the notion of monimial order, we have a way to sort all the monomials of $
 
 \begin{algorithm}
 \caption{Division algorithm over $\mathbb{K}[x, y]$} \label{alg:div}
-\textbf{Input : }A polynomial $f \in \mathbb{K}[x, y]$, a Gröbner basis $\mathscr{G}$ of an Ideal I for $\prec$ \\
+\textbf{Input : }A polynomial $f \in \mathbb{K}[x, y]$, $\mathscr{G} \subseteq I$ \\
 \textbf{Output : }Normal form of $f$
 \begin{algorithmic}
     \State $h \gets 0$
@@ -361,7 +364,7 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
         f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right)
     \end{displaymath}
     Therefore $f$ is an algebraic combination of elements of $\mathscr{G} \subset I$, so $f \in I$. \\
-    $\Leftarrow$ Assume that $f \in I$. Using Algorithm \ref{alg:div} on $f$, we can write it as :
+    $\Leftarrow$ Conversly, assume that $f \in I$. Using Algorithm \ref{alg:div} on $f$, we can write it as :
     \begin{displaymath}
         f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right) + h
     \end{displaymath}
@@ -398,9 +401,11 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
 
 \section{Geometric point of view}
 
+After studying ideals from an algebraic point of view, we may need to observe what happens when we study the zeroes of the polynomials characterizing ideals. Here, we'll introduce affine varieties, and some results linking the algebraic and geometric points of view.
+
 \subsection*{Varieties}
 
-\begin{definition}
+\begin{definition} [Affine variety]
     The variety of an ideal $I$ is the set as defined below : 
     \begin{displaymath}
         V(I) = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f \in I, f(a, b) = 0 \}
@@ -473,8 +478,12 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
     \end{enumerate}
 \end{proof}
 
+\begin{remark}
+    We see that as we \textit{reduce} the generating conditions of the members of the ideal we study, the size of the associated variety rises (while making an intersection of ideals, we get union of varieties). On the other hand, while rising the conditions to belong to an ideal, the size of the associated variety reduces. 
+\end{remark}
+
 We now want to study the Gröbner basis for the lexicographic ordering (lex-GB) of the intersection of ideals, assuming we their lex-GB.
-We will start with the simplest case, called the "shape position", which is $I = \langle h(y), x - g(y) \rangle$. \\
+We will start with the simplest case, called the "shape position", which is $I = \langle h(y), x - g(y) \rangle$. Here starts the real \textit{"research"} part of this project. \\
 
 \subsection*{Ideals Intersections case 1}
 
@@ -701,7 +710,7 @@ We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h
 \textbf{Conjecture} : The grobner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the
 above proprieties is of dimension heigh(H) + 1.
 
-\textbf{Conjecture 2} : \[I_{1}\cap I_{2}\cap\dots\cap I_{N} = <lcm(h_{1},\dots,h_{N}),(\prod_{m \in H_{2}} m)f_{1},(\prod_{m \in H_{3}} m)f_{2}),\dots,(\prod_{m \in H_{height(H)}} m)f_{height(H)-1},f_{height})>$ \]
+\textbf{Conjecture 2} : \[ I_{1}\cap I_{2}\cap\dots\cap I_{N} = <lcm(h_{1},\dots,h_{N}),(\prod_{m \in H_{2}} m)f_{1},(\prod_{m \in H_{3}} m)f_{2}),\dots,(\prod_{m \in H_{height(H)}} m)f_{height(H)-1},f_{height})> \]
 
 
 
