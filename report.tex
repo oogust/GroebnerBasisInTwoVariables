@@ -288,6 +288,8 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 
 \section{Division over $\mathbb{K}[x, y]$}
 
+Using the notion of monimial order, we have a way to sort all the monomials of $\mathbb{K}[x, y]$. Therefore, we can now define a division algorithm similar to the Euclidean division algorithm, which will be useful to prove some results about ideals. 
+
 \begin{proposition}
     The staircase of $I$ for a monomial order $\prec$ is a basis of $\mathbb{K}[x, y] / I$ as a $\mathbb{K}$ vector space.
 \end{proposition}
@@ -314,8 +316,8 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 
 \begin{algorithm}
 \caption{Division algorithm over $\mathbb{K}[x, y]$} \label{alg:div}
-\textbf{Input : }Gröbner basis G of an Ideal I for $\prec$+ \\
-\textbf{Output : }Normal form of f
+\textbf{Input : }A polynomial $f \in \mathbb{K}[x, y]$, a Gröbner basis $\mathscr{G}$ of an Ideal I for $\prec$ \\
+\textbf{Output : }Normal form of $f$
 \begin{algorithmic}
     \State $h \gets 0$
     \While{$f \neq 0$} 
@@ -382,7 +384,7 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
 \end{proof}
 
 \begin{corollary}
-    Let $h$ be the output of Algorithm \ref{alg:div}. $h$ does not d1epend on the choices made during the execution of the algorithm. 
+    Let $h$ be the output of Algorithm \ref{alg:div}. $h$ does not depend on the choices made during the execution of the algorithm. 
 \end{corollary}
 
 \begin{proof}
