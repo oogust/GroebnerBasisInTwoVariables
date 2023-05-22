@@ -83,9 +83,9 @@
     
 \LARGE{Introduction\\}
 \end{center}
-Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ polynomials in x and y with coefficients in K, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems.\newline
-It is known that when the system has a finite number of solutions, the associated Gröbner bases under the lexicographical order contain at least two non-zero polynomials that can be distinguished:(1) one exclusively in terms of y and (2) another where the leading term is a power of x.The objective of this project is to investigate the structure of these bases.\newline
-To accomplish this, we first examined the construction of a Gröbner basis and then established the existence of polynomials (1) and (2). Subsequently, we explored the structure of the intersection of two Gröbner bases with specific properties(link).Finally, we extended our analysis to the structure of the intersection of N Gröbner bases.
+Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ polynomials in x and y with coefficients in K, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems. \newline
+It is known that when the system has a finite number of solutions, the associated Gröbner bases under the lexicographical order contain at least two non-zero polynomials that can be distinguished : (1) one exclusively in terms of y and (2) another where the leading term is a power of x.The objective of this project is to investigate the structure of these bases.\newline
+To accomplish this, we first examined the construction of a Gröbner basis and then established the existence of polynomials (1) and (2). Subsequently, we explored the structure of the intersection of two Gröbner bases with specific properties(link). Finally, we extended our analysis to the structure of the intersection of N Gröbner bases.
 \newpage
 
 \textbf{We would like to extend our sincere appreciation to our supervisor Jeremy Berthomieu from the LIP6 PolSys  team for his invaluable guidance and expertise throughout this project.}
@@ -509,11 +509,12 @@ Let us now define the ideals $I_{1}$ and $I_{2}$.
 
 We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 
-\begin{theorem}
+\begin{theorem} 
+    Let $I_{1}$ and $I_{2}$ be two ideals as defined above, with $g_{1}$ defined by interpolating the points $p_{0...d-1}$ and $g_{2}$ defined by interpolating the points $p_{d...e-1}$
     \begin{displaymath}
         I_{1} \cap I_{2} = \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle
     \end{displaymath}
-    Where $g_{3}(y)$ satisfies : % can be computed using the CRT
+    Where $g_{3}(y)$ is the polynomial defined by interpolating the points $p_{0,...,d-1,d,...,e-1}$ and satisfies :
     \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -521,7 +522,7 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
         g_{3} = g_{2} \pmod {h_{2}} \\
     \end{array}
     \right.
-    \end{displaymath}
+    \end{displaymath} 
 \end{theorem}
 
 \begin{proof}
@@ -534,7 +535,8 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
     Let $m$ be any of the $m_{i}$. There a few possible cases for $m$ : 
     \begin{itemize}
         \item $m$ is purely in $y$. Then $h_{1} | m$ and $h_{2} | m$, so $h_{1}h_{2} | m$, thus $m \in \langle h_{1}h_{2}(y) \rangle$.
-        \item $m = k \cdot (x - g_{1}(y)) (x - g_{2}(y))$. 
+        \item $m$ is a multiple of $x - g_{1}(y)$ and $x - g_{2}(y)$. Then, $m = k(x - g_{1}(y))(x - g_{2}(y))$, that is, $m = k \cdot h$, $h$ being the polynomial that zeroes on all the $y_{0,...,d-1,d,...,e-1}$. As all the $y_{i}$ are distinct, We have that $x - g_{3}(y) | m$, so $m \in \langle x - g_{3}(y) \rangle $
+        \item 
     \end{itemize}
     
     Now, let us show that $\langle h_{1}h_{2}(y), x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$.
@@ -592,7 +594,7 @@ This algorithm is used only for understanding the step behind Maple's algorithms
 
 \newpage
 \begin{algorithm}
-    \caption{Intersection ($I_{1}, I_{2}$)}\label{alg:intersect-2-ideals}
+    \caption{Intersection ($I_{1}, I_{2}$)} \label{alg:intersect-2-ideals}
     \textbf{Input : }Two Ideals $I_{1}$ and $I_{2}$ as described above \\
     \textbf{Output : }$I_{1} \cap I_{2}$
 \begin{algorithmic}
@@ -656,7 +658,7 @@ Again, such a polynomial can be computed using the CRT.
 From this reasoning we get the following iterative algorithm : 
 
 \begin{algorithm}
-    \caption{Intersect1($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals}
+    \caption{Intersect1($I_{1},...,I_{N}$)}\label{alg:intersect-n-ideals-equal-gcd}
     \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
     \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
 \begin{algorithmic}
@@ -685,12 +687,8 @@ Which implies that there exist $i$ such that $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1
 This mean that the polynomial $H = \prod_{i=1}^{N} h_{i}$ has at least one factor which isn't gcd($\{h_{i}\}$) with multiplicity greater than one.
 
 
-
-
-
-
 \begin{algorithm}
-    \caption{Intersect2 ($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals}
+    \caption{Intersect2 ($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals-diff-gcd}
     \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
     \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
 \begin{algorithmic}
@@ -722,7 +720,7 @@ This mean that the polynomial $H = \prod_{i=1}^{N} h_{i}$ has at least one facto
     \State P[MaxMultiplicity(F)+2] $:= $NormalForm($res[1],P$)
     \State \Return P
 
-\end{algorithmic}
+1\end{algorithmic}
 \end{algorithm}
 \nocite{*}
 \printbibliography
