@@ -23,6 +23,7 @@
 \usepackage[english]{babel}
 
 \usepackage{filecontents}
+\usepackage{algorithmicx}
 
 \begin{filecontents*}{\jobname.bib}
 
@@ -620,12 +621,12 @@ This algorithm is used only for understanding the step behind Maple's algorithms
 How can we generalize this process for an intersection of N ideal instead of only 2 ?
 Let assume we have N Ideal with the same structure which are : 
 
-$$I_{1} = <h_{1}(y),x-g_{1}(y)>$$
-$$I_{2} = <h_{2}(y),x-g_{2}(y)>$$
-$$\dots$$
-$$I_{N} = <h_{N}(y),x-g_{N}(y)>$$
+\[I_{1} = <h_{1}(y),x-g_{1}(y)>\]
+\[I_{2} = <h_{2}(y),x-g_{2}(y)>\]
+\[\dots\]
+\[I_{N} = <h_{N}(y),x-g_{N}(y)>\]
 
-We also have the assumption that: $$gcd(h_{1},h_{2})=gcd(h_{2},h_{3})=...=gcd(h_{N-1},h_{N})\neq1$$ 
+We also have the assumption that: \[gcd(h_{1},h_{2})=gcd(h_{2},h_{3})=...=gcd(h_{N-1},h_{N})\neq1\]
 
 We define the polynomials $y_{1},\dots,y_{N}$ such that $y_{1} = \displaystyle \frac{h_{1}}{\gcd(\{h_{N}\})}$,$\dots$, $y_{N} = \displaystyle \frac{h_{N}}{\gcd(\{h_{i}\})}$. We want to find $f$ such that : 
 \begin{displaymath}
@@ -678,13 +679,31 @@ From this reasoning we get the following iterative algorithm :
 \subsection*{Ideals Intersections case 2}
 
 Let now assume that we have : 
-$$gcd(\{h_{i}\}) \neq 1$$
-But this time we don't necessarily have the pairwise equality :
-$$gcd(h_{1},h_{2}) = gcd(h_{2},h_{3}) = \dots = gcd(h_{N-1},h_{N}) $$
+\[gcd(\{h_{i}\}) \neq 1\]
+But this time we don't necessarily have the following proprieties :
+\[gcd(h_{1},h_{2}) = gcd(h_{2},h_{3}) = \dots = gcd(h_{N-1},h_{N}) \]
 
 Which implies that there exist $i$ such that $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1},h_{i+2})$
 
 This mean that the polynomial $H = \prod_{i=1}^{N} h_{i}$ has at least one factor which isn't gcd($\{h_{i}\}$) with multiplicity greater than one.
+
+We can then write H as :
+\[H=\prod_{k_{i} \in \mathbb{N}
+ \setminus \{0\}, y_{i}\in \mathbb{K}} (y-y_{i})^{k_{i}}\]
+
+We define the set $H_{j}$ as following :
+\[H_{j} = \{ (y-y_{i}) | k_{i} = j\}\]
+
+We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h_{1},...,h_{N})})\]
+
+\textbf{Conjecture} : The grobner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the
+above proprieties is of dimension heigh(H) + 1.
+
+\textbf{Conjecture 2} : \[I_{1}\cap I_{2}\cap\dots\cap I_{N} = <lcm(h_{1},\dots,h_{N}),(\prod_{m \in H_{2}} m)f_{1},(\prod_{m \in H_{3}} m)f_{2}),\dots,(\prod_{m \in H_{height(H)}} m)f_{height(H)-1},f_{height})>$ \]
+
+
+
+
 
 
 \begin{algorithm}
@@ -692,28 +711,28 @@ This mean that the polynomial $H = \prod_{i=1}^{N} h_{i}$ has at least one facto
     \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
     \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
 \begin{algorithmic}
-    \State $H := \{h_{1},..,h_{N}\}$
-    \State $P:=[]$
-    \State $C := $Correspondances($h_{i},g_{i}$)
-    \State $P[1] := LCM(H)$
-    \State $H := \prod^{N}_{i=1} h_{i}$
-    \State $F:= $ListOfFactorsAndMultiplicities(H)
-    \State $F: = $DecreaseAllMultiplicitiesByOne(F)
+    \State $H \coloneqq \{h_{1},..,h_{N}\}$
+    \State $P \coloneqq []$
+    \State $C \coloneqq $ Correspondances($h_{i},g_{i}$)
+    \State $P[1] \coloneqq LCM(H)$
+    \State $H \coloneqq \prod^{N}_{i=1} h_{i}$
+    \State $F \coloneqq $ListOfFactorsAndMultiplicities(H)
+    \State $F \coloneqq $DecreaseAllMultiplicitiesByOne(F)
     \If{only one factor has a multiplicity greater than 0}
         \State \Return Intersect1($I_{1},...,I_{N}$)
     \EndIf
     \State $Last\_used\_poly\_y := 1$
     \State $Last\_found\_poly\_x := 1$
     \For{ i from 1 to MaxMultiplicity(F)}
-        \State $y^{*}:= \prod_{f_{i} has multiplicity > 0} f_{i}$
-        \State $p_y:=\frac{\frac{P[1]}{y^{*}}}{last\_used\_poly\_y}$
-        \State $X, Y:=$BuildCRTParameters($p_y, C$)
-        \State $res := $CRT($X,Y$)
+        \State $y^{*}\coloneqq \prod_{f_{i} has multiplicity > 0} f_{i}$
+        \State $p_y\coloneqq \frac{\frac{P[1]}{y^{*}}}{last\_used\_poly\_y}$
+        \State $X, Y\coloneqq$ BuildCRTParameters($p_y, C$)
+        \State $res \coloneqq $ CRT($X,Y$)
         \If{$i > 1$}
-            \State $res := $CRT($[res[1],last\_found\_poly\_x],[res[2],last\_used\_poly\_y]$)
+            \State $res \coloneqq $ CRT($[res[1],last\_found\_poly\_x],[res[2],last\_used\_poly\_y]$)
         \EndIf
-        \State $P[i+1] := $NormalForm($res[1]*y^{*},P$)
-        \State $F: = $DecreaseAllMultiplicitiesByOne(F)
+        \State $P[i+1] \coloneqq $ NormalForm($res[1]*y^{*},P$)
+        \State $F \coloneqq $ DecreaseAllMultiplicitiesByOne(F)
     \EndFor
     \State $X,Y$ := BuildCRTParameters($GCD(\{h_{i}\}),C$)
     \State res := CRT($X,Y\cup\{last\_used\_poly\_y\}$
