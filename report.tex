@@ -254,7 +254,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proposition}
 
 \begin{proof}
-    Assume that there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $m$. Then, there exists a monomial $k \in \mathbb{K}[x, y]$ such that $m = k \cdot LM_{\prec}(g)$. For instance, one could choose $k = 1$ or $k = g$. We just constructed a polynomial of $I$ with $m$ as its leading monomial. So $m \notin E(I)$, hence the result by contraposition.
+    Assume that there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $m$. Then, there exists a monomial $k \in \mathbb{K}[x, y]$ such that $m = k \cdot LM_{\prec}(g)$. For instance, one could choose $k = g \cdot \displaystyle \frac{m}{LM(g)}$. We just constructed a polynomial of $I$ with $m$ as its leading monomial. So $m \notin E(I)$, hence the result by contraposition.
 \end{proof}
 
 \begin{lemma} \label{lemma:finite-staircase-lm}
@@ -277,6 +277,16 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \begin{proof} % check this proof
     Let $E(I)$ be the finite staircase for the order $\prec_{1}$. Then, there exists $k, l \in \mathbb{N}$ such that $x^{k_{1}}$ and $y^{l_{1}}$ are leading monomials of I (Lemma \ref{lemma:finite-staircase-lm}). $E(I)$ has size equal to $k_{1}l_{1}$ at most. Let $\prec_{2}$ be any monomial order different than $\prec_{1}$, and suppose $E(I)$ is not finite for $\prec_{2}$. Following the same idea as in the proof of Lemma \ref{lemma:finite-staircase-lm}, we can state that all the leading monomials for $\prec_{2}$ are of the form $x^{i}y^{j}$, $i, j \in \mathbb{N}$. 
 \end{proof}
+
+\begin{proposition}
+    If $I$ is principal and $I \neq \langle 1 \rangle$, the staircase of $I$ is not finite. 
+\end{proposition}
+
+\begin{proof}
+    Let $f$ be the generator of $I$. Suppose $E(I)$ is finite. So there exists $(k, l) \in \mathbb{N}^{2}$ such that $x^{k}$ and $y^{l}$ are leading monomials of $I$. Then, there exists $(i, j) \in \mathbb{N}^{2}$ such that $i \leq k, j \leq l$ and $x^{k} = LM_{\prec}(f) \cdot x^{k - i}$ and $y^{l} = LM_{\prec}(f) \cdot y^{l - j}$. So $LM_{\prec}(f)$ would have to be either only in $x$ or in $y$, which is not possible as it is unique : contradiction. Thus, $E(I)$ is not finite. 
+\end{proof}
+
+\section{Division over $\mathbb{K}[x, y]$}
 
 \begin{proposition}
     The staircase of $I$ for a monomial order $\prec$ is a basis of $\mathbb{K}[x, y] / I$ as a $\mathbb{K}$ vector space.
@@ -302,16 +312,6 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     Let us assume the staircase of $I$ for $\prec_{lex}$ if finite. Then, there exists $l \in \mathbb{N}$ such that $y^{l}$ is a leading monomial of $I$. Let $f \in I$ be a polynomial with $LM(f) = y^{l}$. We can rewrite $f$ as $f = \alpha x^{y} + f^{\prime}$. As for all $k \in \mathbb{N}, y^{k} \prec_{lex} x$ and $LM(f) = y^{l}$, all the monomials of $f^{\prime}$ must contain only $y$ as a variable. Thus,  $f \in I$ is purely in $y$.
 \end{proof}
 
-\begin{proposition}
-    If $I$ is principal and $I \neq \langle 1 \rangle$, the staircase of $I$ is not finite. 
-\end{proposition}
-
-\begin{proof}
-    Let $f$ be the generator of $I$. Suppose $E(I)$ is finite. So there exists $(k, l) \in \mathbb{N}^{2}$ such that $x^{k}$ and $y^{l}$ are leading monomials of $I$. Then, there exists $(i, j) \in \mathbb{N}^{2}$ such that $i \leq k, j \leq l$ and $x^{k} = LM_{\prec}(f) \cdot x^{k - i}$ and $y^{l} = LM_{\prec}(f) \cdot y^{l - j}$. So $LM_{\prec}(f)$ would have to be either only in $x$ or in $y$, which is not possible as it is unique : contradiction. Thus, $E(I)$ is not finite. 
-\end{proof}
-
-\section{Division over $\mathbb{K}[x, y]$}
-
 \begin{algorithm}
 \caption{Division algorithm over $\mathbb{K}[x, y]$} \label{alg:div}
 \textbf{Input : }Gröbner basis G of an Ideal I for $\prec$+ \\
@@ -330,8 +330,9 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{algorithmic}
 \end{algorithm}
 
+
 \begin{definition}
-    Let $h$ be the output of Algorithm \ref{alg:div}. $h$ is called the normal form of $f$ with respect to $\mathscr{G}$ and $\prec$. In a more formal way, 
+Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner basis of $I$ for the order $\prec$, $h$ is called the normal form of $f$ with respect to $\mathscr{G}$ and $\prec$. In a more formal way, 
     \begin{displaymath}
         h = NF(f, \mathscr{G}, \prec)
     \end{displaymath}
@@ -347,7 +348,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \end{proof}
 
 \begin{theorem}
-    Let $h$ be the output of Algorithm \ref{alg:div}. Then, $h = 0$ if and only if $f \in I$.
+    Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner basis of $I$ for the order $\prec$, $h = 0$ if and only if $f \in I$.
 \end{theorem}
 
 \begin{proof}
@@ -375,9 +376,9 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 \begin{proof}
     Let $f \in I$. If we apply Algorithm \ref{alg:div} to $f$, we get that 
     \begin{displaymath}
-        f = \sum_{i = 1}^{n} k_{i}g_{i}
+        f = \sum_{i = 1}^{n} k_{i}g_{i} + NF(f, \mathscr{G}, \prec)
     \end{displaymath}
-    So $f$ is an algebraic combination of elements of $\mathscr{G}$, therefore $\mathscr{G}$ generates $I$.
+    As $NF(f, \mathscr{G}, \prec) = 0$, $f$ is an algebraic combination of elements of $\mathscr{G}$, therefore $\mathscr{G}$ generates $I$.
 \end{proof}
 
 \begin{corollary}
@@ -469,6 +470,9 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{enumerate}
 \end{proof}
 
+We now want to study the Gröbner basis for the lexicographic ordering (lex-GB) of the intersection of ideals, assuming we their lex-GB.
+We will start with the simplest case, called the "shape position", which is $I = \langle h(y), x - g(y) \rangle$. \\
+
 \subsection*{Ideals Intersections case 1}
 
 We will now study ideals based on generators of a certain form. 
@@ -531,7 +535,7 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
     \begin{itemize}
         \item $m$ is purely in $y$. Then $h_{1} | m$ and $h_{2} | m$, so $h_{1}h_{2} | m$, thus $m \in \langle h_{1}h_{2}(y) \rangle$.
         \item $m$ is a multiple of $x - g_{1}(y)$ and $x - g_{2}(y)$. That is, $m = k \cdot h$, $h$ being the polynomial that zeroes on all the $p_{0,...,d-1,d,...,e-1}$. As all the $y_{i}$ are distinct, We have that $x - g_{3}(y) = h$, so $m \in \langle x - g_{3}(y) \rangle$.
-        \item $m$ is a multiple of $h_{1}$ and $x - g_{2}(y)$. 
+        \item $m$ is a multiple of $h_{1}$ and $x - g_{2}(y)$. ??? 
         \item This point is the same as the last one, we only need to swap $h_{1}$ with $h_{2}$ and $x - g_{2}(y)$ with $x - g_{1}(y)$.
     \end{itemize}
     
