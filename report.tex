@@ -643,10 +643,9 @@ This algorithm is used only for understanding the step behind Maple's algorithms
         \right
     \end{displaymath}
     we obtain $f_{2}\ =\ x^2 - 5*y^2 + 2*x - 8*y + 13$
-    The base found is then \[\langle (y-1)(y+4)(y+3),x*y - 3*y^2 - x - 2*y + 5,x^2 - 5*y^2 + 2*x - 8*y + 13\rangle\]
+    The the result is then \[\langle (y-1)(y+4)(y+3),\ x*y - 3*y^2 - x - 2*y + 5,\ x^2 - 5*y^2 + 2*x - 8*y + 13\rangle\]
 \end{example}
-
-
+\newpage
 How can we generalize this process for an intersection of N ideal instead of only 2 ?
 Let assume we have N Ideal with the same structure which are : 
 
@@ -710,7 +709,6 @@ From this reasoning we get the following iterative algorithm :
 \begin{theorem} The complexity of the above algorithm is in $\mathcal{O}(N*n^2)$
 \end{theorem}
 
-
 \begin {example}
 
 \end{example}
@@ -743,7 +741,6 @@ We finally define the polynomials $\forall i \in \{1,\dots,height(H)\}, \forall 
 Case i = 1
 
 \[\{ f_{i} = \prod_{c \in C_{i}^{w} } c \pmod w \\ \}\]
-
 
 Case i $>$ 1
 
