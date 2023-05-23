@@ -553,7 +553,7 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 \end{proof}
 
 
-Now, assume $\gcd(h_{1}, {h_2}) \neq 1$. 
+Now, assume $\gcd(h_{1}, {h_2}) \neq 1$.
 We want to compute $I_{1} \cap I_{2}$. We define the polynomials $p_{1}, p_{2}$ such that $p_{1} = \displaystyle \frac{h_{1}}{\gcd(h_{1}, h_{2})}$ and $p_{2} = \displaystyle \frac{h_{2}}{\gcd(h_{1}, h_{2})}$. We want to find $f$ such that : 
 \begin{displaymath}
     \left\{
@@ -664,12 +664,13 @@ From this reasoning we get the following iterative algorithm :
     \State $X := \{x_{1} = \frac{x-g_{1}}{y_{1}},...,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
     \State $x^{*} := \prod^{N}_{i=1} \frac{x-g_{i}}{h^{*}}$
     \State $c:= CRT(X,Y)$
-    \State $P2 := c*h^{*}$
-    \State $P3 := CRT(\{c,x^{*}\},\{\prod^{N}_{i=1} y_{i}, h^{*}\})$
+    \State $P2 := c[1]*h^{*}$ \Comment{The CRT algorithm implemented return 2 elements the first one is the found polynomial and the second one the multiplication of each divisor $\prod^{N}_{i=1} y_{i}$}
+    \State $P3 := CRT(\{c[1],x^{*}\},\{c[2], h^{*}\})$
     \State \Return P1,P2,P3
 \end{algorithmic}
 \end{algorithm}
 
+\newpage
 \subsection*{Ideals Intersections case 2}
 
 Let now assume that we have : 
@@ -686,23 +687,17 @@ We can then write H as :
  \setminus \{0\}, y_{i}\in \mathbb{K}} (y-y_{i})^{k_{i}}\]
 
 We define the set $H_{j}$ as following :
-\[H_{j} = \{ (y-y_{i}) | k_{i} = j\}\]
+\[H_{j} = \{\ (y-y_{i}) \ |\  k_{i} \geq j\ \}\]
 
 We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h_{1},...,h_{N})})\]
 
-We now define $W_{x} = H_{x}-H_{x+1}$
-We also define $C_{x}^{w}$ = \{ $x-g_{x}$ $|$ w divide $h_{i}$, $\forall i \in \{1,\dots,N\}$\}
-We finally define the polynomials $\forall i \in \{1,\dots,height(N-1)\}, \forall w \in W_{i}$ :
+Let define $W_{x} = H_{x}-H_{x+1}$ and $C_{x}^{w}$ = \{ ($x-g_{x})$ $|$ w divide $h_{i}$, $\forall i \in \{1,\dots,N\}$\}\newline
+We finally define the polynomials $\forall i \in \{1,\dots,height(H)\}, \forall w \in W_{i}$ :
 
 Case i = 1
 
-\begin{displaymath}
-    \left\{
-    \begin{array}{ll}
-    f_{i} = \prod_{c \in C_{i}^{w} } c \pmod w \\
-    \end{array}
-    \right.
-\end{displaymath}
+\[\{ f_{i} = \prod_{c \in C_{i}^{w} } c \pmod w \\ \}\]
+
 
 Case i $>$ 1
 
@@ -715,39 +710,48 @@ Case i $>$ 1
     \right.
 \end{displaymath}
 
+for both cases, we can find $f_{i}$ using the CRT.
 
-\textbf{Conjecture} : The gröbner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the
+\vspace{5mm} \newline
+\textbf{Conjecture 1} : The gröbner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the
 above proprieties is of dimension height(H) + 1.
+\vspace{5mm} \newline
 
-\textbf{Conjecture 2} : \[I_{1}\cap I_{2}\cap\dots\cap I_{N} = <lcm(h_{1},\dots,h_{N}),(\prod_{m \in H_{2}} m)f_{1},(\prod_{m \in H_{3}} m)f_{2}),\dots,(\prod_{m \in H_{height(H)}} m)f_{height(H)-1},f_{height(H)})>\]
+\begin{theorem}
+     When $gcd(h_{1},\dots,h_{N}) \neq 1$ and $\exists i$ s.t $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1},h_{i+2})$
+    \begin{displaymath}
+        I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle lcm(h_{1},\dots,h_{N}),(\prod_{m \in H_{2}} m)f_{1},(\prod_{m \in H_{3}} m)f_{2}),\dots,(\prod_{m \in H_{height(H)}} m)f_{height(H)-1},f_{height(H)})\rangle
+    \end{displaymath}
+\end{theorem}
 
+With this reasoning we can deduce an algorithm to compute the intersection of N ideals with above proprieties.
 
-
-
-
-
-
+The algorithm use a \("\)correspondence\("\) list $C$, this list act like a dictionary which map $y-y_{i}$ with the resulted multiplication $\prod_{c \in C_{i}^{w} } c$.\newline
+The function ListOfFactorsAndMultiplicities is also a dictionary, matching each factor with their multiplicities.\newline
+The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities by one, this function act like $W_{x}$ defined above.\newline
 
 \begin{algorithm}
-    \caption{Intersect2 ($I_{1},...,I_{N}$)}\label{alg:intersect-2-ideals-diff-gcd}
-    \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
-    \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
+    \caption{Intersect2 ($I_{1},\dots,I_{N}$)}\label{alg:intersect-2-ideals-diff-gcd}
+    \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
+    \textbf{Output : }$I_{1} \cap \dots\cap I_ {N}$
 \begin{algorithmic}
     \State $H \coloneqq \{h_{1},..,h_{N}\}$
     \State $P \coloneqq []$
-    \State $C \coloneqq $ Correspondances($h_{i},g_{i}$)
+    \State $C \coloneqq $ Correspondences($h_{i},g_{i}$) \Comment{List acting as the dictionary defined above}
     \State $P[1] \coloneqq LCM(H)$
     \State $H \coloneqq \prod^{N}_{i=1} h_{i}$
     \State $F \coloneqq $ListOfFactorsAndMultiplicities(H)
     \State $F \coloneqq $DecreaseAllMultiplicitiesByOne(F)
     \If{only one factor has a multiplicity greater than 0}
-        \State \Return Intersect1($I_{1},...,I_{N}$)
+        \State \Return Intersect1($I_{1},\dots,I_{N}$)
     \EndIf
-    \State $Last\_used\_poly\_y := 1$
-    \State $Last\_found\_poly\_x := 1$
-    \For{ j from 1 to MaxMultiplicity(F)}
-        \State $y^{*}\coloneqq \prod_{f \in H_{j}} f$
-        \State $p_y\coloneqq \frac{\frac{P[1]}{y^{*}}}{last\_used\_poly\_y}$
+    \State $Last\_used\_poly\_y \coloneqq 1$
+    \State $Last\_found\_poly\_x \coloneqq 1$
+    \State $Nb\_It \coloneqq MaxMultiplicity(F) $ \Comment{MaxMultiplicity act like the function height() defined above}
+    \For{ j from 1 to Nb_It}
+
+        \State $y^{*}\coloneqq \prod_{f \in H_{j}} f$ \Comment{All the factor of H with multiplicities greater or equal to j }
+        \State $p_y\coloneqq \frac{\frac{P[1]}{y^{*}}}{last\_used\_poly\_y}$ \Comment{Equivalent of $W_{j}$ but instead of a set of factor, all the factor are multiplied}
         \State $X, Y\coloneqq$ BuildCRTParameters($p_y, C$)
         \State $res \coloneqq $ CRT($X,Y$)
         \If{$i > 1$}
@@ -756,12 +760,12 @@ above proprieties is of dimension height(H) + 1.
         \State $P[i+1] \coloneqq $ NormalForm($res[1]*y^{*},P$)
         \State $F \coloneqq $ DecreaseAllMultiplicitiesByOne(F)
     \EndFor
-    \State $X,Y$ := BuildCRTParameters($GCD(h_{1},...,h_{N}),C$)
+    \State $X,Y$ := BuildCRTParameters($GCD(h_{1},\dots,h_{N}),C$)
     \State res := CRT($X,Y\cup\{last\_used\_poly\_y\}$
-    \State P[MaxMultiplicity(F)+2] $:= $NormalForm($res[1],P$)
+    \State P[Nb_It+2] $\coloneqq $NormalForm($res[1],P$)
     \State \Return P
 
-1\end{algorithmic}
+\end{algorithmic}
 \end{algorithm}
 \nocite{*}
 \printbibliography
