@@ -67,7 +67,7 @@
         \vspace*{1mm}
         \vspace*{1mm}
          \noindent\rule[0.3\baselineskip]{\textwidth}{1pt}
-        \LARGE{PSFPN - Gröbner bases of two variables\\}
+        \LARGE{PSFPN - Gröbner bases in two variables\\}
 }
          \noindent\rule[0.3\baselineskip]{\textwidth}{1pt}
          \vspace{5mm}
@@ -82,7 +82,7 @@
 \end{center}
 
 \newpage
-     
+
 \section*{Introduction}
 
 Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ are polynomials in $x$ and $y$ with coefficients in a field $\mathbb{K}$, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems. \\
@@ -145,7 +145,7 @@ We will also define the intersection and the sum of two ideals, as they will be 
 
 \section{Monomial orderings}
 
-When studying polynomials of only one variable, the order of the monomials is straightforward : we implicitely assume that $1 < x < x^{2} < ...$. If we rise the number of variables we study, we can still sort all the powers of one variable with each other, but how do we manage monomials that are products of more than one variable ? There are many ways to handle this order problem. This is why we'll introduce \textit{monomial orderings}. 
+When studying polynomials of only one variable, the order of the monomials is straightforward : we implicitely assume that $1 < x < x^{2} < ...$. If we rise the number of variables we study, we can still sort all the powers of one variable with each other, but how do we manage monomials that are products of more than one variable ? There are many ways to handle this order problem. This is why we'll introduce \textit{monomial orderings}.
 
 \begin{definition}[Monomial ordering]\label{def:monomial-order}
     A monomial ordering $\prec$ on $\mathbb{K}[x, y]$ is any ordering on the monomials $x^{i}y^{j}$ : 
@@ -267,9 +267,9 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     \end{itemize}
 \end{lemma}
 
-\begin{proof} 
+\begin{proof}
     $\Rightarrow$ Assume the staircase of $I$ is finite. Suppose there exists no $k, l \in \mathbb{N}$ such that either $x^{k}$ or $y^{l}$ is a leading monomial of I. Without loss of generality, assume none of the $x^{k}$ are leading monomials of $I$. \\
-    Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are either of the form $x^{m}y^{n}$, $m,n > 0$ or $y^{l}$, $l > 0$ . So for all $k > 0$, the monomials $x^{k}$ are in $E(I)$. Hence $E(I)$ is not finite. \\ 
+    Let $\mathscr{G}$ be a Gröbner basis of $I$. Then all the leading monomials of $\mathscr{G}$ are either of the form $x^{m}y^{n}$, $m,n > 0$ or $y^{l}$, $l > 0$ . So for all $k > 0$, the monomials $x^{k}$ are in $E(I)$. Hence $E(I)$ is not finite. \\
     $\Leftarrow$ Conversly, assume there exists $k, l \in \mathbb{N}$ such that $x^{k}$ and $y^{l}$ are leading monomials of I. Then, for all $i, j > 0$, $x^{k}y^{i}$ and $x^{j}y^{l}$ are leading monomials of $I$ (Lemma \ref{lemma:lm-mult}), so the the size of $E(I)$ is at most equal to $kl$. Thus the staircase of $I$ is finite.
 \end{proof}
 
@@ -387,7 +387,7 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
 \end{proof}
 
 \begin{corollary}
-    Let $h$ be the output of Algorithm \ref{alg:div}. $h$ does not depend on the choices made during the execution of the algorithm. 
+    Let $h$ be the output of Algorithm \ref{alg:div}. $h$ does not depend on the choices made during the execution of the algorithm.
 \end{corollary}
 
 \begin{proof}
@@ -478,7 +478,7 @@ After studying ideals from an algebraic point of view, we may need to observe wh
 \end{proof}
 
 \begin{remark}
-    We see that as we \textit{reduce} the generating conditions of the members of the ideal we study, the size of the associated variety rises (while making an intersection of ideals, we get union of varieties). On the other hand, while rising the conditions to belong to an ideal, the size of the associated variety reduces. 
+    We see that as we \textit{reduce} the generating conditions of the members of the ideal we study, the size of the associated variety rises (while making an intersection of ideals, we get union of varieties). On the other hand, while rising the conditions to belong to an ideal, the size of the associated variety reduces.
 \end{remark}
 
 We now want to study the Gröbner basis for the lexicographic ordering (lex-GB) of the intersection of ideals, assuming we their lex-GB.
@@ -636,9 +636,10 @@ Let assume we have N Ideal with the same structure which are :
 \[\dots\]
 \[I_{N} = <h_{N}(y),x-g_{N}(y)>\]
 
-We also have the assumption that: \[gcd(h_{1},h_{2})=gcd(h_{2},h_{3})=...=gcd(h_{N-1},h_{N})\neq1\]
+Also, we have the assumption that: \[gcd(h_{1},...,h_{N})\neq1\ \forall i \in \{1,...,N\}\]
+and \[gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,...,N-2\}\]
 
-We define the polynomials $y_{1},\dots,y_{N}$ such that $y_{1} = \displaystyle \frac{h_{1}}{\gcd(\{h_{N}\})}$,$\dots$, $y_{N} = \displaystyle \frac{h_{N}}{\gcd(\{h_{i}\})}$. We want to find $f$ such that : 
+We define the polynomials $y_{1},\dots,y_{N}$ such that $y_{1} = \displaystyle \frac{h_{1}}{\gcd(h_{1},...,h_{N})}$,$\dots$, $y_{N} = \displaystyle \frac{h_{N}}{\gcd(h_{1},...,h_{N})}$. We want to find $f$ such that :
 \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -654,7 +655,7 @@ $f_{1}$ can be computed using the CRT. Now, we want to find $f_{2}$ such that :
     \left\{
     \begin{array}{ll}
         f_{2} = f_{1} \pmod {\prod_{i=1}^{N} y_{i}} \\
-        f_{2} = \prod^{N}_{i=1} x-g_{i} \pmod {\gcd(\{h_{i}\})} \\
+        f_{2} = \prod^{N}_{i=1} (x-g_{i}) \pmod {\gcd(\{h_{i}\})} \\
     \end{array}
     \right.
 \end{displaymath}
@@ -689,13 +690,13 @@ From this reasoning we get the following iterative algorithm :
 \subsection*{Ideals Intersections case 2}
 
 Let now assume that we have : 
-\[gcd(\{h_{i}\}) \neq 1\]
+\[gcd(h_{1},...,h_{N}) \neq 1\]
 But this time we don't necessarily have the following proprieties :
 \[gcd(h_{1},h_{2}) = gcd(h_{2},h_{3}) = \dots = gcd(h_{N-1},h_{N}) \]
 
 Which implies that there exist $i$ such that $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1},h_{i+2})$
 
-This mean that the polynomial $H = \prod_{i=1}^{N} h_{i}$ has at least one factor which isn't gcd($\{h_{i}\}$) with multiplicity greater than one.
+This mean that the polynomial $H = \prod_{i=1}^{N} h_{i}$ has at least one factor which isn't gcd($h_{1},\dots,h_{N}$) with multiplicity greater than one.
 
 We can then write H as :
 \[H=\prod_{k_{i} \in \mathbb{N}
@@ -706,10 +707,38 @@ We define the set $H_{j}$ as following :
 
 We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h_{1},...,h_{N})})\]
 
-\textbf{Conjecture} : The grobner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the
-above proprieties is of dimension heigh(H) + 1.
+We now define $W_{x} = H_{x}-H_{x+1}$
+We also define $C_{x}^{w}$ = \{ $x-g_{x}$ $|$ w divide $h_{i}$, $\forall i \in \{1,\dots,N\}$\}
+We finally define the polynomials $\forall i \in \{1,\dots,height(N-1)\}, \forall w \in W_{i}$ :
 
-\textbf{Conjecture 2} : \[ I_{1}\cap I_{2}\cap\dots\cap I_{N} = <lcm(h_{1},\dots,h_{N}),(\prod_{m \in H_{2}} m)f_{1},(\prod_{m \in H_{3}} m)f_{2}),\dots,(\prod_{m \in H_{height(H)}} m)f_{height(H)-1},f_{height})> \]
+Case i = 1
+
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+    f_{i} = \prod_{c \in C_{i}^{w} } c \pmod w \\
+    \end{array}
+    \right.
+\end{displaymath}
+
+Case i $>$ 1
+
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+    f_{i} = \prod_{c \in C_{i}^{w} } c \pmod w \\
+    f_{i} = f_{i-1} \pmod{\prod_{w^{*} \in W_{i-1}} w^{*}}\\
+    \end{array}
+    \right.
+\end{displaymath}
+
+
+\textbf{Conjecture} : The gröbner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the
+above proprieties is of dimension height(H) + 1.
+
+\textbf{Conjecture 2} : \[I_{1}\cap I_{2}\cap\dots\cap I_{N} = <lcm(h_{1},\dots,h_{N}),(\prod_{m \in H_{2}} m)f_{1},(\prod_{m \in H_{3}} m)f_{2}),\dots,(\prod_{m \in H_{height(H)}} m)f_{height(H)-1},f_{height(H)})>$\]
+
+
 
 
 
@@ -733,8 +762,8 @@ above proprieties is of dimension heigh(H) + 1.
     \EndIf
     \State $Last\_used\_poly\_y := 1$
     \State $Last\_found\_poly\_x := 1$
-    \For{ i from 1 to MaxMultiplicity(F)}
-        \State $y^{*}\coloneqq \prod_{f_{i} has multiplicity > 0} f_{i}$
+    \For{ j from 1 to MaxMultiplicity(F)}
+        \State $y^{*}\coloneqq \prod_{f \in H_{j}} f$
         \State $p_y\coloneqq \frac{\frac{P[1]}{y^{*}}}{last\_used\_poly\_y}$
         \State $X, Y\coloneqq$ BuildCRTParameters($p_y, C$)
         \State $res \coloneqq $ CRT($X,Y$)
@@ -744,7 +773,7 @@ above proprieties is of dimension heigh(H) + 1.
         \State $P[i+1] \coloneqq $ NormalForm($res[1]*y^{*},P$)
         \State $F \coloneqq $ DecreaseAllMultiplicitiesByOne(F)
     \EndFor
-    \State $X,Y$ := BuildCRTParameters($GCD(\{h_{i}\}),C$)
+    \State $X,Y$ := BuildCRTParameters($GCD(h_{1},...,h_{N}),C$)
     \State res := CRT($X,Y\cup\{last\_used\_poly\_y\}$
     \State P[MaxMultiplicity(F)+2] $:= $NormalForm($res[1],P$)
     \State \Return P
