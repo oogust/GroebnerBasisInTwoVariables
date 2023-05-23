@@ -642,9 +642,10 @@ $f_{1}$ can be computed using the CRT. Now, we want to find $f_{2}$ such that :
     \end{array}
     \right.
 \end{displaymath}
-Again, such a polynomial can be computed using the CRT. 
+Again, such a polynomial can be computed using the CRT\@.
 
 \begin{theorem}
+    When $gcd(h_{1},...,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,...,N-2\}$
     \begin{displaymath}
         I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle lcm(\{h_{i}\}), gcd(\{h_{i}\})f_{1},f_{2} \rangle
     \end{displaymath}
@@ -653,19 +654,19 @@ Again, such a polynomial can be computed using the CRT.
 From this reasoning we get the following iterative algorithm : 
 
 \begin{algorithm}
-    \caption{Intersect1($I_{1},...,I_{N}$)}\label{alg:intersect-n-ideals-equal-gcd}
-    \textbf{Input : } N Ideals $I_{1},...,I_{N}$ as described above \\
-    \textbf{Output : }$I_{1} \cap ...\cap I_ {N}$
+    \caption{Intersect1($I_{1},\dots,I_{N}$)}\label{alg:intersect-n-ideals-equal-gcd}
+    \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
+    \textbf{Output : }$I_{1} \cap \dots\cap I_ {N}$
 \begin{algorithmic}
-    \State $H := \{h_{1},..,h_{N}\}$
-    \State $P1 := LCM(H)$
-    \State $h^{*} := GCD(H)$
-    \State $Y:= \{y_{1}= \frac{h_{1}}{h^{*}},...,y_{N}= \frac{h_{N}}{h^{*}}\}$
-    \State $X := \{x_{1} = \frac{x-g_{1}}{y_{1}},...,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
-    \State $x^{*} := \prod^{N}_{i=1} \frac{x-g_{i}}{h^{*}}$
-    \State $c:= CRT(X,Y)$
-    \State $P2 := c[1]*h^{*}$ \Comment{The CRT algorithm implemented return 2 elements the first one is the found polynomial and the second one the multiplication of each divisor $\prod^{N}_{i=1} y_{i}$}
-    \State $P3 := CRT(\{c[1],x^{*}\},\{c[2], h^{*}\})$
+    \State $H \coloneqq \{h_{1},..,h_{N}\}$
+    \State $P1 \coloneqq LCM(H)$
+    \State $h^{*} \coloneqq GCD(H)$
+    \State $Y\coloneqq \{y_{1}= \frac{h_{1}}{h^{*}},...,y_{N}= \frac{h_{N}}{h^{*}}\}$
+    \State $X \coloneqq \{x_{1} = \frac{x-g_{1}}{y_{1}},...,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
+    \State $x^{*} \coloneqq \prod^{N}_{i=1} \frac{x-g_{i}}{h^{*}}$
+    \State $c\coloneqq CRT(X,Y)$
+    \State $P2 \coloneqq c[1]*h^{*}$ \Comment{The CRT algorithm implemented return 2 elements the first one is the found polynomial and the second one the multiplication of each divisor $\prod^{N}_{i=1} y_{i}$}
+    \State $P3 \coloneqq CRT(\{c[1],x^{*}\},\{c[2], h^{*}\})$
     \State \Return P1,P2,P3
 \end{algorithmic}
 \end{algorithm}
@@ -674,7 +675,7 @@ From this reasoning we get the following iterative algorithm :
 \subsection*{Ideals Intersections case 2}
 
 Let now assume that we have : 
-\[gcd(h_{1},...,h_{N}) \neq 1\]
+\[gcd(h_{1},\dots,h_{N}) \neq 1\]
 But this time we don't necessarily have the following proprieties :
 \[gcd(h_{1},h_{2}) = gcd(h_{2},h_{3}) = \dots = gcd(h_{N-1},h_{N}) \]
 
@@ -710,7 +711,7 @@ Case i $>$ 1
     \right.
 \end{displaymath}
 
-for both cases, we can find $f_{i}$ using the CRT.
+for both cases, we can find $f_{i}$ using the CRT\@.
 
 \vspace{5mm} \newline
 \textbf{Conjecture 1} : The gröbner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the
