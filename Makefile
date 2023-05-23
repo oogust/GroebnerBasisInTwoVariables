@@ -1,7 +1,7 @@
 DOCNAME=report
 PRESENTATION=slides
 
-all : $(DOCNAME) 
+all : $(DOCNAME) $(PRESENTATION)
 
 $(DOCNAME) : 
 	pdflatex $(DOCNAME).tex

@@ -32,6 +32,7 @@
 \newtheorem{example}{Example}[section]
 \newtheorem{property}{Property}[section]
 \newtheorem{remark}{Remark}[section]
+\newtheorem{conjecture}{Conjecture}[section]
 
 \title{PSFPN - Gröbner bases in two variables}
 \begin{document}
@@ -713,10 +714,10 @@ Case i $>$ 1
 
 for both cases, we can find $f_{i}$ using the CRT\@.
 
-\vspace{5mm} \newline
-\textbf{Conjecture 1} : The gröbner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the
-above proprieties is of dimension height(H) + 1.
-\vspace{5mm} \newline
+\begin{conjecture}
+    The gröbner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the above proprieties is of dimension height(H) + 1.
+\end{conjecture}
+
 
 \begin{theorem}
      When $gcd(h_{1},\dots,h_{N}) \neq 1$ and $\exists i$ s.t $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1},h_{i+2})$
@@ -749,7 +750,7 @@ The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities 
     \State $Last\_used\_poly\_y \coloneqq 1$
     \State $Last\_found\_poly\_x \coloneqq 1$
     \State $Nb\_It \coloneqq MaxMultiplicity(F) $ \Comment{MaxMultiplicity act like the function height() defined above}
-    \For{ j from 1 to Nb_It}
+    \For{ j from 1 to Nb\_It}
 
         \State $y^{*}\coloneqq \prod_{f \in H_{j}} f$ \Comment{All the factor of H with multiplicities greater or equal to j }
         \State $p_y\coloneqq \frac{\frac{P[1]}{y^{*}}}{last\_used\_poly\_y}$ \Comment{Equivalent of $W_{j}$ but instead of a set of factor, all the factor are multiplied}
@@ -763,7 +764,7 @@ The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities 
     \EndFor
     \State $X,Y$ := BuildCRTParameters($GCD(h_{1},\dots,h_{N}),C$)
     \State res := CRT($X,Y\cup\{last\_used\_poly\_y\}$
-    \State P[Nb_It+2] $\coloneqq $NormalForm($res[1],P$)
+    \State P[Nb\_It+2] $\coloneqq $NormalForm($res[1],P$)
     \State \Return P
 
 \end{algorithmic}
