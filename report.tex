@@ -39,7 +39,7 @@
 
 \DeclareMathOperator{\lcm}{lcm}
 
-\geometry{legalpaper, margin=3cm}
+%\geometry{legalpaper, margin=3cm}
 
 \title{PSFPN - Gröbner bases in two variables}
 \begin{document}
@@ -109,16 +109,16 @@ We will also define the intersection and the sum of two ideals, as they will be 
 
 
 \begin{definition}
-    Let $I_{1} = \langle f_{1}, ..., f_{r} \rangle$ and  $I_{2} = \langle g_{1}, ..., g_{s} \rangle $ two ideals of $R$. 
+    Let $I_{1} = \langle f_{1}, \dots, f_{r} \rangle$ and  $I_{2} = \langle g_{1}, \dots, g_{s} \rangle $ two ideals of $R$. 
     \begin{displaymath}
-        I_{1} + I_{2} = \{f + g \mid f \in I_{1}, g \in I_{2}\} = \langle f_{1}, ..., f_{r}, g_{1}, ..., g_{s} \rangle 
+        I_{1} + I_{2} = \{f + g \mid f \in I_{1}, g \in I_{2}\} % = \langle f_{1}, \dots, f_{r}, g_{1}, \dots, g_{s} \rangle 
     \end{displaymath}
 \end{definition}
 
 \begin{definition}
     Let $I_{1}, I_{2}$ two ideals of $R$. 
     \begin{displaymath}
-        I_{1} \cdot I_{2} = \langle f_{1}f_{2} \mid f_{1} \in I_{1}, f_{2} \in I_{2} \rangle
+        I_{1} \cdot I_{2} = \lbrace \sum_{i} f_{1}f_{2} \mid f_{1} \in I_{1}, f_{2} \in I_{2} \rbrace
     \end{displaymath}
 \end{definition}
 
@@ -135,7 +135,7 @@ We will also define the intersection and the sum of two ideals, as they will be 
 
 \section{Monomial orderings}
 
-When studying polynomials of only one variable, the order of the monomials is straightforward : we implicitely assume that $1 < x < x^{2} < ...$. If we rise the number of variables we study, we can still sort all the powers of one variable with each other, but how do we manage monomials that are products of more than one variable ? There are many ways to handle this order problem. This is why we'll introduce \textit{monomial orderings}.
+When studying polynomials of only one variable, the order of the monomials is straightforward : we implicitely assume that $1 < x < x^{2} < \dots$. If we rise the number of variables we study, we can still sort all the powers of one variable with each other, but how do we manage monomials that are products of more than one variable ? There are many ways to handle this order problem. This is why we'll introduce \textit{monomial orderings}.
 
 \begin{definition}[Monomial ordering]\label{def:monomial-order}
     A monomial ordering $\prec$ on $\mathbb{K}[x, y]$ is any ordering on the monomials $x^{i}y^{j}$ : 
@@ -199,7 +199,7 @@ When studying polynomials of only one variable, the order of the monomials is st
 
 \begin{example}
     The first monomials for the DRL order appearing in $\mathbb{K}[x, y]$ are : \\
-    $1 \prec_{drl} y \prec_{drl} x \prec_{drl} y^{2} \prec_{drl} xy \prec_{drl} x^{2} \prec_{drl} y^{3} \prec_{drl} xy^{2} \prec_{drl} x^{2} y \prec_{drl} x^{3} \prec_{drl} ...$
+    $1 \prec_{drl} y \prec_{drl} x \prec_{drl} y^{2} \prec_{drl} xy \prec_{drl} x^{2} \prec_{drl} y^{3} \prec_{drl} xy^{2} \prec_{drl} x^{2} y \prec_{drl} x^{3} \prec_{drl} \dots$
 \end{example}
 
 \begin{definition} 
@@ -228,7 +228,8 @@ When studying polynomials of only one variable, the order of the monomials is st
 
 \section{Gröbner Bases}
 
-In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
+In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$. 
+
 
 \begin{definition}[Gröbner basis]
     A finite subset $\mathscr{G} \subseteq I$ is said to be a Gröbner basis of $I$ for the monomial order $\prec$ if for all $f \in I$, there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$. 
@@ -342,12 +343,12 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
     Therefore, every monomial of $h$ is in the staircase of $I$, as proved above (Proposition \ref{proposition:monomial-in-staircase}). 
 \end{proof}
 
-\begin{theorem}
+\begin{theorem} \label{th:ideal-membership-test}
     Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner basis of $I$ for the order $\prec$, $h = 0$ if and only if $f \in I$.
 \end{theorem}
 
 \begin{proof}
-    Let $\mathscr{G} = \{g_{1}, ..., g_{k}\}$ be a Gröbner basis of $I$. \\
+    Let $\mathscr{G} = \{g_{1}, \dots, g_{k}\}$ be a Gröbner basis of $I$. \\
     $\Rightarrow$ Assume that $h = 0$. Using Algorithm \ref{alg:div} on $f$, we get that : 
     \begin{displaymath}
         f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right)
@@ -511,11 +512,11 @@ Let us now define the ideals $I_{1}$ and $I_{2}$.
 We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 
 \begin{theorem} 
-    Let $I_{1}$ and $I_{2}$ be two ideals as defined above, with $g_{1}$ defined by interpolating the points $p_{0...d-1}$ and $g_{2}$ defined by interpolating the points $p_{d...e-1}$
+    Let $I_{1}$ and $I_{2}$ be two ideals as defined above, with $g_{1}$ defined by interpolating the points $p_{0,\dots,d-1}$ and $g_{2}$ defined by interpolating the points $p_{d,\dots,e-1}$
     \begin{displaymath}
         I_{1} \cap I_{2} = \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle
     \end{displaymath}
-    Where $g_{3}(y)$ is the polynomial defined by interpolating the points $p_{0,...,d-1,d,...,e-1}$ and satisfies :
+    Where $g_{3}(y)$ is the polynomial defined by interpolating the points $p_{0,\dots,d-1,d,\dots,e-1}$ and satisfies :
     \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -527,7 +528,12 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 \end{theorem}
 
 \begin{proof}
-    We will first show that $I_{1} \cap I_{2} \subset \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle$.
+    Let us denote $I =  \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle$
+    First, remark that as $\gcd(h_{1}, h_{2}) = 1$, there exists $u, v$ such that : 
+    \begin{displaymath}
+        uh_{1} + vh_{2} = 1
+    \end{displaymath}
+    We will first show that $I_{1} \cap I_{2} \subseteq \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle$.
     Assume that $f \in I_{1} \cap I_{2}$. We can write $f$ as : 
     \begin{displaymath}
         f = \sum_{i = 1}^{n} m_{i}
@@ -536,25 +542,33 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
     Let $m$ be any of the $m_{i}$. There a few possible cases for $m$ : 
     \begin{itemize}
         \item $m$ is purely in $y$. Then $h_{1} | m$ and $h_{2} | m$, so $h_{1}h_{2} | m$, thus $m \in \langle h_{1}h_{2}(y) \rangle$.
-        \item $m$ is a multiple of $x - g_{1}(y)$ and $x - g_{2}(y)$. That is, $m = k \cdot h$, $h$ being the polynomial that zeroes on all the $p_{0,...,d-1,d,...,e-1}$. As all the $y_{i}$ are distinct, We have that $x - g_{3}(y) = h$, so $m \in \langle x - g_{3}(y) \rangle$.
-        \item $m$ is a multiple of $h_{1}$ and $x - g_{2}(y)$. ??? 
-        \item This point is the same as the last one, we only need to swap $h_{1}$ with $h_{2}$ and $x - g_{2}(y)$ with $x - g_{1}(y)$.
-    \end{itemize}
-    
-    Now, let us show that $\langle h_{1}h_{2}(y), x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$.
-    \begin{itemize}
-        \item It is straightforward that $\langle h_{1}h_{2}(y) \rangle \subset I_{1} \cap I_{2}$, as it belongs to $I_{1}$ as well as $I_{2}$.
-        \item Now, we will show that  $\langle x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$. As $\gcd(h_{1}, h_{2}) = 1$, there exists $u, v$ such that : 
+        \item $m$ is a multiple of $x - g_{1}(y)$ and $x - g_{2}(y)$. That is, $m = k \cdot h$, $h$ being the polynomial that vanishes on all the $p_{0,\dots,d-1,d,\dots,e-1}$. As all the $y_{i}$ are distinct, We have that $x - g_{3}(y) = h$, so $m \in \langle x - g_{3}(y) \rangle$.
+        \item $m$ is a multiple of $h_{1}$ and $x - g_{2}(y)$. If we divide $m$ by $x - g_{3}$, we get : 
         \begin{displaymath}
-            uh_{1} + vh_{2} = 1
+            q = h_{1}, r = h_{1} (g_{2} - g_{3})
         \end{displaymath}
+        We can remark that 
+        \begin{align*}
+            r & = 0 & \pmod{h_{1}} \\
+            r & = h_{1} (g_{2} - g_{2}) & \pmod {h_{2}} \\
+            r & = 0 & \pmod {h_{2}}
+        \end{align*}
+        Thus by the CRT, $r = 0 \pmod{h_{1}h_{2}}$, so by Theorem \ref{th:ideal-membership-test}, $m \in I$
+        \item This point is the same as the last one, we only need to swap $h_{1}$ with $h_{2}$ and $x - g_{2}(y)$ with $x - g_{1}(y)$.
+        If we divide $m$ by $(x - g_{3})$, we get : 
+    \end{itemize} 
+    
+    Now, let us show that $\langle h_{1}h_{2}(y), x - g_{3}(y) \rangle \subseteq I_{1} \cap I_{2}$.
+    \begin{itemize}
+        \item It is straightforward that $\langle h_{1}h_{2}(y) \rangle \subseteq I_{1} \cap I_{2}$, as it belongs to $I_{1}$ as well as $I_{2}$.
+        \item Now, we will show that  $\langle x - g_{3}(y) \rangle \subseteq I_{1} \cap I_{2}$. Recall that we have $uh_{1} + vh_{2} = 1$.
         Using the CRT, we have : 
         \begin{align*}
             (x - g_{2})uh_{1} + (x - g_{1})vh_{2} 
             & = x(uh_{1} + vh_{2}) - ug_{2}h_{1} - vg_{1}h_{2} \\
             & = x - g_{3}(y)
         \end{align*}
-        Thus we get that $\langle x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$ as it is an algebraic combination of terms belonging to $I_{1} \cap I_{2}$.
+        Thus we get that $\langle x - g_{3}(y) \rangle \subset I_{1} \cap I_{2}$ as it is an algebraic expression of terms belonging to $I_{1} \cap I_{2}$.
 
     \end{itemize}
 
@@ -565,11 +579,11 @@ Now, assume $\gcd(h_{1}, {h_2}) \neq 1$.
 
 We can now write the two ideals as : 
 \begin{align*}
-    I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle = \langle \gcd(h_{1}, h_{2}) p_{1}(y), x - g_{1}(y) \rangle \\
-    I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle = \langle \gcd(h_{1}, h_{2}) p_{2}(y), x - g_{2}(y) \rangle
+    I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle = \langle \alpha p_{1}(y), x - g_{1}(y) \rangle \\
+    I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle = \langle \alpha p_{2}(y), x - g_{2}(y) \rangle
 \end{align*}
 
-Where $\gcd(p_{1}, p_{2}) = 1$.
+Where $\alpha = \gcd(h_{1}, h_{2})$ and $\gcd(p_{1}, p_{2}) = 1$.
 
 As we did previously, we want to find $g_{3}$ such that 
 \begin{displaymath}
@@ -587,59 +601,131 @@ Now, we want to find $f$ such that :
     \left\{
     \begin{array}{ll}
         f = x - g_{3}           & \pmod {p_{1}p_{2}}         \\
-        f = (x-g_{1})(x-g_{2})  & \pmod {\gcd(h_{1}, h_{2})} \\
+        f = (x-g_{1})(x-g_{2})  & \pmod {\alpha}             \\
     \end{array}
     \right.
 \end{align*}
 Again, such a polynomial can be computed using the CRT. 
 
-\begin{theorem}
-    Assume $\gcd(I_{1}, I_{2}) \neq 1$. 
+\begin{theorem} \label{th:inter-2-gcd-neq-1}
+    Assume $\gcd(h_{1}, h_{2}) \neq 1$. 
     \begin{displaymath}
-        I_{1} \cap I_{2} = \langle \lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})(x - g_{3}(y)), f(x,y) \rangle
+        I_{1} \cap I_{2} = \langle \lcm(h_{1}, h_{2})(y), \alpha (x - g_{3}(y)), f(x,y) \rangle
     \end{displaymath}
 \end{theorem}
 
 \begin{proof}
+    Let us denote $I = \langle \lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})(x - g_{3}(y)), f(x,y) \rangle$. \\
+    First, remark that as $\gcd(p_{1}, p_{2}) = 1$, there exists $u, v$ such that : 
 
+    \begin{displaymath}
+        up_{1} + vp_{2} = 1
+    \end{displaymath}
+
+    We will first prove that $I_{1} \cap I_{2} \subseteq \langle \lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})(x - g_{3}(y)), f(x,y) \rangle$. \\
+    Let $f \in I_{1}$ and $f \in I_{2}$. We can write $f$ as : 
+
+    \begin{displaymath}
+        f = \sum_{i = 1}^{n} m_{i}
+    \end{displaymath}
+    
+    Where all the $m_{i}$ are in $I_{1} \cap I_{2}$. \\
+    Let $m$ be any of the $m_{i}$. There a few possible cases for $m$ : 
+    
+    \begin{itemize}
+        \item $m$ is purely in $y$. The smallest polynomial in $y$ belonging to $I_{1} \cap I_{2}$ is by definition $\lcm(h_{1}, h_{2})$. Hence $m \in I$.
+        \item $m$ is a multiple of $(x - g_{1})$ and $(x - g_{2})$. Now, we don't have the assumption that all the points $p_{0,\dots,d-1,d,\dots,e-1}$ are distinct. Then, we can only interpolate the $y_{i}$ that are distinct to define $x - g_{3}$. So to take into account the points skipped during the interpolation, $m$ also needs to be a multiple of $\alpha$. So we have that $m = k \cdot \alpha (x - g_{3})$, thus $m \in I$. 
+        \item $m$ is a multiple of $h_{1}$ and $x - g_{2}(y)$. We get that $m = p_{1} \alpha (x - g_{2})$. If we divide $m$ by $\alpha (x - g_{3})$, we get : 
+        \begin{displaymath}
+            q = \alpha h_{1}, r = \alpha p_{1} (g_{2} - g_{3})
+        \end{displaymath}
+        We can remark that :
+        \begin{align*}
+            r & = 0 & \pmod{p_{1}} \\
+            r & = \alpha p_{1} (g_{2} - g_{2}) & \pmod {p_{2}} \\
+            r & = 0 & \pmod {p_{2}}
+        \end{align*}
+        Thus by the CRT, $r = 0 \pmod{h_{1}h_{2}}$, so by Theorem \ref{th:ideal-membership-test}, $m \in I$
+        \item This point is the same as the last one, we only need to swap $h_{1}$ with $h_{2}$ and $x - g_{2}(y)$ with $x - g_{1}(y)$.
+        
+%        \item $m$ is a multiple of $h_{1}$ and $(x - g_{2})$ or $m$ is a multiple of $h_{2}$ and $(x - g_{1})$. We get that : 
+%        \begin{displaymath}
+%            m = \alpha p_{1} (x - g_{2})
+%        \end{displaymath}
+%        If we divide $m$ by $\alpha (x - g_{3})$, we get : \\
+%        $q = p_{1}$, $r = - \alpha (x - g_{1}) v p_{2} = 0 \pmod {\lcm(p_{1}, p_{2})}$
+    \end{itemize} 
+    % --------------------------------------------------------------------------------------------------------------------------------------
+    Conversly, let us show that $\langle \lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})(x - g_{3}(y)), f(x,y) \rangle \subseteq I_{1} \cap I_{2}$.
+
+    \begin{itemize}
+        \item It is straightforward that $\langle \lcm(h_{1}, h_{2}) \rangle \subseteq I_{1} \cap I_{2}$, as $h_{1}$ and $h_{2}$ divide $\lcm(h_{1}, h_{2})$.
+        \item Then, we will show that  $\langle \alpha (x - g_{3}(y)) \rangle \subseteq I_{1} \cap I_{2}$. Recall that we have $up_{1} + vp_{2} = 1$.
+        Using the CRT, we have : 
+        \begin{align*}
+            x - g_{3} = (x - g_{2})up_{1} + (x - g_{1})vp_{2}
+        \end{align*}
+        If we multiply by $\alpha$, we get :
+        \begin{align*}
+            \alpha (x - g_{3}(y)) =  \alpha p_{1} (x - g_{2})u + \alpha p_{2} (x - g_{1})v
+        \end{align*}
+        Thus we get that $\langle \alpha (x - g_{3}(y)) \rangle \subset I_{1} \cap I_{2}$ as it is an algebraic combination of terms belonging to $I_{1} \cap I_{2}$.
+        \item Finally, let us show that $f(x, y) \subseteq I_{1} \cap I_{2} $. As $\gcd(p_{1}p_{2}, \alpha) = 1$, the following equality stands :
+        \begin{displaymath}
+            u^{\prime} p_{1}p_{2} + v^{\prime} \alpha = 1
+        \end{displaymath}
+        The CRT formula gives us that : 
+        \begin{align*}
+            f & = (x - g_{1})(x - g_{2}) p_{1}p_{2} u^{\prime} + \alpha (x - g_{3}) v^{\prime} \\
+              & = (x - g_{1})(x - g_{2}) p_{1}p_{2} u^{\prime} + \alpha ((x - g_{2})up_{1} + (x - g_{1})vp_{2}) v^{\prime}
+        \end{align*}
+        The 2 terms of the expression are clearly in $I_{1} \cap I_{2}$. 
+    \end{itemize}
+
+    As all the generators of $I$ are in $I_{1} \cap I_{2}$, we can conclude that $I \subseteq I_{1} \cap I_{2}$.
 \end{proof}
 
-From this reasoning we can deduce an algorithm to compute the intersection of two ideal with the above proprieties.
-This algorithm is used only for understanding the step behind Maple's algorithms.
+%From this reasoning we can deduce an algorithm to compute the intersection of two ideal with the above proprieties.
+%This algorithm is used only for understanding the step behind Maple's algorithms.
 
-\begin{algorithm} [H]
-    \caption{Intersection ($I_{1}, I_{2}$)} \label{alg:intersect-2-ideals}
-    \textbf{Input : }Two Ideals $I_{1}$ and $I_{2}$ as described above \\
-    \textbf{Output : }$I_{1} \cap I_{2}$
-\begin{algorithmic}
-    \State $h_{1}, g_{1} = I_{1}$ 
-    \State $h_{2}, g_{2} = I_{2}$ 
-    \State $l, g \gets lcm(h_{1}, h_{2}), gcd(h_{1}, h_{2})$
-    \State $p_{1}, p_{2} \gets \frac{h_{1}}{g}, \frac{h_{2}}{g}$
-    \State $q_{1}, q_{2} \gets g_{1} \pmod {p_{1}}, g_{2} \pmod {p_{2}}$
-    \State $q_{3} \gets g_{1} \cdot g_{2} \pmod {g}$ \Comment{Polynomials can both be reduced modulo $g$ first}
-    \State $u_{1}, v_{1} \gets gcdex_{y} (p_{1}, p_{2})$ \Comment{$u_{1}, v_{1}$ represent the cofactors here}
-    \State $u_{2}, v_{2} \gets gcdex_{y} (p_{1} \cdot p_{2}, g)$ \Comment{$u_{2}, v_{2}$ represent the cofactors here}
-    \State $P_{1}, P_{2} \gets u_{1}q_{2}p_{1}, v_{1}q_{1}p_{2}$ \Comment{This are the CRT solutions}
-    \State $P_{12} = P_{1} + P_{2}$
-    \State $P_{3}, P_{4} \gets u_{2}q_{3}p_{1}p_{2}, v_{2}P_{12}g$
-    \State $P_{34} = P_{3} + P_{4}$
-    \State $B^{\prime} = \langle l, gP_{12} \rangle$
-    \State $P_{34} \gets NF(P_{34}, B^{\prime})$
-    \State $R = \langle l, NF(gP_{12}, \langle l \rangle), P_{34} \rangle$ \\
-    \Return $R$
-\end{algorithmic}
-\end{algorithm}
+%\begin{algorithm} [H]
+%    \caption{Intersection ($I_{1}, I_{2}$)} \label{alg:intersect-2-ideals}
+%    \textbf{Input : }Two Ideals $I_{1}$ and $I_{2}$ as described above \\
+%    \textbf{Output : }$I_{1} \cap I_{2}$
+%\begin{algorithmic}
+%    \State $h_{1}, g_{1} = I_{1}$ 
+%    \State $h_{2}, g_{2} = I_{2}$ 
+%    \State $l, g \gets lcm(h_{1}, h_{2}), gcd(h_{1}, h_{2})$
+%    \State $p_{1}, p_{2} \gets \frac{h_{1}}{g}, \frac{h_{2}}{g}$
+%    \State $q_{1}, q_{2} \gets g_{1} \pmod {p_{1}}, g_{2} \pmod {p_{2}}$
+%    \State $q_{3} \gets g_{1} \cdot g_{2} \pmod {g}$ \Comment{Polynomials can both be reduced modulo $g$ first}
+%    \State $u_{1}, v_{1} \gets gcdex_{y} (p_{1}, p_{2})$ \Comment{$u_{1}, v_{1}$ represent the cofactors here}
+%    \State $u_{2}, v_{2} \gets gcdex_{y} (p_{1} \cdot p_{2}, g)$ \Comment{$u_{2}, v_{2}$ represent the cofactors here}
+%    \State $P_{1}, P_{2} \gets u_{1}q_{2}p_{1}, v_{1}q_{1}p_{2}$ \Comment{This are the CRT solutions}
+%    \State $P_{12} = P_{1} + P_{2}$
+%    \State $P_{3}, P_{4} \gets u_{2}q_{3}p_{1}p_{2}, v_{2}P_{12}g$
+%    \State $P_{34} = P_{3} + P_{4}$
+%    \State $B^{\prime} = \langle l, gP_{12} \rangle$
+%    \State $P_{34} \gets NF(P_{34}, B^{\prime})$
+%    \State $R = \langle l, NF(gP_{12}, \langle l \rangle), P_{34} \rangle$ \\
+%    \Return $R$
+%\end{algorithmic}
+%\end{algorithm}
 
-\begin{theorem} The complexity of the above algorithm is in $\mathcal{O}(n^2)$
+\begin{theorem} 
+    The complexity of computing the intersection of two ideals using Theorem \ref{th:inter-2-gcd-neq-1} is $\mathcal{O}(n^2)$
 \end{theorem}
 
+\begin{proof}
+    
+\end{proof}
 
-\begin {example}
+
+\begin{example}
     Let describe one execution of our algorithm,\newline
-    We take $I_{1} = \langle y^{2}+2y-3,x-y+1\rangle$ and $I_{2} = \langle y^{2}+3y-4,x-y+3 \rangle$\newline
-    we have $h_{1}\ =\ (y + 3)(y - 1)$ and $h_{2}\ =\ (y + 4)(y - 1)$\newline
-    we clearly have $gcd(h_{1},h_{2})\ =\ (y-1)$\newline
+    We take $I_{1} = \langle y^{2}+2y-3,x-y+1\rangle$ and $I_{2} = \langle y^{2}+3y-4,x-y+3 \rangle$ \newline
+    We can factor $h_{1}$ and $h_{2}$ and get : $h_{1}\ =\ (y + 3)(y - 1)$ and $h_{2}\ =\ (y + 4)(y - 1)$ \newline
+    Clearly, $\gcd(h_{1},h_{2})\ =\ (y-1)$\newline
     We have the following CRT :
     \begin{displaymath}
         \left\{
@@ -662,7 +748,7 @@ This algorithm is used only for understanding the step behind Maple's algorithms
         \right.
     \end{align*}
     we obtain $f_{2}\ =\ x^2 - 5y^2 + 2x - 8y + 13$
-    The the result is then \[\langle (y-1)(y+4)(y+3),\ (y-1)(x - 3y - 5),\ x^2 - 5y^2 + 2x - 8y + 13\rangle\]
+    The the result is then \[ I_{1} \cap I_{2} = \langle (y-1)(y+4)(y+3),\ (y-1)(x - 3y - 5),\ x^2 - 5y^2 + 2x - 8y + 13\rangle\]
 \end{example}
 \newpage
 How can we generalize this process for an intersection of N ideal instead of only 2 ?
@@ -673,10 +759,10 @@ Let assume we have N Ideal with the same structure which are :
 \[\dots\]
 \[I_{N} = <h_{N}(y),x-g_{N}(y)>\]
 
-Also, we have the assumption that: \[gcd(h_{1},...,h_{N})\neq1\ \forall i \in \{1,...,N\}\]
-and \[gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,...,N-2\}\]
+Also, we have the assumption that: \[gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}\]
+and \[gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}\]
 
-We define the polynomials $y_{1},\dots,y_{N}$ such that $y_{1} = \displaystyle \frac{h_{1}}{\gcd(h_{1},...,h_{N})}$,$\dots$, $y_{N} = \displaystyle \frac{h_{N}}{\gcd(h_{1},...,h_{N})}$. We want to find $f$ such that :
+We define the polynomials $y_{1},\dots,y_{N}$ such that $y_{1} = \displaystyle \frac{h_{1}}{\gcd(h_{1},\dots,h_{N})}$,$\dots$, $y_{N} = \displaystyle \frac{h_{N}}{\gcd(h_{1},\dots,h_{N})}$. We want to find $f$ such that :
 \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -699,7 +785,7 @@ $f_{1}$ can be computed using the CRT. Now, we want to find $f_{2}$ such that :
 Again, such a polynomial can be computed using the CRT\@.
 
 \begin{theorem}
-    When $gcd(h_{1},...,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,...,N-2\}$
+    When $gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}$
     \begin{displaymath}
         I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle lcm(\{h_{i}\}), gcd(\{h_{i}\})f_{1},f_{2} \rangle
     \end{displaymath}
@@ -715,8 +801,8 @@ From this reasoning we get the following iterative algorithm :
     \State $H \coloneqq \{h_{1},..,h_{N}\}$
     \State $P1 \coloneqq LCM(H)$
     \State $h^{*} \coloneqq GCD(H)$
-    \State $Y\coloneqq \{y_{1}= \frac{h_{1}}{h^{*}},...,y_{N}= \frac{h_{N}}{h^{*}}\}$
-    \State $X \coloneqq \{x_{1} = \frac{x-g_{1}}{y_{1}},...,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
+    \State $Y\coloneqq \{y_{1}= \frac{h_{1}}{h^{*}},\dots,y_{N}= \frac{h_{N}}{h^{*}}\}$
+    \State $X \coloneqq \{x_{1} = \frac{x-g_{1}}{y_{1}},\dots,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
     \State $x^{*} \coloneqq \prod^{N}_{i=1} \frac{x-g_{i}}{h^{*}}$
     \State $c\coloneqq CRT(X,Y)$
     \State $P2 \coloneqq c[1]*h^{*}$ \Comment{The CRT algorithm implemented return 2 elements the first one is the found polynomial and the second one the multiplication of each divisor $\prod^{N}_{i=1} y_{i}$}
@@ -752,7 +838,7 @@ We can then write H as :
 We define the set $H_{j}$ as following :
 \[H_{j} = \{\ (y-y_{i}) \ |\  k_{i} \geq j\ \}\]
 
-We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h_{1},...,h_{N})})\]
+We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h_{1},\dots,h_{N})})\]
 
 Let define $W_{x} = H_{x}-H_{x+1}$ and $C_{x}^{w}$ = \{ ($x-g_{x})$ $|$ w divide $h_{i}$, $\forall i \in \{1,\dots,N\}$\}\newline
 We finally define the polynomials $\forall i \in \{1,\dots,height(H)\}, \forall w \in W_{i}$ :
