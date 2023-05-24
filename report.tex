@@ -637,7 +637,7 @@ This algorithm is used only for understanding the step behind Maple's algorithms
 
 \begin {example}
     Let describe one execution of our algorithm,\newline
-    We take $I1 = \langle y^{2}+2y-3,x-y+1\rangle$ and $I2 = \langley^{2}+3y-4,x-y+3\rangle$\newline
+    We take $I1 = \langle y^{2}+2y-3,x-y+1\rangle$ and $I2 = \langle y^{2}+3y-4,x-y+3 \rangle$\newline
     we have $h_{1}\ =\ (y + 3)*(y - 1)$ and $h_{2}\ =\ (y + 4)*(y - 1)$\newline
     we clearly have $gcd(h_{1},h_{2})\ =\ (y-1)$\newline
     We have the following CRT :
@@ -653,14 +653,14 @@ This algorithm is used only for understanding the step behind Maple's algorithms
     We then multiply $f_{1}$ by $y-1$ and we obtain the 2nd polynomial of the grobner base which is :
     \[(y-1)*(x - 3*y - 5) = x*y - 3*y^2 - x - 2*y + 5\]
     We then compute the last polynomial of the base using again the CRT : \newline
-    \begin{displaymath}
+    \begin{align*}
         \left\{
             \begin{array}{ll}
             f_{2} = x - 3*y - 5 \pmod{(y + 3)*(y + 4)} \\
             f_{2} = (x-y+3)*(x-y+1) \pmod{y-1}  = x*(x+2) \pmod{y-1} \\
             \end{array}
-        \right
-    \end{displaymath}
+        \right.
+    \end{align*}
     we obtain $f_{2}\ =\ x^2 - 5*y^2 + 2*x - 8*y + 13$
     The the result is then \[\langle (y-1)(y+4)(y+3),\ x*y - 3*y^2 - x - 2*y + 5,\ x^2 - 5*y^2 + 2*x - 8*y + 13\rangle\]
 \end{example}
