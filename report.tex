@@ -78,7 +78,7 @@
 Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ are polynomials in $x$ and $y$ with coefficients in a field $\mathbb{K}$, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems. \\
 It is known that when the system has a finite number of solutions, the associated Gröbner bases under the lexicographical order contain at least two non-zero polynomials that can be distinguished : (1) one exclusively in terms of y and (2) another where the leading term is a power of x. \\
 The objective of this project is to investigate the structure of these bases. \\
-To accomplish this, we first examined the construction of a Gröbner basis and then established the existence of polynomials (1) and (2). Subsequently, we explored the structure of the intersection of two Gröbner bases with specific properties(link). \\
+To accomplish this, we first examined the construction of a Gröbner basis and then established the existence of polynomials (1) and (2). Subsequently, we explored the structure of the intersection of two Gröbner bases with specific properties (Section\ref{sec:<GV>}). \\
 Finally, we extended our analysis to the structure of the intersection of N Gröbner bases. \\ \\
 
 \textbf{We would like to extend our sincere appreciation to our supervisor Jeremy Berthomieu from the LIP6 PolSys  team for his invaluable guidance and expertise throughout this project.}
@@ -383,7 +383,7 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
     Suppose that we have $f = g + h = g^{\prime} + h^{\prime}$, where $g^{\prime}$ is also a combination of elements of $\mathscr{G}$. Then, $h - h^{\prime} = g^{\prime} - g \in I$. If $h \neq h^{\prime}$, there exist $g \in \mathscr{G}$ such that $LT(g)$ divides $LT(h - h^{\prime})$. But from Proposition \ref{proposition:monomials-h-staircase}, all the monomials of $h$ and $h^{\prime}$ are in $E(I)$. In particular, $LT(h - h^{\prime}) \in E(I)$. We get to a contradition, thus $h - h^{\prime} = 0$ which proves the uniqueness of $h$.
 \end{proof}
 
-\section{Geometric point of view}
+\section{Geometric point of view}\label{sec:<GV>}
 
 After studying ideals from an algebraic point of view, we may need to observe what happens when we study the zeroes of the polynomials characterizing ideals. Here, we'll introduce affine varieties, and some results linking the algebraic and geometric points of view.
 
