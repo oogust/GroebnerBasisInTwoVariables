@@ -163,23 +163,18 @@ When studying polynomials of only one variable, the order of the monomials is st
 
 \begin{proof}
     $\Rightarrow$ \newline
-    $y^{m} \prec_{lex} x^{m}$ \ref{def:lexicographic-order} \newline
-    $y^{m+l} \prec_{lex} y^{l}x^{m}$ \ref{def:monomial-order} \newline
-    $x^{i}y^{m+l} \prec_{lex} y^{l}x^{m+i}$ \ref{def:lexicographic-order} \newline
+    $y^{m} \prec_{lex} x^{m}$ \ref{def:lexicographic-order},
+    $y^{m+l} \prec_{lex} y^{l}x^{m}$ \ref{def:monomial-order},
+    $x^{i}y^{m+l} \prec_{lex} y^{l}x^{m+i}$ \ref{def:lexicographic-order},
     $j = m+l$ $ k = m + i$ and we have that $m+i>i \Rightarrow k > i$ \newline
     $\Leftarrow$ Let suppose that we have $i<k$ We can then write 
     \newline
-    $x^{i}\prec_{lex} x^{k}$ \ref{def:lexicographic-order} \newline
-    $x^{i}y^{j}\prec_{lex} 
-    x^{k}y^{j}$ \ref{def:monomial-order}
-    \newline
-    $x^{k}y^{j} \prec_{lex} x^{k+1}y^{j} $ \ref{def:lexicographic-order}, \ref{def:monomial-order}
-    \newline
-    $x^{k}y^{j}y^{w} \prec_{lex} x^{k+1}y^{j}y^{w} $ \ref{def:monomial-order}
-    \newline
-    $x^{i}y^{j}\prec_{lex} 
-    x^{k}y^{j}\prec_{lex} x^{k'}y^{l} $ \ref{def:monomial-order}
-    \newline
+    $x^{i}\prec_{lex} x^{k}$ \ref{def:lexicographic-order},
+    $x^{i}y^{j}\prec_{lex},
+    x^{k}y^{j}$ \ref{def:monomial-order},
+    $x^{k}y^{j} \prec_{lex} x^{k+1}y^{j} $ \ref{def:lexicographic-order}, \ref{def:monomial-order},
+    $x^{k}y^{j}y^{w} \prec_{lex} x^{k+1}y^{j}y^{w} $ \ref{def:monomial-order},
+    $x^{i}y^{j}\prec_{lex}x^{k}y^{j}\prec_{lex} x^{k'}y^{l} $ \ref{def:monomial-order},
     $x^{i}y^{j}\prec_{lex} x^{k'}y^{l} $
     
     
