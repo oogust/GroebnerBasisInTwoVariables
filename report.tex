@@ -2,6 +2,7 @@
 
 \usepackage{listings}
 \usepackage{geometry}
+\usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -12,6 +13,8 @@
 \usepackage{blindtext}
 \usepackage{titlesec}
 \usepackage{algorithm}
+\usepackage{algorithmicx}
+%\usepackage{algorithm2e}
 \usepackage{algpseudocode}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
@@ -34,9 +37,12 @@
 \newtheorem{remark}{Remark}[section]
 \newtheorem{conjecture}{Conjecture}[section]
 
+\DeclareMathOperator{\lcm}{lcm}
+
+\geometry{legalpaper, margin=3cm}
+
 \title{PSFPN - Gröbner bases in two variables}
 \begin{document}
-%\geometry{legalpaper, margin=2cm}
 \setlength{\parindent}{0pt}
 
 
@@ -301,7 +307,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 
 Using the notion of monimial order, we have a way to sort all the monomials of $\mathbb{K}[x, y]$. Therefore, we can now define a division algorithm similar to the Euclidean division algorithm, which will be useful to prove some results about ideals. 
 
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{Division algorithm over $\mathbb{K}[x, y]$} \label{alg:div}
 \textbf{Input : }A polynomial $f \in \mathbb{K}[x, y]$, $\mathscr{G} \subseteq I$ \\
 \textbf{Output : }Normal form of $f$
@@ -468,6 +474,7 @@ After studying ideals from an algebraic point of view, we may need to observe wh
 We now want to study the Gröbner basis for the lexicographic ordering (lex-GB) of the intersection of ideals, assuming we their lex-GB.
 We will start with the simplest case, called the "shape position", which is $I = \langle h(y), x - g(y) \rangle$. Here starts the real \textit{"research"} part of this project. \\
 
+
 \subsection*{Ideals Intersections case 1}
 
 We will now study ideals based on generators of a certain form. 
@@ -555,40 +562,52 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 
 
 Now, assume $\gcd(h_{1}, {h_2}) \neq 1$.
-We want to compute $I_{1} \cap I_{2}$. We define the polynomials $p_{1}, p_{2}$ such that $p_{1} = \displaystyle \frac{h_{1}}{\gcd(h_{1}, h_{2})}$ and $p_{2} = \displaystyle \frac{h_{2}}{\gcd(h_{1}, h_{2})}$. We want to find $f$ such that : 
+
+We can now write the two ideals as : 
+\begin{align*}
+    I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle = \langle \gcd(h_{1}, h_{2}) p_{1}(y), x - g_{1}(y) \rangle \\
+    I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle = \langle \gcd(h_{1}, h_{2}) p_{2}(y), x - g_{2}(y) \rangle
+\end{align*}
+
+Where $\gcd(p_{1}, p_{2}) = 1$.
+
+As we did previously, we want to find $g_{3}$ such that 
 \begin{displaymath}
     \left\{
     \begin{array}{ll}
-        f_{1} = x-g_{1} \pmod {p_{1}} \\
-        f_{1} = x-g_{2} \pmod {p_{2}} \\
+        g_{3} = g_{1} \pmod {p_{1}} \\
+        g_{3} = g_{2} \pmod {p_{2}} \\
     \end{array}
     \right.
 \end{displaymath}
-$f_{1}$ can be computed using the CRT. Now, we want to find $f_{2}$ such that : 
-\begin{displaymath}
+Such a polynomial $g_{3}$ can be computed using the CRT.
+
+Now, we want to find $f$ such that : 
+\begin{align*}
     \left\{
     \begin{array}{ll}
-        f_{2} = f_{1} \pmod {p_{1}p_{2}} \\
-        f_{2} = (x-g_{1})(x-g_{2}) \pmod {\gcd(h_{1}, h_{2})} \\
+        f = x - g_{3}           & \pmod {p_{1}p_{2}}         \\
+        f = (x-g_{1})(x-g_{2})  & \pmod {\gcd(h_{1}, h_{2})} \\
     \end{array}
     \right.
-\end{displaymath}
+\end{align*}
 Again, such a polynomial can be computed using the CRT. 
 
 \begin{theorem}
     Assume $\gcd(I_{1}, I_{2}) \neq 1$. 
     \begin{displaymath}
-        I_{1} \cap I_{2} = \langle lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})f_{1}(x,y), f_{2}(x,y) \rangle
+        I_{1} \cap I_{2} = \langle \lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})(x - g_{3}(y)), f(x,y) \rangle
     \end{displaymath}
 \end{theorem}
 
-From this reasoning we can deduce an iterative algorithm to compute the intersection of two ideal with the above proprieties[].
+\begin{proof}
 
+\end{proof}
 
+From this reasoning we can deduce an algorithm to compute the intersection of two ideal with the above proprieties.
 This algorithm is used only for understanding the step behind Maple's algorithms.
 
-\newpage
-\begin{algorithm}
+\begin{algorithm} [H]
     \caption{Intersection ($I_{1}, I_{2}$)} \label{alg:intersect-2-ideals}
     \textbf{Input : }Two Ideals $I_{1}$ and $I_{2}$ as described above \\
     \textbf{Output : }$I_{1} \cap I_{2}$
@@ -654,7 +673,7 @@ Again, such a polynomial can be computed using the CRT\@.
 
 From this reasoning we get the following iterative algorithm : 
 
-\begin{algorithm}
+\begin{algorithm}[H]
     \caption{Intersect1($I_{1},\dots,I_{N}$)}\label{alg:intersect-n-ideals-equal-gcd}
     \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
     \textbf{Output : }$I_{1} \cap \dots\cap I_ {N}$
@@ -672,7 +691,6 @@ From this reasoning we get the following iterative algorithm :
 \end{algorithmic}
 \end{algorithm}
 
-\newpage
 \subsection*{Ideals Intersections case 2}
 
 Let now assume that we have : 
@@ -715,7 +733,7 @@ Case i $>$ 1
 for both cases, we can find $f_{i}$ using the CRT\@.
 
 \begin{conjecture}
-    The gröbner base formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the above proprieties is of dimension height(H) + 1.
+    The Gröbner basis formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the above proprieties is of dimension height(H) + 1.
 \end{conjecture}
 
 
@@ -732,7 +750,7 @@ The algorithm use a \("\)correspondence\("\) list $C$, this list act like a dict
 The function ListOfFactorsAndMultiplicities is also a dictionary, matching each factor with their multiplicities.\newline
 The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities by one, this function act like $W_{x}$ defined above.\newline
 
-\begin{algorithm}
+\begin{algorithm}[H]
     \caption{Intersect2 ($I_{1},\dots,I_{N}$)}\label{alg:intersect-2-ideals-diff-gcd}
     \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
     \textbf{Output : }$I_{1} \cap \dots\cap I_ {N}$
