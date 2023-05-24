@@ -510,7 +510,7 @@ Let us now define the ideals $I_{1}$ and $I_{2}$.
 
 We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 
-\begin{theorem} 
+\begin{theorem} \label{sec:<case1>}
     Let $I_{1}$ and $I_{2}$ be two ideals as defined above, with $g_{1}$ defined by interpolating the points $p_{0...d-1}$ and $g_{2}$ defined by interpolating the points $p_{d...e-1}$
     \begin{displaymath}
         I_{1} \cap I_{2} = \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle
@@ -900,6 +900,19 @@ The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities 
     The final result is : \[\langle y(y-1)(y+1)(y+2),\ y(y+1)(y-1)(x+5),\ y(\frac{3x^{2}-6xy+y^{2}+9x-9y+8}{3}),\ x^{3}-3x^{2}+6x^{2}-3xy-3y^{2}+11x-3y+6\ \rangle\]
 
 \end{example}
+
+\newpage
+\section{Conclusion}
+In this project, we have delved into the foundations of Gröbner bases, a powerful mathematical tool utilized for solving polynomial systems and demonstrating polynomial membership within an ideal.
+Our research has primarily focused on the latter aspect, specifically exploring the membership of polynomials in ideals and investigating the structure of Gröbner bases for intersections of ideals with specific properties.\newline
+Through these investigations, we have gained insights into how the structure of these bases varies based on the parameters of the input ideals.
+This exploration has been exceptionally enriching since the Gröbner basis generates the resulting ideal of the intersection.\newline
+Nevertheless, the structures we have examined are not exhaustive in nature.
+For instance, what happens if we replace $I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle$ and $I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle$ with $I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle$  $I_{2} = \langle h_{2,1}(y), h_{2,2}(y), h_{2,1}(y)(x - g_{2,0}(y)), x^{2}-xg_{2,2}(y)-g_{2,1}(y) \rangle$ with $\gcd(h_{1,1},h_{1,2},h_{2,1},h_{2,2}) = 1$ or  $I_{j} = \langle h_{j,1}(y), h_{j,2}(y), h_{j,1}(y)G_{j,1}^(x,y),G_{j,2}(x,y) \rangle$ with $LT_{\prec_{lex}}(G_{j,2}(x,y))$ parametrized in x and $G_{j,2}(x,y) \in \langle G_{j,1},h_{j,2} \rangle$ for $j\in\{1,2\}$ or $j\in\{1,2,3\}$  ?
+Additionally, how does the scenario unfold when we move beyond two variables and venture into the realm of three, four, or even n variables?\newline
+These unanswered questions and unexplored scenarios provide intriguing avenues for further research and deepen our understanding of the complexities associated with Gröbner bases.
+They inspire future investigations into the impact of varying structures and the behavior of systems with an increased number of variables.\newline
+By acknowledging these remaining areas of inquiry, we recognize the potential for continued advancement in this field and open the door to exciting possibilities for future exploration.
 \nocite{*}
 \printbibliography
 
