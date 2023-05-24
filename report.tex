@@ -631,6 +631,40 @@ This algorithm is used only for understanding the step behind Maple's algorithms
 \end{algorithmic}
 \end{algorithm}
 
+\begin{theorem} The complexity of the above algorithm is in $\mathcal{O}(n^2)$
+\end{theorem}
+
+
+\begin {example}
+    Let describe one execution of our algorithm,\newline
+    We take $I1 = \langle y^{2}+2y-3,x-y+1\rangle$ and $I2 = \langley^{2}+3y-4,x-y+3\rangle$\newline
+    we have $h_{1}\ =\ (y + 3)*(y - 1)$ and $h_{2}\ =\ (y + 4)*(y - 1)$\newline
+    we clearly have $gcd(h_{1},h_{2})\ =\ (y-1)$\newline
+    We have the following CRT :
+    \begin{displaymath}
+        \left\{
+            \begin{array}{ll}
+            f_{1} = x-y+1 \pmod{p_{1}} = x\ +\ 5 \pmod{p_{1}} \\
+            f_{1} = x-y+3 \pmod{p_{2}}  = x\ +\ 6 \pmod{p_{2}}  \\
+            \end{array}
+        \right.
+    \end{displaymath}
+    Using the CRT we have $f_{1} = x - 3*y - 5$ (By using the function gcdex to obtain the cofactors) \newline
+    We then multiply $f_{1}$ by $y-1$ and we obtain the 2nd polynomial of the grobner base which is :
+    \[(y-1)*(x - 3*y - 5) = x*y - 3*y^2 - x - 2*y + 5\]
+    We then compute the last polynomial of the base using again the CRT : \newline
+    \begin{displaymath}
+        \left\{
+            \begin{array}{ll}
+            f_{2} = x - 3*y - 5 \pmod{(y + 3)*(y + 4)} \\
+            f_{2} = (x-y+3)*(x-y+1) \pmod{y-1}  = x*(x+2) \pmod{y-1} \\
+            \end{array}
+        \right
+    \end{displaymath}
+    we obtain $f_{2}\ =\ x^2 - 5*y^2 + 2*x - 8*y + 13$
+    The the result is then \[\langle (y-1)(y+4)(y+3),\ x*y - 3*y^2 - x - 2*y + 5,\ x^2 - 5*y^2 + 2*x - 8*y + 13\rangle\]
+\end{example}
+\newpage
 How can we generalize this process for an intersection of N ideal instead of only 2 ?
 Let assume we have N Ideal with the same structure which are : 
 
@@ -691,6 +725,15 @@ From this reasoning we get the following iterative algorithm :
 \end{algorithmic}
 \end{algorithm}
 
+\begin{theorem} The complexity of the above algorithm is in $\mathcal{O}(N*n^2)$
+\end{theorem}
+
+\begin {example}
+
+\end{example}
+
+
+\newpage
 \subsection*{Ideals Intersections case 2}
 
 Let now assume that we have : 
@@ -717,7 +760,6 @@ We finally define the polynomials $\forall i \in \{1,\dots,height(H)\}, \forall 
 Case i = 1
 
 \[\{ f_{i} = \prod_{c \in C_{i}^{w} } c \pmod w \\ \}\]
-
 
 Case i $>$ 1
 
@@ -787,6 +829,17 @@ The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities 
 
 \end{algorithmic}
 \end{algorithm}
+
+\begin{theorem} The complexity of the above algorithm is in $\mathcal{O}(n^{2}(height(H)\ +\ N))$
+\end{theorem}
+
+
+
+\begin {example}
+
+\end{example}
+
+
 \nocite{*}
 \printbibliography
 
