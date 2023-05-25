@@ -49,13 +49,66 @@
 
 \frame{\titlepage}
 
-\begin{frame}
-    \frametitle{Table of Contents}
-    \tableofcontents
+%\begin{frame}
+%    \frametitle{Table of Contents}
+%    \tableofcontents
+%\end{frame}
+
+
+%\begin{frame}{Introduction}
+%\end{frame}
+
+\begin{frame}{Remainders}
+    \begin{definition}[Lexicographic order]\label{def:lexicographic-order}
+        The lexicographic order $\prec_{lex}$ is the monomial order over $\mathbb{K}[x, y]$ defined as : 
+        \begin{displaymath}
+            \forall i \in \mathbb{N}, y^{i} \prec_{lex} x
+        \end{displaymath}
+    \end{definition}
+    \begin{definition}[Gröbner basis]
+        A finite subset $\mathscr{G} \subseteq I$ is said to be a Gröbner basis of $I$ for the monomial order $\prec$ if for all $f \in I$, there exists $g \in \mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$. 
+    \end{definition}
+    \begin{definition}[Staircase]
+        The staircase $E(I)$ for the monomial order $\prec$ is the set of all the monomials that are not leading monomials of $I$ for $\prec$. It can be expressed as follows : 
+        \begin{displaymath}
+            E(I) = \{ x^{i}y^{j} \mid \forall (i, j) \in \mathbb{N}^{2}, \nexists f \in I, LM(f) = x^{i}y^{j}\}
+        \end{displaymath}
+    \end{definition}
 \end{frame}
 
+\begin{frame}{Staircase}
+    Consider the ideal $I = \langle y^{5} + 1, x^2 + y - 1 \rangle$ for the lexicographic ordering. \\
+    All the multiples of $y^{5} + 1$ and $x^2 + y - 1$ are not in the staircase of $I$, by definition. 
+    Then, we get that : 
+    \begin{displaymath}
+        E(I) = \{ 1, y, y^{2}, y^{3}, y^{4}, x, xy, xy^{2}, xy^{3}, xy^{4} \}
+    \end{displaymath}
+    \begin{theorem} \label{th:polynomial-only-in-y}
+        If the staircase of $I$ for the lexicographic order is finite, there exists a non zero polynomial with monomials in $y$ only in $I$.
+    \end{theorem}
+\end{frame}
 
-\begin{frame}{Introduction}
+\begin{frame}[shrink=20]{First results}
+    \begin{algorithm}[H]
+        \caption{Division algorithm over $\mathbb{K}[x, y]$} \label{alg:div}
+        \textbf{Input : }A polynomial $f \in \mathbb{K}[x, y]$, $\mathscr{G} \subseteq I$ \\
+        \textbf{Output : }Normal form of $f$
+        \begin{algorithmic}
+            \State $h \gets 0$
+            \While{$f \neq 0$} 
+                \If{there exists g $\in$ $\mathscr{G}$ such that $LM_{\prec}(g)$ divides $LM_{\prec}(f)$}
+                    \State $f \gets f- \displaystyle \frac{LT_{\prec}(f)}{LT_{\prec}(g)}g$
+                \Else
+                    \State $h \gets h + LT_{\prec}(f)$
+                    \State $f \gets f - LT_{\prec}(f)$
+                \EndIf
+            \EndWhile
+            \State \Return $h$
+        \end{algorithmic}
+        \end{algorithm}
+    \begin{theorem} \label{th:ideal-membership-test}
+        Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner basis of $I$ for the order $\prec$, $h = 0$ if and only if $f \in I$.
+    \end{theorem}
 \end{frame}
 
 \begin{frame}{Geometric point of view}
@@ -67,7 +120,7 @@
         Where $\overline{\mathbb{K}}$ stands for the algebraic closure of $\mathbb{K}$.
     \end{definition}
     \begin{proposition}
-        Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$.
+        Let $I_{1}, I_{2}$ be two ideals of $\mathbb{K}[x, y]$.
         \begin{enumerate}
             \item[(i)] $V(I_{1} \cdot I_{2}) = V(I_{1}) \cup V(I_{2})$
             \item[(ii)] $V(I_{1} \cap I_{2}) = V(I_{1}) \cup V(I_{2})$
@@ -76,16 +129,28 @@
     \end{proposition}
 \end{frame}
 
-\begin{frame}{Ideals Intersections case 1}
-    Let us now define the ideals $I_{1}$ and $I_{2}$.
-\begin{displaymath}
-    I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle
-\end{displaymath}
-\begin{displaymath}
-    I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle
-\end{displaymath}
-We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 
+
+
+\begin{frame}{Ideals Intersections}
+    Given the points $p_{i} = (x_{i}, y_{i})$ for $0 \leq i \leq d$, where $y_{i} \neq y_{j}, \forall i, j$. 
+    We define the following polynomials : 
+    
+    \begin{displaymath}
+        h(y) = \prod_{i=0}^{d-1} (y - y_{i}) 
+    \end{displaymath}
+    And the polynomial $g(y) = x$ that can be defined by interpolating the points $p_{i}$ as all the $y_{i}$ are distinct.
+    Let us now define the ideals $I_{1}$ and $I_{2}$.
+    \begin{displaymath}
+        I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle
+    \end{displaymath}
+    \begin{displaymath}
+        I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle
+    \end{displaymath}
+    We will assume that $\gcd(h_{1}, h_{2}) = 1$.
+\end{frame}
+
+\begin{frame}{Simplest case}
 \begin{theorem}
     Let $I_{1}$ and $I_{2}$ be two ideals as defined above, with $g_{1}$ defined by interpolating the points $p_{0,\dots,d-1}$ and $g_{2}$ defined by interpolating the points $p_{d,\dots,e-1}$
     \begin{displaymath}
@@ -114,7 +179,7 @@ We can now write the two ideals as :
 
 Where $\alpha = \gcd(h_{1}, h_{2})$ and $\gcd(p_{1}, p_{2}) = 1$.
 
-We will define then define polynomials $g_{3}(y)$
+We will define then define the polynomials $g_{3}(y)$
 \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -143,13 +208,17 @@ and $f(x, y)$
 
 \begin{frame}{Case 2 - Generalization}
 How can we generalize this process for an intersection of N ideal instead of only 2 ?
-Let assume we have N Ideal with the same structure which are :
-
-$I_{1} = \langle h_{1}(y),x-g_{1}(y) \rangle, I_{2} = \langle h_{2}(y),x-g_{2}(y) \rangle, \dots ,I_{N} = \langle h_{N}(y),x-g_{N}(y) \rangle$
-
-
-Also, we have the assumption that: \[gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}\]
-and \[gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}\]
+Assume we have N ideals with the same structure which are :
+\begin{align*}
+    I_{1} & = \langle h_{1}(y),x-g_{1}(y) \rangle    \\
+          & \hspace{8mm} \vdots                      \\
+    I_{N} & = \langle h_{N}(y),x-g_{N}(y) \rangle
+\end{align*}
+Also, we have the assumption that: 
+\begin{align*}
+    gcd(h_{1},\dots,h_{N}) & \neq 1                 & \forall i \in \{1,\dots,N\} \\
+    gcd(h_{i},h_{i+1})     & =gcd(h_{i+1},h_{i+2})\ & \forall i \in \{1,\dots,N-2\}
+\end{align*}
  We define the polynomials $y_{1},\dots,y_{N}$ such that $y_{1} = \displaystyle \frac{h_{1}}{\gcd(h_{1},\dots,h_{N})}$,$\dots$, $y_{N} = \displaystyle \frac{h_{N}}{\gcd(h_{1},\dots,h_{N})}$.
 
 \end{frame}
@@ -175,12 +244,12 @@ and \[gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}\]
     \end{array}
     \right.
 \end{displaymath}
-We compute $f_1$ and $f_2$ using CRT.
+We compute $f_1$ and $f_2$ using the CRT.
 
 \begin{theorem}
-    When $gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}$
+    When $\gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $\gcd(h_{i},h_{i+1}) = \gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}$
     \begin{displaymath}
-        I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle lcm(\{h_{i}\}), gcd(\{h_{i}\})f_{1},f_{2} \rangle
+        I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle \lcm(\{h_{i}\}), \gcd(\{h_{i}\})f_{1},f_{2} \rangle
     \end{displaymath}
 \end{theorem}
 \end{frame}
