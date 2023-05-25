@@ -247,9 +247,9 @@ Also, we have the assumption that:
 We compute $f_1$ and $f_2$ using the CRT.
 
 \begin{theorem}
-    When $\gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $\gcd(h_{i},h_{i+1}) = \gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}$
+    When $\gcd(h_{1},\dots,h_{N})\neq 1$ and $\gcd(h_{i},h_{i+1}) = \gcd(h_{i+1},h_{i+2}) $
     \begin{displaymath}
-        I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle \lcm(\{h_{i}\}), \gcd(h_{1},...,h_{N})f_{1},f_{2} \rangle
+        \bigcap_{k = 1}^{N} I_{k} = \langle \lcm(\{h_{i}\}), \gcd(h_{1},...,h_{N})f_{1},f_{2} \rangle
     \end{displaymath}
 \end{theorem}
 \end{frame}
@@ -276,9 +276,9 @@ We compute $f_1$ and $f_2$ using the CRT.
 
 \begin{frame}{Case 3}
 Let us now assume that we have :
-\[gcd(h_{1},\dots,h_{N}) \neq 1\]
+\[\gcd(h_{1},\dots,h_{N}) \neq 1\]
 But this time we don't necessarily have the following proprieties :
-\[gcd(h_{1},h_{2}) = gcd(h_{2},h_{3}) = \dots = gcd(h_{N-1},h_{N}) \]
+\[\gcd(h_{1},h_{2}) = \gcd(h_{2},h_{3}) = \dots = \gcd(h_{N-1},h_{N}) \]
 
 Which implies that there exist $i$ such that $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1},h_{i+2})$
 
