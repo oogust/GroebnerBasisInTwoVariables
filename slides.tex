@@ -254,7 +254,7 @@ We compute $f_1$ and $f_2$ using the CRT.
 \end{theorem}
 \end{frame}
 
-\begin{frame}{Algorithme case 2}
+\begin{frame}{Algorithm case 2}
     \begin{algorithm}[H]
     \caption{Intersect1($I_{1},\dots,I_{N}$)}\label{alg:intersect-n-ideals-equal-gcd}
     \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
@@ -319,6 +319,48 @@ Case $i > 1$
 
 for both cases, we can find $f_{i}$ using the CRT\@.
 \end{frame}
+
+\begin{frame}{Algorithm case 3}
+    \begin{algorithm}[H]    \tiny
+    \caption{Intersect2 ($I_{1},\dots,I_{N}$)}\label{alg:intersect-2-ideals-diff-gcd}
+    \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
+    \textbf{Output : }$I_{1} \cap \dots\cap I_ {N}$
+\begin{algorithmic}
+    \State $H \coloneqq \{h_{1},..,h_{N}\}$
+    \State $P \coloneqq []$
+    \State $C \coloneqq $ Correspondences($h_{i},g_{i}$) \Comment{List acting as the dictionary defined above}
+    \State $P[1] \coloneqq LCM(H)$
+    \State $H \coloneqq \prod^{N}_{i=1} h_{i}$
+    \State $F \coloneqq $ListOfFactorsAndMultiplicities(H)
+    \State $F \coloneqq $DecreaseAllMultiplicitiesByOne(F)
+    \If{only one factor has a multiplicity greater than 0}
+        \State \Return Intersect1($I_{1},\dots,I_{N}$)
+    \EndIf
+    \State $Last\_used\_poly\_y \coloneqq 1$
+    \State $Last\_found\_poly\_x \coloneqq 1$
+    \State $Nb\_It \coloneqq MaxMultiplicity(F) $ \Comment{MaxMultiplicity act like the function height() defined above}
+    \For{ j from 1 to Nb\_It}
+
+        \State $y^{*}\coloneqq \prod_{f \in H_{j}} f$ \Comment{All the factor of H with multiplicities greater or equal to j }
+        \State $p_y\coloneqq \frac{\frac{P[1]}{y^{*}}}{last\_used\_poly\_y}$ \Comment{Equivalent of $W_{j}$ but instead of a set of factor, all the factor are multiplied}
+        \State $X, Y\coloneqq$ BuildCRTParameters($p_y, C$)
+        \State $res \coloneqq $ CRT($X,Y$)
+        \If{$i > 1$}
+            \State $res \coloneqq $ CRT($[res[1],last\_found\_poly\_x],[res[2],last\_used\_poly\_y]$)
+        \EndIf
+        \State $P[i+1] \coloneqq $ NormalForm($res[1]*y^{*},P$)
+        \State $F \coloneqq $ DecreaseAllMultiplicitiesByOne(F)
+    \EndFor
+    \State $X,Y$ := BuildCRTParameters($GCD(h_{1},\dots,h_{N}),C$)
+    \State res := CRT($X,Y\cup\{last\_used\_poly\_y\}$
+    \State P[Nb\_It+2] $\coloneqq $NormalForm($res[1],P$)
+    \State \Return P
+
+\end{algorithmic}
+\end{algorithm}
+
+\end{frame}
+
 
 \begin{frame}{References}
     \nocite{*}
