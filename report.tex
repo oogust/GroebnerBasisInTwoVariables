@@ -1,8 +1,7 @@
 \documentclass{article}
 
 \usepackage{listings}
-\usepackage{geometry}
-\usepackage{geometry}
+\usepackage[a4paper]{geometry}
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -39,11 +38,11 @@
 
 \DeclareMathOperator{\lcm}{lcm}
 
-%\geometry{legalpaper, margin=3cm}
+\geometry{margin=2.5cm}
 
 \title{PSFPN - Gröbner bases in two variables}
 \begin{document}
-\setlength{\parindent}{0pt}
+%\setlength{\parindent}{1pt}
 
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
@@ -76,11 +75,10 @@
 
 \section*{Introduction}
 
-Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ are polynomials in $x$ and $y$ with coefficients in a field $\mathbb{K}$, we are interested in computing solutions of the systems. A Gröbner basis of the ideals $<f_{1},\dots,f_{r}>$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal above. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems. \\
-It is known that when the system has a finite number of solutions, the associated Gröbner bases under the lexicographical order contain at least two non-zero polynomials that can be distinguished : (1) one exclusively in terms of y and (2) another where the leading term is a power of x. \\
-The objective of this project is to investigate the structure of these bases. \\
-To accomplish this, we first examined the construction of a Gröbner basis and then established the existence of polynomials (1) and (2). Subsequently, we explored the structure of the intersection of two Gröbner bases with specific properties (Section\ref{sec:<GV>}). \\
-Finally, we extended our analysis to the structure of the intersection of N Gröbner bases. \\ \\
+\par Given $f_{1}=0,\dots,f_{r}=0$ where $f_{1},\dots,f_{r}$ are polynomials in $x$ and $y$ with coefficients in a field $\mathbb{K}$, we are interested in computing solutions of the systems. A Gröbner basis of the ideal $\langle f_{1},\dots,f_{r} \rangle$ is a set of generators with advantageous properties for solving the system mentioned above and also to guess the belonging or not of a polynomial to the ideal. Studying the structures of these bases is, therefore, a valuable approach for efficiently solving such systems.
+\par It is known that when the system has a finite number of solutions, the associated Gröbner basis under the lexicographical order contains at least two non-zero polynomials that can be distinguished : (1) one exclusively in terms of y and (2) another where the leading term is a power of x. The objective of this project is to investigate the structure of these bases.
+\par To accomplish this, we first examined the construction of a Gröbner basis and then established the existence of polynomials (1) and (2). Subsequently, we explored the structure of the intersection of two Gröbner bases with specific properties (Section \ref{sec:gpov}). 
+\par Finally, we extended our analysis to the structure of the intersection of N Gröbner bases. \\ \\
 
 \textbf{We would like to extend our sincere appreciation to our supervisor Jeremy Berthomieu from the LIP6 PolSys  team for his invaluable guidance and expertise throughout this project.}
 
@@ -136,7 +134,7 @@ We will also define the intersection and the sum of two ideals, as they will be 
 
 \section{Monomial orderings}
 
-When studying polynomials of only one variable, the order of the monomials is straightforward : we implicitely assume that $1 < x < x^{2} < \dots$. If we rise the number of variables we study, we can still sort all the powers of one variable with each other, but how do we manage monomials that are products of more than one variable ? There are many ways to handle this order problem. This is why we'll introduce \textit{monomial orderings}.
+\par When studying polynomials of only one variable, the order of the monomials is straightforward : we implicitly assume that $1 < x < x^{2} < \dots$. If we rise the number of variables we study, we can still sort all the powers of one variable with each other, but how do we manage monomials that are products of more than one variable ? There are many ways to handle this order problem. This is why we'll introduce \textit{monomial orderings}.
 
 \begin{definition}[Monomial ordering]\label{def:monomial-order}
     A monomial ordering $\prec$ on $\mathbb{K}[x, y]$ is any ordering on the monomials $x^{i}y^{j}$ : 
@@ -167,8 +165,8 @@ When studying polynomials of only one variable, the order of the monomials is st
     $y^{m} \prec_{lex} x^{m}$ \ref{def:lexicographic-order},
     $y^{m+l} \prec_{lex} y^{l}x^{m}$ \ref{def:monomial-order},
     $x^{i}y^{m+l} \prec_{lex} y^{l}x^{m+i}$ \ref{def:lexicographic-order},
-    $j = m+l$ $ k = m + i$ and we have that $m+i>i \Rightarrow k > i$ \newline
-    $\Leftarrow$ Let suppose that we have $i<k$ We can then write 
+    if we let $j = m+l$ and $ k = m + i$ we get that $m+i>i \Rightarrow k > i$ \newline
+    $\Leftarrow$ Suppose that we have $i<k$. We can then write 
     \newline
     $x^{i}\prec_{lex} x^{k}$ \ref{def:lexicographic-order},
     $x^{i}y^{j}\prec_{lex},
@@ -284,12 +282,12 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
     Let $\prec_{1}$ a monomial order such that $E_{\prec_{1}}(I)$ is finite. As proven in Proposition \ref{proposition:staircase-finite-any-order}, $E_{\prec_{2}}(I)$ is finite. Let us show that $\# E_{\prec_{1}}(I) = \# E_{\prec_{2}}(I)$, \textit{i.e.} $dim(E_{\prec_{1}}(I)) = dim(E_{\prec_{2}}(I))$. From the dimension theorem for vector spaces, we deduce that $dim(E_{\prec_{1}}(I)) = dim(E_{\prec_{2}}(I))$, hence the result.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem} \label{th:polynomial-only-in-y}
     If the staircase of $I$ for the lexicographic order is finite, there exists a non zero polynomial with monomials in $y$ only in $I$.
 \end{theorem}
 
 \begin{proof}
-    Let us assume the staircase of $I$ for $\prec_{lex}$ if finite. Then, there exists $l \in \mathbb{N}$ such that $y^{l}$ is a leading monomial of $I$. Let $f \in I$ be a polynomial with $LM(f) = y^{l}$. We can rewrite $f$ as $f = \alpha x^{y} + f^{\prime}$. As for all $k \in \mathbb{N}, y^{k} \prec_{lex} x$ and $LM(f) = y^{l}$, all the monomials of $f^{\prime}$ must contain only $y$ as a variable. Thus,  $f \in I$ is purely in $y$.
+    Let us assume the staircase of $I$ for $\prec_{lex}$ if finite. Then, there exists $l \in \mathbb{N}$ such that $y^{l}$ is a leading monomial of $I$. Let $f \in I$ be a polynomial with $LM(f) = y^{l}$. We can rewrite $f$ as $f = \alpha y^{l} + f^{\prime}$. As for all $k \in \mathbb{N}, y^{k} \prec_{lex} x$ and $LM(f) = y^{l}$, all the monomials of $f^{\prime}$ must contain only $y$ as a variable. Thus,  $f \in I$ is purely in $y$.
 \end{proof}
 
 \begin{proposition}
@@ -302,7 +300,7 @@ In the section, we will denote $I$ an ideal of the ring $\mathbb{K}[x, y]$.
 
 \section{Division over $\mathbb{K}[x, y]$}
 
-Using the notion of monimial order, we have a way to sort all the monomials of $\mathbb{K}[x, y]$. Therefore, we can now define a division algorithm similar to the Euclidean division algorithm, which will be useful to prove some results about ideals. 
+\par Using the notion of monimial order, we have a way to sort all the monomials of $\mathbb{K}[x, y]$. Therefore, we can now define a division algorithm similar to the Euclidean division algorithm, which will be useful to prove some results about ideals. 
 
 \begin{algorithm}[H]
 \caption{Division algorithm over $\mathbb{K}[x, y]$} \label{alg:div}
@@ -349,7 +347,7 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
     \begin{displaymath}
         f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right)
     \end{displaymath}
-    Therefore $f$ is an algebraic combination of elements of $\mathscr{G} \subset I$, so $f \in I$. \\
+    Therefore $f$ is an algebraic combination of elements of $\mathscr{G} \subseteq I$, so $f \in I$. \\
     $\Leftarrow$ Conversly, assume that $f \in I$. Using Algorithm \ref{alg:div} on $f$, we can write it as :
     \begin{displaymath}
         f = \left( \sum_{i = 1}^{n} k_{i}g_{i} \right) + h
@@ -385,9 +383,9 @@ Let $h$ be the output of Algorithm \ref{alg:div}. If $\mathscr{G}$ is a Gröbner
     Suppose that we have $f = g + h = g^{\prime} + h^{\prime}$, where $g^{\prime}$ is also a combination of elements of $\mathscr{G}$. Then, $h - h^{\prime} = g^{\prime} - g \in I$. If $h \neq h^{\prime}$, there exist $g \in \mathscr{G}$ such that $LT(g)$ divides $LT(h - h^{\prime})$. But from Proposition \ref{proposition:monomials-h-staircase}, all the monomials of $h$ and $h^{\prime}$ are in $E(I)$. In particular, $LT(h - h^{\prime}) \in E(I)$. We get to a contradition, thus $h - h^{\prime} = 0$ which proves the uniqueness of $h$.
 \end{proof}
 
-\section{Geometric point of view}\label{sec:<GV>}
+\section{Geometric point of view}\label{sec:gpov}
 
-After studying ideals from an algebraic point of view, we may need to observe what happens when we study the zeroes of the polynomials characterizing ideals. Here, we'll introduce affine varieties, and some results linking the algebraic and geometric points of view.
+\par After studying ideals from an algebraic point of view, we may need to observe what happens when we study the zeroes of the polynomials characterizing ideals. Here, we'll introduce affine varieties, and some results linking the algebraic and geometric points of view.
 
 \subsection*{Varieties}
 
@@ -445,8 +443,7 @@ After studying ideals from an algebraic point of view, we may need to observe wh
         \item[(i)] 
         \begin{align*}
             V(I_{1} \cdot I_{2})
-            & = V( \langle f \mid f \in I_{1} \land f \in I_{2} \rangle) \\
-            & = \{(a, b) \in \overline{\mathbb{K}} \mid \forall f \in I_{1} \cap I_{2}, f(a, b) = 0\} \\
+            & = \{(a, b) \in \overline{\mathbb{K}} \mid \forall f \in I_{1} \cdot I_{2}, f(a, b) = 0\} \\
             & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, \forall f_{2} \in I_{2}, f_{1}f_{2}(a, b) = 0 \} \\ %check 
             & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, \forall f_{2} \in I_{2}, f_{1}(a, b) = 0 \lor f_{2}(a, b) = 0 \} \\
             & = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f_{1} \in I_{1}, f_{1}(a, b) = 0 \} \cup 
@@ -468,11 +465,13 @@ After studying ideals from an algebraic point of view, we may need to observe wh
     We see that as we \textit{reduce} the generating conditions of the members of the ideal we study, the size of the associated variety rises (while making an intersection of ideals, we get union of varieties). On the other hand, while rising the conditions to belong to an ideal, the size of the associated variety reduces.
 \end{remark}
 
-We now want to study the Gröbner basis for the lexicographic ordering (lex-GB) of the intersection of ideals, assuming we their lex-GB.
+\par We now want to study the Gröbner basis for the lexicographic ordering (lex-GB) of the intersection of ideals, assuming we their lex-GB.
 We will start with the simplest case, called the "shape position", which is $I = \langle h(y), x - g(y) \rangle$. Here starts the real \textit{"research"} part of this project. \\
 
 
 \subsection*{Ideals Intersections case 1}
+
+\begin{flushleft}
 
 We will now study ideals based on generators of a certain form. 
 First, let us define the points $p_{i} = (x_{i}, y_{i})$ for $0 \leq i \leq d$, where $y_{i} \neq y_{j}, \forall i, j$. 
@@ -481,22 +480,17 @@ Then, we will define the following polynomials :
 \begin{displaymath}
     h(y) = \prod_{i=0}^{d-1} (y - y_{i}) 
 \end{displaymath}
-And the polynomial $g(y) = x$ that can be defined by interpolating the points $p_{i}$ as all the $y_{i}$ are distinct. 
-
-We can now define the following ideal : 
-
+And the polynomial $g(y) = x$ that can be defined by interpolating the points $p_{i}$ as all the $y_{i}$ are distinct.
+We can now define the following ideal :
 \begin{displaymath}
     I = \langle h(y), x - g(y) \rangle
 \end{displaymath}
-
 \begin{proposition}
     $I$ is a Gröbner basis of I for the lexicographic ordering $\prec_{lex}$.  
 \end{proposition}
-
 \begin{proof}
     Let $a \in I$. If $a$ is purely in $y$, then $a$ is a multiple of $h(y)$ and then $LM(h(y))$ divides $LM(a)$. Otherwise, $LM(a) = x^{k}$ where $k \geq 1$, so $LM(x - g(y)) = x$ divides $LM(a)$.
 \end{proof}
-
 Let us now define the ideals $I_{1}$ and $I_{2}$. 
 \begin{displaymath}
     I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle
@@ -504,7 +498,6 @@ Let us now define the ideals $I_{1}$ and $I_{2}$.
 \begin{displaymath}
     I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle
 \end{displaymath}
-
 We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 
 \begin{theorem} 
@@ -524,8 +517,8 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
 \end{theorem}
 
 \begin{proof}
-    Let us denote $I =  \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle$
-    First, remark that as $\gcd(h_{1}, h_{2}) = 1$, there exists $u, v$ such that : 
+    Let us denote $I =  \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle$. One can remark that $I$ is a Gröbner basis of $I$ for $\prec_{lex}$.
+    Also, remark that as $\gcd(h_{1}, h_{2}) = 1$, there exists $u, v$ such that : 
     \begin{displaymath}
         uh_{1} + vh_{2} = 1
     \end{displaymath}
@@ -551,7 +544,6 @@ We will assume that $\gcd(h_{1}, h_{2}) = 1$.
         \end{align*}
         Thus by the CRT, $r = 0 \pmod{h_{1}h_{2}}$, so by Theorem \ref{th:ideal-membership-test}, $m \in I$
         \item This point is the same as the last one, we only need to swap $h_{1}$ with $h_{2}$ and $x - g_{2}(y)$ with $x - g_{1}(y)$.
-        If we divide $m$ by $(x - g_{3})$, we get : 
     \end{itemize} 
     
     Now, let us show that $\langle h_{1}h_{2}(y), x - g_{3}(y) \rangle \subseteq I_{1} \cap I_{2}$.
@@ -581,7 +573,7 @@ We can now write the two ideals as :
 
 Where $\alpha = \gcd(h_{1}, h_{2})$ and $\gcd(p_{1}, p_{2}) = 1$.
 
-As we did previously, we want to find $g_{3}$ such that 
+We will define then define polynomials $g_{3}(y)$ 
 \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -590,9 +582,7 @@ As we did previously, we want to find $g_{3}$ such that
     \end{array}
     \right.
 \end{displaymath}
-Such a polynomial $g_{3}$ can be computed using the CRT.
-
-Now, we want to find $f$ such that : 
+and $f(x, y)$ 
 \begin{align*}
     \left\{
     \begin{array}{ll}
@@ -601,7 +591,6 @@ Now, we want to find $f$ such that :
     \end{array}
     \right.
 \end{align*}
-Again, such a polynomial can be computed using the CRT. 
 
 \begin{theorem} \label{th:inter-2-gcd-neq-1}
     Assume $\gcd(h_{1}, h_{2}) \neq 1$. 
@@ -611,8 +600,8 @@ Again, such a polynomial can be computed using the CRT.
 \end{theorem}
 
 \begin{proof}
-    Let us denote $I = \langle \lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})(x - g_{3}(y)), f(x,y) \rangle$. \\
-    First, remark that as $\gcd(p_{1}, p_{2}) = 1$, there exists $u, v$ such that : 
+    Let us denote $I = \langle \lcm(h_{1}, h_{2})(y), \gcd(h_{1},h_{2})(x - g_{3}(y)), f(x,y) \rangle$. Again, $I$ is a Gröbner basis of $I$ for $\prec_{lex}$. \\
+    Remark that as $\gcd(p_{1}, p_{2}) = 1$, there exists $u, v$ such that : 
 
     \begin{displaymath}
         up_{1} + vp_{2} = 1
@@ -633,7 +622,7 @@ Again, such a polynomial can be computed using the CRT.
         \item $m$ is a multiple of $(x - g_{1})$ and $(x - g_{2})$. Now, we don't have the assumption that all the points $p_{0,\dots,d-1,d,\dots,e-1}$ are distinct. Then, we can only interpolate the $y_{i}$ that are distinct to define $x - g_{3}$. So to take into account the points skipped during the interpolation, $m$ also needs to be a multiple of $\alpha$. So we have that $m = k \cdot \alpha (x - g_{3})$, thus $m \in I$. 
         \item $m$ is a multiple of $h_{1}$ and $x - g_{2}(y)$. We get that $m = p_{1} \alpha (x - g_{2})$. If we divide $m$ by $\alpha (x - g_{3})$, we get : 
         \begin{displaymath}
-            q = \alpha h_{1}, r = \alpha p_{1} (g_{2} - g_{3})
+            q = \alpha p_{1}, r = \alpha p_{1} (g_{2} - g_{3})
         \end{displaymath}
         We can remark that :
         \begin{align*}
@@ -709,16 +698,16 @@ Again, such a polynomial can be computed using the CRT.
 %\end{algorithm}
 
 \begin{theorem} 
-    The complexity of computing the intersection of two ideals using Theorem \ref{th:inter-2-gcd-neq-1} is $\mathcal{O}(n^2)$
+    Let $n = \max(\deg(h_{1}), deg(h_{2}))$. The complexity of computing the intersection of two ideals using Theorem \ref{th:inter-2-gcd-neq-1} is $\mathcal{O}(n^2)$. It could be improved using fast algorithms such as fast polynomial division and multiplication.
 \end{theorem}
 
 \begin{proof}
-    
+    The computation of the Gröbner basis consists in multiplying polynomials and solving 2 CRT systems. These operations can all be done in $\mathcal{O}(n^2)$, hence the total complexity.
 \end{proof}
 
 
 \begin{example}
-    Let describe one execution of our algorithm,\newline
+    Let describe one computation using Theorem \ref{th:inter-2-gcd-neq-1},\newline
     We take $I_{1} = \langle y^{2}+2y-3,x-y+1\rangle$ and $I_{2} = \langle y^{2}+3y-4,x-y+3 \rangle$ \newline
     We can factor $h_{1}$ and $h_{2}$ and get : $h_{1}\ =\ (y + 3)(y - 1)$ and $h_{2}\ =\ (y + 4)(y - 1)$ \newline
     Clearly, $\gcd(h_{1},h_{2})\ =\ (y-1)$\newline
@@ -746,14 +735,18 @@ Again, such a polynomial can be computed using the CRT.
     we obtain $f_{2}\ =\ x^2 - 5y^2 + 2x - 8y + 13$
     The the result is then \[ I_{1} \cap I_{2} = \langle (y-1)(y+4)(y+3),\ (y-1)(x - 3y - 5),\ x^2 - 5y^2 + 2x - 8y + 13\rangle\]
 \end{example}
-\newpage
+
+\end{flushleft}
+
 How can we generalize this process for an intersection of N ideal instead of only 2 ?
 Let assume we have N Ideal with the same structure which are : 
 
-\[I_{1} = <h_{1}(y),x-g_{1}(y)>\]
-\[I_{2} = <h_{2}(y),x-g_{2}(y)>\]
+\[I_{1} = \langle h_{1}(y),x-g_{1}(y) \rangle \]
+\[I_{2} = \langle h_{2}(y),x-g_{2}(y) \rangle \]
 \[\dots\]
-\[I_{N} = <h_{N}(y),x-g_{N}(y)>\]
+\[I_{N} = \langle h_{N}(y),x-g_{N}(y) \rangle \]
+
+\begin{flushleft}
 
 Also, we have the assumption that: \[gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}\]
 and \[gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}\]
@@ -779,6 +772,8 @@ $f_{1}$ can be computed using the CRT. Now, we want to find $f_{2}$ such that :
     \right.
 \end{displaymath}
 Again, such a polynomial can be computed using the CRT\@.
+
+\end{flushleft}
 
 \begin{theorem}
     When $gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}$
@@ -807,8 +802,9 @@ From this reasoning we get the following iterative algorithm :
 \end{algorithmic}
 \end{algorithm}
 
-\begin{theorem} The complexity of the above algorithm is in $\mathcal{O}(N*n^2)$
-\end{theorem}
+\begin{proposition} 
+    The complexity of the above algorithm is in $\mathcal{O}(N*n^2)$
+\end{proposition}
 
 \begin {example}
     We take $I_{1} = \langle y(y-1),x-y+1\rangle$, $I_{2} = \langle y(y+1),x-y+2)\rangle$, $I_{3} = \langle y(y+2),x-y+3)\rangle$ \newline
@@ -824,29 +820,34 @@ From this reasoning we get the following iterative algorithm :
         \end{array}
         \right.
     \end{displaymath}
-    We obtain $f_1$ = $\frac{y^{2}+6x^{2}-9y+8}{6}$ \newline
-    $P_{2} = gcd(h1,h2,h3)*f1 = \frac{y(y^{2}+6x^{2}-9y+8)}{6}$ \newline
-    $x^{*} = (x-y+1)*(x-y+2)*(x-y+3) \pmod{y} = (x+1)(x+2)(x+3) \pmod{y} = x^{3}+6x^{2}+11x+6 \pmod{y}$ \newline
+    We obtain $f_1$ = $\displaystyle \frac{y^{2}+6x^{2}-9y+8}{6}$ \newline
+    $P_{2} = gcd(h1,h2,h3) \cdot f_{1} = \displaystyle \frac{y(y^{2}+6x^{2}-9y+8)}{6}$ \newline
+    And then $x^{\star}$ is : 
+    \begin{align*}
+    x^{*} & = (x-y+1)*(x-y+2)*(x-y+3) \pmod{y}  \\
+          & = (x+1)(x+2)(x+3) \pmod{y}          \\
+          & = x^{3}+6x^{2}+11x+6 \pmod{y}      \\
+    \end{align*}
     We have another CRT :
-    \begin{displaymath}
+    \begin{align*}
         \left\{
         \begin{array}{ll}
-            f_{2} = x^{*} \pmod{y} = x^{3}+6x^{2}+11x+6 \pmod{y}\\
-            f_{2} = f_{1} \pmod{\frac{h_{1}*h_{2}*h_{3}}{y}} =  y^{2}+6x^{2}-9y+8 \pmod{(y-1)(y+1)(y+2)}\\
+            f_{2} = x^{*} \pmod{y}                                       & = x^{3}+6x^{2}+11x+6 \pmod{y}                  \\
+            f_{2} = f_{1} \pmod{\displaystyle \frac{h_{1}h_{2}h_{3}}{y}} & =  y^{2}+6x^{2}-9y+8 \pmod{(y-1)(y+1)(y+2)}    \\
         \end{array}
         \right.
-    \end{displaymath}
+    \end{align*}
     We obtain $f_{2} = x^{3}-5y^{3}+6y^{2}-3y^{2}+11x+2y+6$
     We obtain \[\langle y(y-1)(y+1)(y+2),\ \frac{y(y^{2}+6x^{2}-9y+8)}{6},\ x^{3}-5y^{3}+6y^{2}-3y^{2}+11x+2y+6\rangle\]
 
 
 \end{example}
 
-
-\newpage
 \subsection*{Ideals Intersections case 2}
 
-Let now assume that we have : 
+\begin{flushleft}
+
+Let us now assume that we have : 
 \[gcd(h_{1},\dots,h_{N}) \neq 1\]
 But this time we don't necessarily have the following proprieties :
 \[gcd(h_{1},h_{2}) = gcd(h_{2},h_{3}) = \dots = gcd(h_{N-1},h_{N}) \]
@@ -867,11 +868,11 @@ We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h
 Let define $W_{x} = H_{x}-H_{x+1}$ and $C_{w}$ = \{ ($x-g_{i})$ $|$ w divide $h_{i}$, $\forall i \in \{1,\dots,N\}$\}\newline
 We finally define the polynomials $\forall i \in \{1,\dots,height(H)\}, \forall w \in W_{i}$ :
 
-Case i = 1
+Case $i = 1$
 
-\[\{ f_{i} = \prod_{c \in C_{w} } c \pmod w \\ \}\]
+\[\{ f_{i} = \prod_{c \in C_{w} } c \pmod w \}\]
 
-Case i $>$ 1
+Case $i > 1$
 
 \begin{displaymath}
     \left\{
@@ -940,10 +941,11 @@ The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities 
 \end{algorithmic}
 \end{algorithm}
 
-\begin{theorem} The complexity of the above algorithm is in $\mathcal{O}(n^{2}(height(H)\ +\ N))$
-\end{theorem}
+\begin{proposition} 
+    The complexity of the above algorithm is in $\mathcal{O}(n^{2}(height(H)\ +\ N))$
+\end{proposition}
 
-
+\end{flushleft}
 
 \begin {example}
     We take $I_{1} = \langle y(y-1)(y+1),x-y+1\rangle$, $I_{2} = \langle y(y+1)(y-1),x-y+2)\rangle$, $I_{3} = \langle y(y+2),x-y+3)\rangle$ \newline
@@ -968,7 +970,7 @@ The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities 
         \right.
     \end{displaymath}
     Using the CRT we get $f_{2} = 3x^{2}-6xy+y^{2}+9x-9y+8$ \newline
-    Which mean we have $P_{3} = y(\frac{3x^{2}-6xy+y^{2}+9x-9y+8}{3})$\newline
+    Which mean we have $P_{3} = y(\displaystyle \frac{3x^{2}-6xy+y^{2}+9x-9y+8}{3})$ \newline
     We finally have one last CRT :
     \begin{displaymath}
         \left\{
@@ -978,23 +980,38 @@ The function DecreaseAllMultiplicitiesByOne simply decrease each multiplicities 
         \end{array}
         \right.
     \end{displaymath}
-    Which give us $f_{3}\ =\ x^{3}-3x^{2}+6x^{2}-3xy-3y^{2}+11x-3y+6$
+    Which give us $f_{3}\ =\ x^{3}-3x^{2}+6x^{2}-3xy-3y^{2}+11x-3y+6$. \\
     The final result is : \[\langle y(y-1)(y+1)(y+2),\ y(y+1)(y-1)(x+5),\ y(\frac{3x^{2}-6xy+y^{2}+9x-9y+8}{3}),\ x^{3}-3x^{2}+6x^{2}-3xy-3y^{2}+11x-3y+6\ \rangle\]
 
 \end{example}
 
-\newpage
 \section{Conclusion}
-In this project, we have delved into the foundations of Gröbner bases, a powerful mathematical tool utilized for solving polynomial systems and demonstrating polynomial membership within an ideal.
-Our research has primarily focused on the latter aspect, specifically exploring the membership of polynomials in ideals and investigating the structure of Gröbner bases for intersections of ideals with specific properties.\newline
-Through these investigations, we have gained insights into how the structure of these bases varies based on the parameters of the input ideals.
-This exploration has been exceptionally enriching since the Gröbner basis generates the resulting ideal of the intersection.\newline
-Nevertheless, the structures we have examined are not exhaustive in nature.
-For instance, what happens if we replace $I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle$ and $I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle$ with $I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle$  $I_{2} = \langle h_{2,1}(y), h_{2,2}(y), h_{2,1}(y)(x - g_{2,0}(y)), x^{2}-xg_{2,2}(y)-g_{2,1}(y) \rangle$ with $\gcd(h_{1,1},h_{1,2},h_{2,1},h_{2,2}) = 1$ or  $I_{j} = \langle h_{j,1}(y), h_{j,2}(y), h_{j,1}(y)G_{j,1}^(x,y),G_{j,2}(x,y) \rangle$ with $LT_{\prec_{lex}}(G_{j,2}(x,y))$ parametrized in x and $G_{j,2}(x,y) \in \langle G_{j,1},h_{j,2} \rangle$ for $j\in\{1,2\}$ or $j\in\{1,2,3\}$  ?
-Additionally, how does the scenario unfold when we move beyond two variables and venture into the realm of three, four, or even n variables?\newline
-These unanswered questions and unexplored scenarios provide intriguing avenues for further research and deepen our understanding of the complexities associated with Gröbner bases.
-They inspire future investigations into the impact of varying structures and the behavior of systems with an increased number of variables.\newline
-By acknowledging these remaining areas of inquiry, we recognize the potential for continued advancement in this field and open the door to exciting possibilities for future exploration.
+
+\par In this project, we have delved into the foundations of Gröbner bases, a powerful mathematical tool utilized for solving polynomial systems and demonstrating polynomial membership within an ideal.
+Our research has primarily focused on the latter aspect, specifically exploring the membership of polynomials in ideals and investigating the structure of Gröbner bases for intersections of ideals with specific properties.
+\par Through these investigations, we have gained insights into how the structure of these bases varies based on the parameters of the input ideals.
+This exploration has been exceptionally enriching since the Gröbner basis generates the resulting ideal of the intersection. 
+\par Nevertheless, the structures we have examined are not exhaustive in nature. 
+For instance, what happens if we replace 
+\begin{displaymath}
+    I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle, I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle
+\end{displaymath}
+with 
+\begin{align*}
+    I_{1} & = \langle h_{1,1}(y), h_{1,2}(y), h_{1,1}(y)(x - g_{1,0}(y)), x^{2}-xg_{1,2}(y)-g_{1,1}(y) \rangle  \\
+    I_{2} & = \langle h_{2,1}(y), h_{2,2}(y), h_{2,1}(y)(x - g_{2,0}(y)), x^{2}-xg_{2,2}(y)-g_{2,1}(y) \rangle \\
+\end{align*}
+where $\gcd(h_{1,1},h_{1,2},h_{2,1},h_{2,2}) = 1$ ? \\
+Or with 
+\begin{align*}
+    I_{j} = \langle h_{j,1}(y), h_{j,2}(y), h_{j,1}(y)G_{j,1}(x,y),G_{j,2}(x,y) \rangle
+\end{align*}
+with $LT_{\prec_{lex}}(G_{j,2}(x,y))$ parametrized in $x$ and $G_{j,2}(x,y) \in \langle G_{j,1},h_{j,2} \rangle$ for $j\in\{1,2\}$ or $j\in\{1,2,3\}$  ?
+Additionally, how does the scenario unfold when we move beyond two variables and venture into the realm of three, four, or even n variables? 
+\par These unanswered questions and unexplored scenarios provide intriguing avenues for further research and deepen our understanding of the complexities associated with Gröbner bases. They inspire future investigations into the impact of varying structures and the behavior of systems with an increased number of variables. 
+\par By acknowledging these remaining areas of inquiry, we recognize the potential for continued advancement in this field and open the door to exciting possibilities for future exploration.
+
+
 \nocite{*}
 \printbibliography
 
