@@ -45,6 +45,133 @@
 \begin{frame}{Introduction}
 \end{frame}
 
+\begin{frame}{Geometric point of view}
+    \begin{definition} [Affine variety]
+        The variety of an ideal $I$ is the set as defined below :
+        \begin{displaymath}
+            V(I) = \{ (a, b) \in \overline{\mathbb{K}} \mid \forall f \in I, f(a, b) = 0 \}
+        \end{displaymath}
+        Where $\overline{\mathbb{K}}$ stands for the algebraic closure of $\mathbb{K}$.
+    \end{definition}
+    \begin{proposition} \textbf{Proposition :}
+        Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$.
+        \begin{enumerate}
+            \item[(i)] $V(I_{1} \cdot I_{2}) = V(I_{1}) \cup V(I_{2})$
+            \item[(ii)] $V(I_{1} \cap I_{2}) = V(I_{1}) \cup V(I_{2})$
+            \item[(iii)] $V(I_{1} + I_{2}) = V(I_{1}) \cap V(I_{2})$
+        \end{enumerate}
+    \end{proposition}
+\end{frame}
+
+\begin{frame}{Ideals Intersections case 1}
+    Let us now define the ideals $I_{1}$ and $I_{2}$.
+\begin{displaymath}
+    I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle
+\end{displaymath}
+\begin{displaymath}
+    I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle
+\end{displaymath}
+We will assume that $\gcd(h_{1}, h_{2}) = 1$.
+
+\begin{theorem}
+    Let $I_{1}$ and $I_{2}$ be two ideals as defined above, with $g_{1}$ defined by interpolating the points $p_{0,\dots,d-1}$ and $g_{2}$ defined by interpolating the points $p_{d,\dots,e-1}$
+    \begin{displaymath}
+        I_{1} \cap I_{2} = \langle h_{1}h_{2}(y), x - g_{3}(y) \rangle
+    \end{displaymath}
+    Where $g_{3}(y)$ is the polynomial defined by interpolating the points $p_{0,\dots,d-1,d,\dots,e-1}$ and satisfies :
+    \begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+        g_{3} = g_{1} \pmod {h_{1}} \\
+        g_{3} = g_{2} \pmod {h_{2}} \\
+    \end{array}
+    \right.
+    \end{displaymath}
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Case 2}
+    Now, assume $\gcd(h_{1}, {h_2}) \neq 1$.
+
+We can now write the two ideals as :
+\begin{align*}
+    I_{1} = \langle h_{1}(y), x - g_{1}(y) \rangle = \langle \alpha p_{1}(y), x - g_{1}(y) \rangle \\
+    I_{2} = \langle h_{2}(y), x - g_{2}(y) \rangle = \langle \alpha p_{2}(y), x - g_{2}(y) \rangle
+\end{align*}
+
+Where $\alpha = \gcd(h_{1}, h_{2})$ and $\gcd(p_{1}, p_{2}) = 1$.
+
+We will define then define polynomials $g_{3}(y)$
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+        g_{3} = g_{1} \pmod {p_{1}} \\
+        g_{3} = g_{2} \pmod {p_{2}} \\
+    \end{array}
+    \right.
+\end{displaymath}
+and $f(x, y)$
+\begin{align*}
+    \left\{
+    \begin{array}{ll}
+        f = x - g_{3}           & \pmod {p_{1}p_{2}}         \\
+        f = (x-g_{1})(x-g_{2})  & \pmod {\alpha}             \\
+    \end{array}
+    \right.
+\end{align*}
+
+\begin{theorem} \label{th:inter-2-gcd-neq-1}
+    Assume $\gcd(h_{1}, h_{2}) \neq 1$.
+    \begin{displaymath}
+        I_{1} \cap I_{2} = \langle \lcm(h_{1}, h_{2})(y), \alpha (x - g_{3}(y)), f(x,y) \rangle
+    \end{displaymath}
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Case 2 - Generalization}
+How can we generalize this process for an intersection of N ideal instead of only 2 ?
+Let assume we have N Ideal with the same structure which are :
+
+$I_{1} = \langle h_{1}(y),x-g_{1}(y) \rangle, I_{2} = \langle h_{2}(y),x-g_{2}(y) \rangle, \dots ,I_{N} = \langle h_{N}(y),x-g_{N}(y) \rangle$
+
+
+Also, we have the assumption that: \[gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}\]
+and \[gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}\]
+ We define the polynomials $y_{1},\dots,y_{N}$ such that $y_{1} = \displaystyle \frac{h_{1}}{\gcd(h_{1},\dots,h_{N})}$,$\dots$, $y_{N} = \displaystyle \frac{h_{N}}{\gcd(h_{1},\dots,h_{N})}$.
+
+\end{frame}
+
+\begin{frame}{Case 2 - Generalization}
+    We want to find $f_{1}$ such that :
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+        f_{1} = x-g_{1} \pmod {y_{1}} \\
+        f_{1} = x-g_{2} \pmod {y_{2}} \\
+        \hspace{8mm} \vdots \\
+        f_{1} = x-g_{N} \pmod{y_{N}}\\
+    \end{array}
+    \right.
+\end{displaymath}
+    Now, we want to find $f_{2}$ such that :
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+        f_{2} = f_{1} \pmod {\prod_{i=1}^{N} y_{i}} \\
+        f_{2} = \prod^{N}_{i=1} (x-g_{i}) \pmod {\gcd(\{h_{i}\})} \\
+    \end{array}
+    \right.
+\end{displaymath}
+We compute $f_1$ and $f_2$ using CRT.
+
+\begin{theorem}
+    When $gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $gcd(h_{i},h_{i+1})=gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}$
+    \begin{displaymath}
+        I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle lcm(\{h_{i}\}), gcd(\{h_{i}\})f_{1},f_{2} \rangle
+    \end{displaymath}
+\end{theorem}
+\end{frame}
+
 \begin{frame}{References}
     \nocite{*}
     \printbibliography
