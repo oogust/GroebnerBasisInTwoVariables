@@ -240,7 +240,7 @@ Also, we have the assumption that:
     \left\{
     \begin{array}{ll}
         f_{2} = f_{1} \pmod {\prod_{i=1}^{N} y_{i}} \\
-        f_{2} = \prod^{N}_{i=1} (x-g_{i}) \pmod {\gcd(\{h_{i}\})} \\
+        f_{2} = \prod^{N}_{i=1} (x-g_{i}) \pmod {\gcd(h_{1},...,h_{N})} \\
     \end{array}
     \right.
 \end{displaymath}
@@ -249,9 +249,75 @@ We compute $f_1$ and $f_2$ using the CRT.
 \begin{theorem}
     When $\gcd(h_{1},\dots,h_{N})\neq1\ \forall i \in \{1,\dots,N\}$ and $\gcd(h_{i},h_{i+1}) = \gcd(h_{i+1},h_{i+2})\ \forall i \in \{1,\dots,N-2\}$
     \begin{displaymath}
-        I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle \lcm(\{h_{i}\}), \gcd(\{h_{i}\})f_{1},f_{2} \rangle
+        I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle \lcm(\{h_{i}\}), \gcd(h_{1},...,h_{N})f_{1},f_{2} \rangle
     \end{displaymath}
 \end{theorem}
+\end{frame}
+
+\begin{frame}{Algorithme case 2}
+    \begin{algorithm}[H]
+    \caption{Intersect1($I_{1},\dots,I_{N}$)}\label{alg:intersect-n-ideals-equal-gcd}
+    \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
+    \textbf{Output : }$I_{1} \cap \dots\cap I_ {N}$
+\begin{algorithmic}
+    \State $H \coloneqq \{h_{1},..,h_{N}\}$
+    \State $P1 \coloneqq LCM(H)$
+    \State $h^{*} \coloneqq GCD(H)$
+    \State $Y\coloneqq \{y_{1}= \frac{h_{1}}{h^{*}},\dots,y_{N}= \frac{h_{N}}{h^{*}}\}$
+    \State $X \coloneqq \{x_{1} = \frac{x-g_{1}}{y_{1}},\dots,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
+    \State $x^{*} \coloneqq \prod^{N}_{i=1} \frac{x-g_{i}}{h^{*}}$
+    \State $c\coloneqq CRT(X,Y)$
+    \State $P2 \coloneqq c[1]*h^{*}$ \Comment{The CRT algorithm implemented return 2 elements the first one is the found polynomial and the second one the multiplication of each divisor $\prod^{N}_{i=1} y_{i}$}
+    \State $P3 \coloneqq CRT(\{c[1],x^{*}\},\{c[2], h^{*}\})$
+    \State \Return P1,P2,P3
+\end{algorithmic}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}{Case 3}
+Let us now assume that we have :
+\[gcd(h_{1},\dots,h_{N}) \neq 1\]
+But this time we don't necessarily have the following proprieties :
+\[gcd(h_{1},h_{2}) = gcd(h_{2},h_{3}) = \dots = gcd(h_{N-1},h_{N}) \]
+
+Which implies that there exist $i$ such that $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1},h_{i+2})$
+
+This mean that the polynomial $H = \prod_{i=1}^{N} h_{i}$ has at least one factor which isn't gcd($h_{1},\dots,h_{N}$) with multiplicity greater than one.
+
+We can then write H as :
+\[H=\prod_{k_{i} \in \mathbb{N}
+ \setminus \{0\}, y_{i}\in \mathbb{K}} (y-y_{i})^{k_{i}}\]
+
+\end{frame}
+
+\begin{frame}{Case 3}
+    We define the set $H_{j}$ as following :
+\[H_{j} = \{\ (y-y_{i}) \ |\  k_{i} \geq j\ \}\]
+
+We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h_{1},\dots,h_{N})})\]
+
+Let define $W_{x} = H_{x}-H_{x+1}$ and $C_{w}$ = \{ ($x-g_{i})$ $|$ w divide $h_{i}$, $\forall i \in \{1,\dots,N\}$\}\newline
+\end{frame}
+
+\begin{frame}{Case 3}
+    We finally define the polynomials $\forall i \in \{1,\dots,height(H)\}, \forall w \in W_{i}$ :
+
+Case $i = 1$
+
+\[\{ f_{i} = \prod_{c \in C_{w} } c \pmod w \}\]
+
+Case $i > 1$
+
+\begin{displaymath}
+    \left\{
+    \begin{array}{ll}
+    f_{i} = \prod_{c \in C_{w} } c \pmod w \\
+    f_{i} = f_{i-1} \pmod{\prod_{w^{*} \in W_{i-1}} w^{*}}\\
+    \end{array}
+    \right.
+\end{displaymath}
+
+for both cases, we can find $f_{i}$ using the CRT\@.
 \end{frame}
 
 \begin{frame}{References}
