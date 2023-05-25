@@ -20,6 +20,19 @@
 
 \addbibresource{bibliography.bib}
 
+
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{corollary}{Corollary}[theorem]
+%\newtheorem{lemma}{Lemma}[section]
+%\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}[section]
+%\newtheorem{example}{Example}[section]
+%\newtheorem{property}{Property}[section]
+%\newtheorem{remark}{Remark}[section]
+%\newtheorem{conjecture}{Conjecture}[section]
+
+\DeclareMathOperator{\lcm}{lcm}
+
 \AtBeginSection[]
 {
     \begin{frame}
@@ -53,7 +66,7 @@
         \end{displaymath}
         Where $\overline{\mathbb{K}}$ stands for the algebraic closure of $\mathbb{K}$.
     \end{definition}
-    \begin{proposition} \textbf{Proposition :}
+    \begin{proposition}
         Let $I_{1}, I_{2}$ two ideals of $\mathbb{K}[x, y]$.
         \begin{enumerate}
             \item[(i)] $V(I_{1} \cdot I_{2}) = V(I_{1}) \cup V(I_{2})$
