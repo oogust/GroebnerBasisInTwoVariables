@@ -369,6 +369,47 @@ for both cases, we can find $f_{i}$ using the CRT\@.
 
 \end{frame}
 
+\begin{frame}{example case 3}
+    \begin {example}
+        \tiny
+    We take $I_{1} = \langle y(y-1)(y+1),x-y+1\rangle$, $I_{2} = \langle y(y+1)(y-1),x-y+2)\rangle$, $I_{3} = \langle y(y+2),x-y+3)\rangle$ \newline
+    We compute $H = y^{4}(y-1)^{2}(y+1)^{2}(y+2)$ and we deduce that the Height of H is 2, so the obtained intersection is of dimension 4. \newline
+    $P_{1} = lcm(h1,h2,h3) = y(y-1)(y+1)(y+2)$ \newline
+    $i = 1$ \newline
+    $W_{1} = H_{1}-H_{2} = \{y,y-1,y+1,y+2\} - \{y,y-1,y+2\} = \{y+2\}$\newline
+    $C_{y+2} = \{x-y+3\}$\newline
+    We obtain :
+    \[f1 = x-y+3 \pmod{y+2} = x+5 \pmod{y+2}\]
+    which mean we have $P_{2} = y(y+1)(y-1)(x+5)$ \newline
+    $i = 2$\newline
+    $W_{2} = H_{2}-H_{3} = \{y,y-1,y+1\} - \{y\} = \{y-1,y+1\}$\newline
+    We obtain the system :
+    \begin{displaymath}
+        \left\{
+        \begin{array}{ll}
+            f_{2} = f_{1} \pmod{y+2} \\
+            f_{2} = (x-y+1)(x-y+2) \pmod{y-1} \\
+            f_{2} =  (x-y+1)(x-y+2) \pmod{y+1} \\
+        \end{array}
+        \right.
+    \end{displaymath}
+    Using the CRT we get $f_{2} = 3x^{2}-6xy+y^{2}+9x-9y+8$ \newline
+    Which mean we have $P_{3} = y(\displaystyle \frac{3x^{2}-6xy+y^{2}+9x-9y+8}{3})$ \newline
+    We finally have one last CRT :
+    \begin{displaymath}
+        \left\{
+        \begin{array}{ll}
+            f_{3} = f_{2} \pmod{y+2} \\
+            f_{3} = (x-y+3)(x-y+1)(x-y+2) \pmod{y} \\
+        \end{array}
+        \right.
+    \end{displaymath}
+    Which give us $f_{3}\ =\ x^{3}-3x^{2}+6x^{2}-3xy-3y^{2}+11x-3y+6$. \\
+    The final result is : \[\langle y(y-1)(y+1)(y+2),\ y(y+1)(y-1)(x+5),\ y(\frac{3x^{2}-6xy+y^{2}+9x-9y+8}{3}),\ x^{3}-3x^{2}+6x^{2}-3xy-3y^{2}+11x-3y+6\ \rangle\]
+
+\end{example}
+\end{frame}
+
 \begin{frame}{References}
     \nocite{*}
     \printbibliography
