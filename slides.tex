@@ -55,8 +55,12 @@
 %\end{frame}
 
 
-%\begin{frame}{Introduction}
-%\end{frame}
+\begin{frame}{Introduction}
+    Given $f_1 = 0, f_r = 0$ with $f_i \in \mathbb{K}[x,y]$, $\mathbb{K}$ a field.
+    We want to compute the solution of the above system.
+    The Gröbner base of the ideal $I = \langle f_1,\dots,f_r \rangle$ has advantageous proprieties to find solutions of the system or test the belonging of a polynomial in the Ideal.
+    Therefore we want to study the structure of such Gröbner base when using the lexicographical order.
+\end{frame}
 
 \begin{frame}{Remainders}
     \begin{definition}[Lexicographic order]\label{def:lexicographic-order}
@@ -86,6 +90,8 @@
     \begin{theorem} \label{th:polynomial-only-in-y}
         If the staircase of $I$ for the lexicographic order is finite, there exists a non zero polynomial with monomials in $y$ only in $I$.
     \end{theorem}
+
+    \textbf{Hint :} As for all $k \in \mathbb{N}, y^{k} \prec_{lex} x$ and $LM(f) = y^{l}$, all the monomials of $f^{\prime}$ must contain only $y$ as a variable
 \end{frame}
 
 \begin{frame}[shrink=20]{First results}
@@ -320,6 +326,14 @@ Case $i > 1$
 for both cases, we can find $f_{i}$ using the CRT\@.
 \end{frame}
 
+
+
+
+\begin{frame}{References}
+    \nocite{*}
+    \printbibliography
+\end{frame}
+
 \begin{frame}{Algorithm case 3}
     \begin{algorithm}[H]    \tiny
     \caption{Intersect2 ($I_{1},\dots,I_{N}$)}\label{alg:intersect-2-ideals-diff-gcd}
@@ -359,12 +373,6 @@ for both cases, we can find $f_{i}$ using the CRT\@.
 \end{algorithmic}
 \end{algorithm}
 
-\end{frame}
-
-
-\begin{frame}{References}
-    \nocite{*}
-    \printbibliography
 \end{frame}
 
 \end{document}
