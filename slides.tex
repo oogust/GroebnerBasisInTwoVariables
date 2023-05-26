@@ -58,8 +58,8 @@
 \begin{frame}{Introduction}
     Given $f_1 = 0, f_r = 0$ with $f_i \in \mathbb{K}[x,y]$, $\mathbb{K}$ a field.
     We want to compute the solution of the above system.
-    The Gröbner base of the ideal $I = \langle f_1,\dots,f_r \rangle$ has advantageous proprieties to find solutions of the system or test the belonging of a polynomial in the Ideal.
-    Therefore we want to study the structure of such Gröbner base when using the lexicographical order.
+    The Gröbner bases of the ideal $I = \langle f_1,\dots,f_r \rangle$ has advantageous proprieties to find solutions of the system or test the belonging of a polynomial tn the ideal.
+    Therefore we want to study the structure of such Gröbner bases when using the lexicographical order.
 \end{frame}
 
 \begin{frame}{Remainders}
@@ -91,7 +91,7 @@
         If the staircase of $I$ for the lexicographic order is finite, there exists a non zero polynomial with monomials in $y$ only in $I$.
     \end{theorem}
 
-    \textbf{Hint :} As for all $k \in \mathbb{N}, y^{k} \prec_{lex} x$ and $LM(f) = y^{l}$, all the monomials of $f^{\prime}$ must contain only $y$ as a variable
+    \textbf{Hint :} $\exists l, f = \alpha y^{l} + f^{\prime} \in I$. $LM(f) = \alpha y^{l}$. As for all $k \in \mathbb{N}, y^{k} \prec_{lex} x$ and $LM(f) = y^{l}$, all the monomials of $f^{\prime}$ must contain only $y$ as a variable
 \end{frame}
 
 \begin{frame}[shrink=20]{First results}
@@ -130,7 +130,6 @@
         \begin{enumerate}
             \item[(i)] $V(I_{1} \cdot I_{2}) = V(I_{1}) \cup V(I_{2})$
             \item[(ii)] $V(I_{1} \cap I_{2}) = V(I_{1}) \cup V(I_{2})$
-            \item[(iii)] $V(I_{1} + I_{2}) = V(I_{1}) \cap V(I_{2})$
         \end{enumerate}
     \end{proposition}
 \end{frame}
@@ -260,25 +259,6 @@ We compute $f_1$ and $f_2$ using the CRT.
 \end{theorem}
 \end{frame}
 
-\begin{frame}{Algorithm case 2}
-    \begin{algorithm}[H]
-    \caption{Intersect1($I_{1},\dots,I_{N}$)}\label{alg:intersect-n-ideals-equal-gcd}
-    \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
-    \textbf{Output : }$I_{1} \cap \dots\cap I_ {N}$
-\begin{algorithmic}
-    \State $H \coloneqq \{h_{1},..,h_{N}\}$
-    \State $P1 \coloneqq LCM(H)$
-    \State $h^{*} \coloneqq GCD(H)$
-    \State $Y\coloneqq \{y_{1}= \frac{h_{1}}{h^{*}},\dots,y_{N}= \frac{h_{N}}{h^{*}}\}$
-    \State $X \coloneqq \{x_{1} = \frac{x-g_{1}}{y_{1}},\dots,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
-    \State $x^{*} \coloneqq \prod^{N}_{i=1} \frac{x-g_{i}}{h^{*}}$
-    \State $c\coloneqq CRT(X,Y)$
-    \State $P2 \coloneqq c[1]*h^{*}$ \Comment{The CRT algorithm implemented return 2 elements the first one is the found polynomial and the second one the multiplication of each divisor $\prod^{N}_{i=1} y_{i}$}
-    \State $P3 \coloneqq CRT(\{c[1],x^{*}\},\{c[2], h^{*}\})$
-    \State \Return P1,P2,P3
-\end{algorithmic}
-\end{algorithm}
-\end{frame}
 
 \begin{frame}{Case 3}
 Let us now assume that we have :
@@ -327,11 +307,24 @@ for both cases, we can find $f_{i}$ using the CRT\@.
 \end{frame}
 
 
-
-
-\begin{frame}{References}
-    \nocite{*}
-    \printbibliography
+\begin{frame}{Algorithm case 2}
+    \begin{algorithm}[H]
+    \caption{Intersect1($I_{1},\dots,I_{N}$)}\label{alg:intersect-n-ideals-equal-gcd}
+    \textbf{Input : } N Ideals $I_{1},\dots,I_{N}$ as described above \\
+    \textbf{Output : }$I_{1} \cap \dots\cap I_ {N}$
+\begin{algorithmic}
+    \State $H \coloneqq \{h_{1},..,h_{N}\}$
+    \State $P1 \coloneqq LCM(H)$
+    \State $h^{*} \coloneqq GCD(H)$
+    \State $Y\coloneqq \{y_{1}= \frac{h_{1}}{h^{*}},\dots,y_{N}= \frac{h_{N}}{h^{*}}\}$
+    \State $X \coloneqq \{x_{1} = \frac{x-g_{1}}{y_{1}},\dots,x_{N} =\frac{x-g_{N}}{y_{N}}\}$
+    \State $x^{*} \coloneqq \prod^{N}_{i=1} \frac{x-g_{i}}{h^{*}}$
+    \State $c\coloneqq CRT(X,Y)$
+    \State $P2 \coloneqq c[1]*h^{*}$ \Comment{The CRT algorithm implemented return 2 elements the first one is the found polynomial and the second one the multiplication of each divisor $\prod^{N}_{i=1} y_{i}$}
+    \State $P3 \coloneqq CRT(\{c[1],x^{*}\},\{c[2], h^{*}\})$
+    \State \Return P1,P2,P3
+\end{algorithmic}
+\end{algorithm}
 \end{frame}
 
 \begin{frame}{Algorithm case 3}
@@ -373,6 +366,11 @@ for both cases, we can find $f_{i}$ using the CRT\@.
 \end{algorithmic}
 \end{algorithm}
 
+\end{frame}
+
+\begin{frame}{References}
+    \nocite{*}
+    \printbibliography
 \end{frame}
 
 \end{document}
