@@ -307,6 +307,21 @@ Case $i > 1$
 for both cases, we can find $f_{i}$ using the CRT\@.
 \end{frame}
 
+\begin{frame}{Last results}
+    \begin{conjecture}
+        The Gröbner basis formed by the intersection of the ideal $I_{1},\dots,I_{N}$ with the above proprieties is of dimension height(H) + 2.
+    \end{conjecture}
+    
+    
+    \begin{theorem}
+         When $gcd(h_{1},\dots,h_{N}) \neq 1$ and $\exists i$ s.t $gcd(h_{i},h_{i+1}) \neq gcd(h_{i+1},h_{i+2})$
+        \begin{displaymath}
+            I_{1} \cap I_{2} \cap \dots \cap I_{N} = \langle lcm(h_{1},\dots,h_{N}),(\prod_{m \in H_{2}} m)f_{1},(\prod_{m \in H_{3}} m)f_{2}),\dots,(\prod_{m \in H_{height(H)}} m)f_{height(H)-2},f_{height(H)-1})\rangle
+        \end{displaymath}
+    \end{theorem}
+    
+\end{frame}
+
 
 \begin{frame}{Algorithm case 2}
     \begin{algorithm}[H]
