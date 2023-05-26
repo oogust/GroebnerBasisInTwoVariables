@@ -32,6 +32,7 @@
 %\newtheorem{conjecture}{Conjecture}[section]
 
 \DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\divides}{div}
 
 \AtBeginSection[]
 {
@@ -229,7 +230,7 @@ Also, we have the assumption that:
 \end{frame}
 
 \begin{frame}{Case 2 - Generalization}
-    We want to find $f_{1}$ such that :
+    Let $f_{1}$ be the polynomial such that :
 \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -240,7 +241,7 @@ Also, we have the assumption that:
     \end{array}
     \right.
 \end{displaymath}
-    Now, we want to find $f_{2}$ such that :
+    And $f_{2}$ :
 \begin{displaymath}
     \left\{
     \begin{array}{ll}
@@ -249,7 +250,7 @@ Also, we have the assumption that:
     \end{array}
     \right.
 \end{displaymath}
-We compute $f_1$ and $f_2$ using the CRT.
+$f_1$ and $f_2$ can be computed using the CRT.
 
 \begin{theorem}
     When $\gcd(h_{1},\dots,h_{N})\neq 1$ and $\gcd(h_{i},h_{i+1}) = \gcd(h_{i+1},h_{i+2}) $
@@ -282,7 +283,7 @@ We can then write H as :
 
 We define the height of H as follows : \[height(H) = \max_{k_{i}}(\frac{H}{gcd(h_{1},\dots,h_{N})})\]
 
-Let define $W_{x} = H_{x}-H_{x+1}$ and $C_{w}$ = \{ ($x-g_{i})$ $|$ w divide $h_{i}$, $\forall i \in \{1,\dots,N\}$\}\newline
+Let us define \[W_{x} = H_{x}-H_{x+1}\] and \[C_{w} = \{ (x-g_{i}) \mid w \divides h_{i}, \forall 1 \leq i \leq N \}\] \newline
 \end{frame}
 
 \begin{frame}{Case 3}
